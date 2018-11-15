@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"></property>
+        </commentGenerator>
+        
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/business"
+                        userId="root"
+                        password="123">
+        </jdbcConnection>
+
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!--指定javaBean生成的位置-->
+        <javaModelGenerator
+                targetPackage="cn.xt.domain"
+                targetProject="ssm_domain\src\main\java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!--指定sql映射的文件生成位置-->
+        <sqlMapGenerator
+                targetPackage="cn.xt.dao"
+                targetProject="ssm_dao\src\main\java">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <!--指定dao接口生成的位置，mapper接口-->
+        <javaClientGenerator
+                type="XMLMAPPER"
+                targetPackage="cn.xt.dao"
+                targetProject="ssm_dao\src\main\java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+        <!--指定每个表生成的策略-->
+        <table tableName="dept_p" domainObjectName="Dept"></table>
+        <table tableName="user_p" domainObjectName="User"></table>
+        <table tableName="role_p" domainObjectName="Role"></table>
+        <table tableName="user_info_p" domainObjectName="UserInfo"></table>
+        <table tableName="user_temp_b" domainObjectName="UserTemp"></table>
+        <table tableName="role_user_p" domainObjectName="RoleUser"></table>
+        <table tableName="module_p" domainObjectName="Module"></table>
+        <table tableName="role_module_p" domainObjectName="RoleModule"></table>
+        <table tableName="access_log_p" domainObjectName="Access"></table>
+        <table tableName="contract_c" domainObjectName="Contract"></table>
+        <table tableName="contract_product_c" domainObjectName="ContractProduct"></table>
+        <table tableName="export_c" domainObjectName="Export"></table>
+        <table tableName="export_product_c" domainObjectName="ExportProduct"></table>
+        <table tableName="ext_cproduct_c" domainObjectName="ExtCproduct"></table>
+        <table tableName="ext_eproduct_c" domainObjectName="ExtEproduct"></table>
+        <table tableName="factory_c" domainObjectName="Factory"></table>
+        <table tableName="feedback_c" domainObjectName="Feedback"></table>
+        <table tableName="finance_c" domainObjectName="Finance"></table>
+        <table tableName="home_packing_list_c" domainObjectName="HomePackingList"></table>
+        <table tableName="invoice_c" domainObjectName="Invoice"></table>
+        <table tableName="online_info_t" domainObjectName="OnlineInfo"></table>
+        <table tableName="packing_list_c" domainObjectName="PackingList"></table>
+        <table tableName="product_c" domainObjectName="Product"></table>
+        <table tableName="shipping_order_c" domainObjectName="ShippingOrder"></table>
+        <table tableName="sys_code_b" domainObjectName="SysCode"></table>
+        <table tableName="vote_record_b" domainObjectName="VoteRecord"></table>
+    </context>
+</generatorConfiguration>

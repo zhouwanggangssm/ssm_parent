@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xt.dao.UserTempMapper">
+  <resultMap id="BaseResultMap" type="cn.xt.domain.UserTemp">
+    <id column="USER_TEMP_ID" jdbcType="VARCHAR" property="userTempId" />
+    <result column="KEY_CLASS" jdbcType="VARCHAR" property="keyClass" />
+    <result column="KEY_NAME" jdbcType="VARCHAR" property="keyName" />
+    <result column="KEY_CONTENT" jdbcType="VARCHAR" property="keyContent" />
+    <result column="STATE" jdbcType="INTEGER" property="state" />
+    <result column="ORDER_NO" jdbcType="INTEGER" property="orderNo" />
+    <result column="CNOTE" jdbcType="VARCHAR" property="cnote" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    USER_TEMP_ID, KEY_CLASS, KEY_NAME, KEY_CONTENT, STATE, ORDER_NO, CNOTE, UPDATE_BY, 
+    UPDATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="cn.xt.domain.UserTempExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_temp_b
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_temp_b
+    where USER_TEMP_ID = #{userTempId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from user_temp_b
+    where USER_TEMP_ID = #{userTempId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.xt.domain.UserTempExample">
+    delete from user_temp_b
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.xt.domain.UserTemp">
+    insert into user_temp_b (USER_TEMP_ID, KEY_CLASS, KEY_NAME, 
+      KEY_CONTENT, STATE, ORDER_NO, 
+      CNOTE, UPDATE_BY, UPDATE_TIME
+      )
+    values (#{userTempId,jdbcType=VARCHAR}, #{keyClass,jdbcType=VARCHAR}, #{keyName,jdbcType=VARCHAR}, 
+      #{keyContent,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{orderNo,jdbcType=INTEGER}, 
+      #{cnote,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.xt.domain.UserTemp">
+    insert into user_temp_b
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userTempId != null">
+        USER_TEMP_ID,
+      </if>
+      <if test="keyClass != null">
+        KEY_CLASS,
+      </if>
+      <if test="keyName != null">
+        KEY_NAME,
+      </if>
+      <if test="keyContent != null">
+        KEY_CONTENT,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+      <if test="orderNo != null">
+        ORDER_NO,
+      </if>
+      <if test="cnote != null">
+        CNOTE,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userTempId != null">
+        #{userTempId,jdbcType=VARCHAR},
+      </if>
+      <if test="keyClass != null">
+        #{keyClass,jdbcType=VARCHAR},
+      </if>
+      <if test="keyName != null">
+        #{keyName,jdbcType=VARCHAR},
+      </if>
+      <if test="keyContent != null">
+        #{keyContent,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="cnote != null">
+        #{cnote,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.xt.domain.UserTempExample" resultType="java.lang.Long">
+    select count(*) from user_temp_b
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user_temp_b
+    <set>
+      <if test="record.userTempId != null">
+        USER_TEMP_ID = #{record.userTempId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.keyClass != null">
+        KEY_CLASS = #{record.keyClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.keyName != null">
+        KEY_NAME = #{record.keyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.keyContent != null">
+        KEY_CONTENT = #{record.keyContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null">
+        STATE = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderNo != null">
+        ORDER_NO = #{record.orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.cnote != null">
+        CNOTE = #{record.cnote,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateBy != null">
+        UPDATE_BY = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_temp_b
+    set USER_TEMP_ID = #{record.userTempId,jdbcType=VARCHAR},
+      KEY_CLASS = #{record.keyClass,jdbcType=VARCHAR},
+      KEY_NAME = #{record.keyName,jdbcType=VARCHAR},
+      KEY_CONTENT = #{record.keyContent,jdbcType=VARCHAR},
+      STATE = #{record.state,jdbcType=INTEGER},
+      ORDER_NO = #{record.orderNo,jdbcType=INTEGER},
+      CNOTE = #{record.cnote,jdbcType=VARCHAR},
+      UPDATE_BY = #{record.updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.xt.domain.UserTemp">
+    update user_temp_b
+    <set>
+      <if test="keyClass != null">
+        KEY_CLASS = #{keyClass,jdbcType=VARCHAR},
+      </if>
+      <if test="keyName != null">
+        KEY_NAME = #{keyName,jdbcType=VARCHAR},
+      </if>
+      <if test="keyContent != null">
+        KEY_CONTENT = #{keyContent,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null">
+        ORDER_NO = #{orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="cnote != null">
+        CNOTE = #{cnote,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where USER_TEMP_ID = #{userTempId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.xt.domain.UserTemp">
+    update user_temp_b
+    set KEY_CLASS = #{keyClass,jdbcType=VARCHAR},
+      KEY_NAME = #{keyName,jdbcType=VARCHAR},
+      KEY_CONTENT = #{keyContent,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=INTEGER},
+      ORDER_NO = #{orderNo,jdbcType=INTEGER},
+      CNOTE = #{cnote,jdbcType=VARCHAR},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where USER_TEMP_ID = #{userTempId,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="cn.xt.domain.UserTemp">
+    <id column="USER_TEMP_ID" jdbcType="VARCHAR" property="userTempId" />
+    <result column="KEY_CLASS" jdbcType="VARCHAR" property="keyClass" />
+    <result column="KEY_NAME" jdbcType="VARCHAR" property="keyName" />
+    <result column="KEY_CONTENT" jdbcType="VARCHAR" property="keyContent" />
+    <result column="STATE" jdbcType="INTEGER" property="state" />
+    <result column="ORDER_NO" jdbcType="INTEGER" property="orderNo" />
+    <result column="CNOTE" jdbcType="VARCHAR" property="cnote" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    USER_TEMP_ID, KEY_CLASS, KEY_NAME, KEY_CONTENT, STATE, ORDER_NO, CNOTE, UPDATE_BY, 
+    UPDATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="cn.xt.domain.UserTempExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_temp_b
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_temp_b
+    where USER_TEMP_ID = #{userTempId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from user_temp_b
+    where USER_TEMP_ID = #{userTempId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.xt.domain.UserTempExample">
+    delete from user_temp_b
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.xt.domain.UserTemp">
+    insert into user_temp_b (USER_TEMP_ID, KEY_CLASS, KEY_NAME, 
+      KEY_CONTENT, STATE, ORDER_NO, 
+      CNOTE, UPDATE_BY, UPDATE_TIME
+      )
+    values (#{userTempId,jdbcType=VARCHAR}, #{keyClass,jdbcType=VARCHAR}, #{keyName,jdbcType=VARCHAR}, 
+      #{keyContent,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{orderNo,jdbcType=INTEGER}, 
+      #{cnote,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.xt.domain.UserTemp">
+    insert into user_temp_b
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userTempId != null">
+        USER_TEMP_ID,
+      </if>
+      <if test="keyClass != null">
+        KEY_CLASS,
+      </if>
+      <if test="keyName != null">
+        KEY_NAME,
+      </if>
+      <if test="keyContent != null">
+        KEY_CONTENT,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+      <if test="orderNo != null">
+        ORDER_NO,
+      </if>
+      <if test="cnote != null">
+        CNOTE,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userTempId != null">
+        #{userTempId,jdbcType=VARCHAR},
+      </if>
+      <if test="keyClass != null">
+        #{keyClass,jdbcType=VARCHAR},
+      </if>
+      <if test="keyName != null">
+        #{keyName,jdbcType=VARCHAR},
+      </if>
+      <if test="keyContent != null">
+        #{keyContent,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="cnote != null">
+        #{cnote,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.xt.domain.UserTempExample" resultType="java.lang.Long">
+    select count(*) from user_temp_b
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user_temp_b
+    <set>
+      <if test="record.userTempId != null">
+        USER_TEMP_ID = #{record.userTempId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.keyClass != null">
+        KEY_CLASS = #{record.keyClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.keyName != null">
+        KEY_NAME = #{record.keyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.keyContent != null">
+        KEY_CONTENT = #{record.keyContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null">
+        STATE = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderNo != null">
+        ORDER_NO = #{record.orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.cnote != null">
+        CNOTE = #{record.cnote,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateBy != null">
+        UPDATE_BY = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_temp_b
+    set USER_TEMP_ID = #{record.userTempId,jdbcType=VARCHAR},
+      KEY_CLASS = #{record.keyClass,jdbcType=VARCHAR},
+      KEY_NAME = #{record.keyName,jdbcType=VARCHAR},
+      KEY_CONTENT = #{record.keyContent,jdbcType=VARCHAR},
+      STATE = #{record.state,jdbcType=INTEGER},
+      ORDER_NO = #{record.orderNo,jdbcType=INTEGER},
+      CNOTE = #{record.cnote,jdbcType=VARCHAR},
+      UPDATE_BY = #{record.updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.xt.domain.UserTemp">
+    update user_temp_b
+    <set>
+      <if test="keyClass != null">
+        KEY_CLASS = #{keyClass,jdbcType=VARCHAR},
+      </if>
+      <if test="keyName != null">
+        KEY_NAME = #{keyName,jdbcType=VARCHAR},
+      </if>
+      <if test="keyContent != null">
+        KEY_CONTENT = #{keyContent,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null">
+        ORDER_NO = #{orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="cnote != null">
+        CNOTE = #{cnote,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where USER_TEMP_ID = #{userTempId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.xt.domain.UserTemp">
+    update user_temp_b
+    set KEY_CLASS = #{keyClass,jdbcType=VARCHAR},
+      KEY_NAME = #{keyName,jdbcType=VARCHAR},
+      KEY_CONTENT = #{keyContent,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=INTEGER},
+      ORDER_NO = #{orderNo,jdbcType=INTEGER},
+      CNOTE = #{cnote,jdbcType=VARCHAR},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where USER_TEMP_ID = #{userTempId,jdbcType=VARCHAR}
+  </update>
+</mapper>

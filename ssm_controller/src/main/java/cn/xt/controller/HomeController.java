@@ -24,6 +24,8 @@ public class HomeController {
     public String left(@RequestParam("moduleName") String moduleName){
         if(moduleName.equals("sysadmin")){
             return "sysadmin/left";
+        }else if(moduleName.equals("cargo")){
+            return "cargo/left";
         }
         return "home/left";
     }
@@ -32,6 +34,8 @@ public class HomeController {
     public String main(@RequestParam("moduleName") String moduleName){
         if(moduleName.equals("sysadmin")){
             return "sysadmin/main";
+        }else if(moduleName.equals("cargo")){
+            return "cargo/main";
         }
         return "home/main";
     }
