@@ -1,41 +1,49 @@
 package cn.xt.domain;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
+/**
+ * 货物合同类
+ */
 public class ContractProduct {
+    private Contract contract;		//货物和合同，多对一
+    private Factory factory;		//货物和厂家，多对一
+    private Set<ExtCproduct> extCproducts;	//货物和附件，一对多
+
     private String contractProductId;
 
     private String contractId;
 
     private String factoryId;
 
-    private String factoryName;
+    private String factoryName;//冗余
 
-    private String productNo;
+    private String productNo;//货号
 
-    private String productImage;
+    private String productImage;//图片路径
 
-    private String productDesc;
+    private String productDesc;//货描
 
-    private String loadingRate;
+    private String loadingRate;//报运：装率    1/3
 
-    private Integer boxNum;
+    private Integer boxNum;//报运：箱数    100
 
-    private String packingUnit;
+    private String packingUnit;//包装单位：PCS/SETS   支/箱
 
-    private Integer cnumber;
+    private Integer cnumber;//数量                            300
 
-    private Integer outNumber;
+    private Integer outNumber;//报运：出货数量            200
 
-    private Integer finished;
+    private Integer finished;//报运：是否完成		no
 
-    private String productRequest;
+    private String productRequest;//要求
 
-    private BigDecimal price;
+    private double price;//单价
 
-    private BigDecimal amount;
+    private double amount;//总金额，冗余
 
-    private Integer orderNo;
+    private Integer orderNo;//排序号
 
     public String getContractProductId() {
         return contractProductId;
@@ -50,7 +58,7 @@ public class ContractProduct {
     }
 
     public void setContractId(String contractId) {
-        this.contractId = contractId == null ? null : contractId.trim();
+        this.contractId = contractId;
     }
 
     public String getFactoryId() {
@@ -149,19 +157,19 @@ public class ContractProduct {
         this.productRequest = productRequest == null ? null : productRequest.trim();
     }
 
-    public BigDecimal getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public BigDecimal getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
@@ -171,5 +179,55 @@ public class ContractProduct {
 
     public void setOrderNo(Integer orderNo) {
         this.orderNo = orderNo;
+    }
+
+    public Contract getContract() {
+        return contract;
+    }
+
+    public void setContract(Contract contract) {
+        this.contract = contract;
+    }
+
+    public Factory getFactory() {
+        return factory;
+    }
+
+    public void setFactory(Factory factory) {
+        this.factory = factory;
+    }
+
+    public Set<ExtCproduct> getExtCproducts() {
+        return extCproducts;
+    }
+
+    public void setExtCproducts(Set<ExtCproduct> extCproducts) {
+        this.extCproducts = extCproducts;
+    }
+
+    @Override
+    public String toString() {
+        return "ContractProduct{" +
+                "contract=" + contract +
+                ", factory=" + factory +
+                ", extCproducts=" + extCproducts +
+                ", contractProductId='" + contractProductId + '\'' +
+                ", contractId='" + contractId + '\'' +
+                ", factoryId='" + factoryId + '\'' +
+                ", factoryName='" + factoryName + '\'' +
+                ", productNo='" + productNo + '\'' +
+                ", productImage='" + productImage + '\'' +
+                ", productDesc='" + productDesc + '\'' +
+                ", loadingRate='" + loadingRate + '\'' +
+                ", boxNum=" + boxNum +
+                ", packingUnit='" + packingUnit + '\'' +
+                ", cnumber=" + cnumber +
+                ", outNumber=" + outNumber +
+                ", finished=" + finished +
+                ", productRequest='" + productRequest + '\'' +
+                ", price=" + price +
+                ", amount=" + amount +
+                ", orderNo=" + orderNo +
+                '}';
     }
 }

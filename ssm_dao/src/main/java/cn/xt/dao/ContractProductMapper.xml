@@ -20,6 +20,34 @@
     <result column="AMOUNT" jdbcType="DECIMAL" property="amount" />
     <result column="ORDER_NO" jdbcType="INTEGER" property="orderNo" />
   </resultMap>
+
+    <resultMap id="withBaseResultMap" type="cn.xt.domain.ContractProduct">
+      <id column="CONTRACT_PRODUCT_ID" jdbcType="VARCHAR" property="contractProductId" />
+      <result column="CONTRACT_ID" jdbcType="VARCHAR" property="contractId" />
+      <result column="FACTORY_ID" jdbcType="VARCHAR" property="factoryId" />
+      <result column="FACTORY_NAME" jdbcType="VARCHAR" property="factoryName" />
+      <result column="PRODUCT_NO" jdbcType="VARCHAR" property="productNo" />
+      <result column="PRODUCT_IMAGE" jdbcType="VARCHAR" property="productImage" />
+      <result column="PRODUCT_DESC" jdbcType="VARCHAR" property="productDesc" />
+      <result column="LOADING_RATE" jdbcType="VARCHAR" property="loadingRate" />
+      <result column="BOX_NUM" jdbcType="INTEGER" property="boxNum" />
+      <result column="PACKING_UNIT" jdbcType="VARCHAR" property="packingUnit" />
+      <result column="CNUMBER" jdbcType="INTEGER" property="cnumber" />
+      <result column="OUT_NUMBER" jdbcType="INTEGER" property="outNumber" />
+      <result column="FINISHED" jdbcType="INTEGER" property="finished" />
+      <result column="PRODUCT_REQUEST" jdbcType="VARCHAR" property="productRequest" />
+      <result column="PRICE" jdbcType="DECIMAL" property="price" />
+      <result column="AMOUNT" jdbcType="DECIMAL" property="amount" />
+      <result column="ORDER_NO" jdbcType="INTEGER" property="orderNo" />
+      <collection property="extCproducts" ofType="cn.xt.domain.ExtCproduct">
+        <result column="FACTORY_NAMEE" property="factoryName"></result>
+        <result column="PRODUCT_NOE" property="productNo"></result>
+        <result column="PACKING_UNITE" property="packingUnit"></result>
+        <result column="CNUMBERE" property="cnumber"></result>
+        <result column="PRICEE" property="price"></result>
+        <result column="AMOUNTE" property="amount"></result>
+      </collection>
+    </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -83,6 +111,20 @@
     PRODUCT_DESC, LOADING_RATE, BOX_NUM, PACKING_UNIT, CNUMBER, OUT_NUMBER, FINISHED, 
     PRODUCT_REQUEST, PRICE, AMOUNT, ORDER_NO
   </sql>
+  <sql id="withBase_Column_List">
+    c.CONTRACT_PRODUCT_ID,  c.CONTRACT_ID, c.FACTORY_ID, c.FACTORY_NAME, c.PRODUCT_NO, c.PRODUCT_IMAGE,
+    c.PRODUCT_DESC, c.LOADING_RATE, c.BOX_NUM, c.PACKING_UNIT, c.CNUMBER, c.OUT_NUMBER, c.FINISHED,
+    c.PRODUCT_REQUEST, c.PRICE, c.AMOUNT, c.ORDER_NO, e.FACTORY_NAME FACTORY_NAMEE, e.PRODUCT_NO PRODUCT_NOE, e.PACKING_UNIT PACKING_UNITE,
+    e.CNUMBER CNUMBERE, e.PRICE E, e.AMOUNT AMOUNTE
+  </sql>
+  <!--  /*查询厂家名称，附件*/
+    List<ContractProduct> selectByExamplewithcp(@Param("contractProductId") String contractProductId);-->
+  <select id="selectByExamplewithcp" resultMap="withBaseResultMap">
+    select
+    <include refid="withBase_Column_List" />
+     FROM CONTRACT_PRODUCT_C c LEFT JOIN ext_cproduct_c e ON c.CONTRACT_PRODUCT_ID=e.CONTRACT_PRODUCT_ID
+    WHERE c.CONTRACT_PRODUCT_ID in(select CONTRACT_PRODUCT_ID FROM CONTRACT_PRODUCT_C where  CONTRACT_ID=#{contractId})
+  </select>
   <select id="selectByExample" parameterType="cn.xt.domain.ContractProductExample" resultMap="BaseResultMap">
     select
     <if test="distinct">

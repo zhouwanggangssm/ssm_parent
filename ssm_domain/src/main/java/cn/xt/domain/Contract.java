@@ -1,46 +1,57 @@
 package cn.xt.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.validation.annotation.Validated;
+
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Set;
 
+/**
+ * 购销合同类
+ */
 public class Contract {
+    private Set<ContractProduct> contractProducts;		//合同和货物，一对多
+
     private String contractId;
 
-    private String offeror;
+    private String offeror;//收购方
 
-    private String contractNo;
+    private String contractNo;//合同号，订单号
 
-    private Date signingDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date signingDate;//签单日期
 
-    private String inputBy;
+    private String inputBy;//签单人
 
-    private String checkBy;
+    private String checkBy;//审单人
 
-    private String inspector;
+    private String inspector;//验货员
 
-    private BigDecimal totalAmount;
+    private double totalAmount;//总金额=货物的总金额+附件的总金额    冗余字段，为了进行分散计算
 
-    private String crequest;
+    private String crequest;//要求
 
-    private String customName;
+    private String customName;//客户名称
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date shipTime;//船期
 
-    private Date shipTime;
+    private Integer importNum;//重要程度
 
-    private Integer importNum;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date deliveryPeriod;//交货期限
 
-    private Date deliveryPeriod;
+    private Integer oldState;//旧的状态，报运
 
-    private Integer oldState;
+    private Integer outState;//出货状态，报运
 
-    private Integer outState;
+    private String tradeTerms;//贸易条款
 
-    private String tradeTerms;
+    private String printStyle;//打印板式，1打印一个货物2打印两个货物
 
-    private String printStyle;
+    private String remark;//备注
 
-    private String remark;
-
-    private Integer state;
+    private Integer state;//状态：0草稿 1已上报待报运
 
     private String createBy;
 
@@ -108,11 +119,11 @@ public class Contract {
         this.inspector = inspector == null ? null : inspector.trim();
     }
 
-    public BigDecimal getTotalAmount() {
+    public double getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(BigDecimal totalAmount) {
+    public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
     }
 
@@ -242,5 +253,13 @@ public class Contract {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Set<ContractProduct> getContractProducts() {
+        return contractProducts;
+    }
+
+    public void setContractProducts(Set<ContractProduct> contractProducts) {
+        this.contractProducts = contractProducts;
     }
 }

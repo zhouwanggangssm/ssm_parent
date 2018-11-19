@@ -2,32 +2,35 @@ package cn.xt.domain;
 
 import java.util.Date;
 
+/**
+ * 厂家类
+ */
 public class Factory {
     private String factoryId;
 
-    private String ctype;
+    private String ctype;//厂家类型：货物/附件
 
-    private String fullName;
+    private String fullName;//厂家全称
 
-    private String factoryName;
+    private String factoryName;//厂家简称
 
-    private String contacts;
+    private String contacts;//联系人
 
-    private String phone;
+    private String phone;//电话
 
-    private String mobile;
+    private String mobile;//手机
 
-    private String fax;
+    private String fax;//传真
 
-    private String address;
+    private String address;//地址
 
-    private String inspector;
+    private String inspector;//验货员，杰信代表
 
-    private String remark;
+    private String remark;//说明
 
-    private Integer orderNo;
+    private Integer orderNo;//排序号
 
-    private String state;
+    private String state;//状态：1正常0停用(伪删除)
 
     private String createBy;
 

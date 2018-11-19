@@ -2,32 +2,39 @@ package cn.xt.domain;
 
 import java.math.BigDecimal;
 
+/**
+ * 附件类
+ */
 public class ExtCproduct {
+    private ContractProduct contractProduct;	//附件和货物，多对一
+
+    private Factory factory;					//附件和厂家，多对一
+
     private String extCproductId;
 
     private String contractProductId;
 
     private String factoryId;
 
-    private String factoryName;
+    private String factoryName;//工厂名
 
-    private String productNo;
+    private String productNo;//产品号
 
-    private String productImage;
+    private String productImage;//图片
 
-    private String productDesc;
+    private String productDesc;//产品描述
 
-    private String packingUnit;
+    private String packingUnit;//  包装单位   PCS/SETS
 
-    private Integer cnumber;
+    private Integer cnumber;//数量
 
-    private BigDecimal price;
+    private BigDecimal price;//单价
 
-    private BigDecimal amount;
+    private BigDecimal amount;//总金额 　自动计算: 数量x单价
 
-    private String productRequest;
+    private String productRequest;//要求
 
-    private Integer orderNo;
+    private Integer orderNo;//排序号
 
     public String getExtCproductId() {
         return extCproductId;
@@ -131,5 +138,21 @@ public class ExtCproduct {
 
     public void setOrderNo(Integer orderNo) {
         this.orderNo = orderNo;
+    }
+
+    public ContractProduct getContractProduct() {
+        return contractProduct;
+    }
+
+    public void setContractProduct(ContractProduct contractProduct) {
+        this.contractProduct = contractProduct;
+    }
+
+    public Factory getFactory() {
+        return factory;
+    }
+
+    public void setFactory(Factory factory) {
+        this.factory = factory;
     }
 }

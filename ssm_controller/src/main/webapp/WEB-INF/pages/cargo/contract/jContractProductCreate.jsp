@@ -14,15 +14,15 @@
 
 <body>
 <form name="icform" method="post">
-	<input type="hidden" name="contract.id" value="${contract.id}"/>
+	<%--<input type="hidden" name="contractId" value="${o.contractId}"/>--%>
 
 <div id="menubar">
 <div id="middleMenubar">
 <div id="innerMenubar">
   <div id="navMenubar">
 <ul>
-<li id="save"><a href="#" onclick="formSubmit('contractProductAction_insert','_self');this.blur();">保存</a></li>
-<li id="back"><a href="#" onclick="history.go(-1);">返回</a></li>
+<li id="save"><a href="#" onclick="formSubmit('/cargo/contract_inserts','_self');this.blur();">保存</a></li>
+<li id="back"><a href="${ctx}/cargo/contract_list">返回</a></li>
 </ul>
   </div>
 </div>
@@ -40,10 +40,16 @@
 	        <tr>
 	            <td class="columnTitle">生产厂家：</td>
 	            <td class="tableContent">
-	            	 <s:select name="factory.id" list="factoryList" 
+                    <select name="factoryId" onchange="setFactoryName(this.options[this.selectedIndex].text);">
+                        <option value="0">--请选择--</option>
+                        <c:forEach items="${factoryList}" var="factory">
+                            <option value="${factory.factoryId}">${factory.factoryName}</option>
+                        </c:forEach>
+                    </select>
+	            	<%-- <s:select name="factory.id" list="factoryList"
 	            				onchange="setFactoryName(this.options[this.selectedIndex].text);"
 	            				listKey="id" listValue="factoryName" 
-	            				headerKey="" headerValue="--请选择--"/>
+	            				headerKey="" headerValue="--请选择--"/>--%>
 	            				
 	            	<input type="hidden" id="factoryName" name="factoryName" value=""/>
 	            </td>
@@ -60,7 +66,7 @@
 	            <td class="columnTitle">包装单位：</td>
 	            <td class="tableContentAuto">
 	            	<input type="radio" name="packingUnit" value="PCS" class="input">只
-	            	<input type="radio" name="packingUnit" value="SETS" class="input">套
+	            	<input type="radio" name="packingUnit" value="SETS" class="input" checked="checked">套
 	            </td>
 	        </tr>		
 	        <tr>
@@ -109,10 +115,11 @@
 	</tr>
 	</thead>
 	<tbody class="tableBody" >
-	${links }
+	<%--${links }--%>
  	<c:forEach items="${results}" var="o" varStatus="status">
-	<tr class="odd" onmouseover="this.className='highlight'" onmouseout="this.className='odd'" >
-		<td><input type="checkbox" name="id" value="${o.id}"/></td>
+	<tr <c:if test="${o.productNo== null}">hidden</c:if> class="odd" onmouseover="this.className='highlight'" onmouseout="this.className='odd'" >
+		<td><input type="checkbox" name="contractProductId" value="${o.contractProductId}"/></td>
+		<input type="hidden" name="contractId" value="${o.contractId}"/>
 		<td>${status.index+1}</td>
 		<td>${o.factoryName}</td>
 		<td>${o.productNo}</td>
@@ -123,9 +130,9 @@
 		<td>${o.price}</td>
 		<td>${o.amount}</td>
 		<td>
-			<a href="contractProductAction_toupdate.action?id=${o.id}">[修改]</a>
-			<a href="contractProductAction_delete.action?id=${o.id}&contract.id=${o.contract.id}">[删除]</a>
-			<a href="extCproductAction_tocreate.action?contractProduct.contract.id=${o.contract.id}&contractProduct.id=${o.id}">[附件]</a>
+			<a href="contractProductAction_toupdate.action?id=${o.contractProductId}">[修改]</a>
+			<a href="/cargo/contractProduct_deletes?contractProductId=${o.contractProductId}&contractId=${o.contractId}">[删除]</a>
+			<a href="extCproductAction_tocreate.action?contractProduct.contract.id=${o.contract.contractProductId}&contractProduct.id=${o.contractProductId}">[附件]</a>
 		</td>
 	</tr>
 	

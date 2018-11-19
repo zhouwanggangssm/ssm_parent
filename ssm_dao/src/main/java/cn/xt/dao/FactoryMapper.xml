@@ -415,4 +415,8 @@
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
     where FACTORY_ID = #{factoryId,jdbcType=VARCHAR}
   </update>
+  <!-- List<Factory> selectByExamplewithf(String ctype,String state); 查询厂家列表-->
+  <select id="selectByExamplewithf" resultType="factory">
+    SELECT FACTORY_ID,FACTORY_NAME from factory_c WHERE CTYPE=#{ctype} AND STATE=#{state}
+  </select>
 </mapper>

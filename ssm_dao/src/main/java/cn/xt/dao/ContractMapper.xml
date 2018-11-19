@@ -27,6 +27,39 @@
     <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
     <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
+
+  <resultMap id="withBaseResultMap" type="cn.xt.domain.Contract">
+    <id column="CONTRACT_ID" jdbcType="VARCHAR" property="contractId" />
+    <result column="OFFEROR" jdbcType="VARCHAR" property="offeror" />
+    <result column="CONTRACT_NO" jdbcType="VARCHAR" property="contractNo" />
+    <result column="SIGNING_DATE" jdbcType="TIMESTAMP" property="signingDate" />
+    <result column="INPUT_BY" jdbcType="VARCHAR" property="inputBy" />
+    <result column="CHECK_BY" jdbcType="VARCHAR" property="checkBy" />
+    <result column="INSPECTOR" jdbcType="VARCHAR" property="inspector" />
+    <result column="TOTAL_AMOUNT" jdbcType="DECIMAL" property="totalAmount" />
+    <result column="CREQUEST" jdbcType="VARCHAR" property="crequest" />
+    <result column="CUSTOM_NAME" jdbcType="VARCHAR" property="customName" />
+    <result column="SHIP_TIME" jdbcType="TIMESTAMP" property="shipTime" />
+    <result column="IMPORT_NUM" jdbcType="INTEGER" property="importNum" />
+    <result column="DELIVERY_PERIOD" jdbcType="TIMESTAMP" property="deliveryPeriod" />
+    <result column="OLD_STATE" jdbcType="INTEGER" property="oldState" />
+    <result column="OUT_STATE" jdbcType="INTEGER" property="outState" />
+    <result column="TRADE_TERMS" jdbcType="VARCHAR" property="tradeTerms" />
+    <result column="PRINT_STYLE" jdbcType="CHAR" property="printStyle" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="STATE" jdbcType="INTEGER" property="state" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_DEPT" jdbcType="VARCHAR" property="createDept" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+
+    <collection property="contractProducts" ofType="cn.xt.domain.ContractProduct">
+      <id column="CONTRACT_PRODUCT_ID" property="contractProductId"></id>
+      <result column="FACTORY_NAME" property="factoryName"></result>
+      <result column="AMOUNT" property="amount"></result>
+    </collection>
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -91,6 +124,36 @@
     TRADE_TERMS, PRINT_STYLE, REMARK, STATE, CREATE_BY, CREATE_DEPT, CREATE_TIME, UPDATE_BY, 
     UPDATE_TIME
   </sql>
+  <sql id="withBase_Column_List">
+    c.CONTRACT_ID, OFFEROR, CONTRACT_NO, SIGNING_DATE, INPUT_BY, CHECK_BY, INSPECTOR, c.TOTAL_AMOUNT,
+    CREQUEST, CUSTOM_NAME, SHIP_TIME, IMPORT_NUM, DELIVERY_PERIOD, OLD_STATE, OUT_STATE,
+    TRADE_TERMS, PRINT_STYLE, REMARK, STATE, CREATE_BY, CREATE_DEPT, CREATE_TIME, UPDATE_BY,
+    UPDATE_TIME, p.CONTRACT_PRODUCT_ID, p.FACTORY_NAME, p.AMOUNT
+  </sql>
+  <!--/*查询所有*/
+    List<Contract> selectByExamplewithcp(ContractExample example);-->
+  <select id="selectByExamplewithcp" resultMap="withBaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="withBase_Column_List" />
+    from CONTRACT_C c LEFT JOIN CONTRACT_PRODUCT_C p ON c.CONTRACT_ID=p.CONTRACT_ID
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+<!--  /*根据id查询信息*/
+  Contract selectByPrimaryKeywithcp(String contractId);-->
+  <select id="selectByPrimaryKeywithcp" parameterType="java.lang.String" resultMap="withBaseResultMap">
+    select
+    <include refid="withBase_Column_List" />
+    from CONTRACT_C c LEFT JOIN CONTRACT_PRODUCT_C p ON c.CONTRACT_ID=p.CONTRACT_ID
+    where c.CONTRACT_ID = #{contractId,jdbcType=VARCHAR}
+  </select>
   <select id="selectByExample" parameterType="cn.xt.domain.ContractExample" resultMap="BaseResultMap">
     select
     <if test="distinct">

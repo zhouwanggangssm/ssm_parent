@@ -27,4 +27,7 @@ public interface FactoryMapper {
     int updateByPrimaryKeySelective(Factory record);
 
     int updateByPrimaryKey(Factory record);
+
+    /*查询厂家列表*/
+    List<Factory> selectByExamplewithf(@Param("ctype") String ctype,@Param("state") String state);
 }

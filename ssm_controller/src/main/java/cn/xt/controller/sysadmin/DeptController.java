@@ -19,8 +19,8 @@ public class DeptController {
 
     @RequestMapping("/dept_list")
     public String list(Map<String,Object>map){
-        List<Dept> deptByPage = deptService.findDeptByPage();
-        map.put("depts",deptByPage);
+      /*  List<Dept> deptByPage = deptService.findDeptByPage();
+        map.put("depts",deptByPage);*/
         return  "sysadmin/dept/jDeptList";
     }
 }
