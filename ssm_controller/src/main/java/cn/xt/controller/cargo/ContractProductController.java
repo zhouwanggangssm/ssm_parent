@@ -53,8 +53,36 @@ public class ContractProductController {
      * @return
      */
     @RequestMapping("/contractProduct_deletes")
-    public String deleteCP(@RequestParam("contractProductId") String contractProductId,@RequestParam("contractId") String contractId){
+    public String deleteCP(ContractProduct contractProduct) throws Exception {
+        contractProductService.delete(contractProduct);
+        return "redirect:/cargo/contractProduct_tocreate/"+contractProduct.getContractId();
+    }
 
-        return "redirect:/cargo/contractProduct_tocreate/"+contractId;
+    /**
+     * 修改页面
+     * @param contractProductId
+     * @param model
+     * @return
+     */
+    @RequestMapping("/contractProduct_toupdates")
+    public String toupdateUI(@RequestParam("contractProductId") String contractProductId,Model model){
+        //修改页面回显的数据
+        ContractProduct contractProduct = contractProductService.getContractProductById(contractProductId);
+        model.addAttribute("contractProduct",contractProduct);
+
+        //厂家下拉列表
+        List<Factory> list = contractProductService.factoryList("货物", "1");
+        model.addAttribute("factoryList",list);
+        return "cargo/contract/jContractProductUpdate";
+    }
+
+    /**
+     * 修改货物信息
+     * @return
+     */
+    @RequestMapping(value = "/contractProduct_updates",method = RequestMethod.PUT)
+    public String updates(ContractProduct contractProduct){
+        contractProductService.update(contractProduct);
+        return "redirect:/cargo/contractProduct_tocreate/"+contractProduct.getContractId();
     }
 }

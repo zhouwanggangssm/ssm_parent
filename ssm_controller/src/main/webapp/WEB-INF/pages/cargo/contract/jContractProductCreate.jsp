@@ -130,9 +130,9 @@
 		<td>${o.price}</td>
 		<td>${o.amount}</td>
 		<td>
-			<a href="contractProductAction_toupdate.action?id=${o.contractProductId}">[修改]</a>
+			<a href="/cargo/contractProduct_toupdates?contractProductId=${o.contractProductId}">[修改]</a>
 			<a href="/cargo/contractProduct_deletes?contractProductId=${o.contractProductId}&contractId=${o.contractId}">[删除]</a>
-			<a href="extCproductAction_tocreate.action?contractProduct.contract.id=${o.contract.contractProductId}&contractProduct.id=${o.contractProductId}">[附件]</a>
+			<a href="/cargo/extCproduct_tocreates?contractProductId=${o.contractProductId}&contractId=${o.contractId}">[附件]</a>
 		</td>
 	</tr>
 	

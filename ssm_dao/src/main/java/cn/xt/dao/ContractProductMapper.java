@@ -21,6 +21,12 @@ public interface ContractProductMapper {
     /*查询厂家名称，附件*/
     List<ContractProduct> selectByExamplewithcp(@Param("contractId") String contractId);
 
+    /*根据货物id查询附件id信息子查询*/
+    ContractProduct selectByPrimaryKeywithcp(@Param("contractProductId") String contractProductId);
+
+    /*根据货物id查询附件id信息*/
+    ContractProduct selectByPrimaryKeywithExport(@Param("contractProductId") String contractProductId);
+
     ContractProduct selectByPrimaryKey(String contractProductId);
 
     int updateByExampleSelective(@Param("record") ContractProduct record, @Param("example") ContractProductExample example);

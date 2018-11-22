@@ -14,7 +14,7 @@
 <div id="innerMenubar">
   <div id="navMenubar">
 <ul>
-<li id="save"><a href="#" onclick="formSubmit('outProductAction_print','_self');this.blur();">打印</a></li>
+<li id="save"><a href="#" onclick="formSubmit('/cargo/outProduct_print','_self');this.blur();">打印</a></li>
 </ul>
   </div>
 </div>
@@ -33,8 +33,8 @@
 	            <td class="columnTitle">船期：</td>
 	            <td class="tableContent">
 					<input type="text" style="width:90px;" name="inputDate"
-	            	 value="2015-07"
-	             	onclick="WdatePicker({el:this,isShowOthers:true,dateFmt:'yyyy-MM'});"/>
+	            	 value="2015-01"
+	             	onclick="WdatePicker({el:this,isShowOthers:true,dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 				</td>
 	        </tr>		
 		</table>

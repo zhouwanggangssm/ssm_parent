@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class ContractService {
     @Autowired
-   ContractMapper contractMapper;
+    private ContractMapper contractMapper;
 
     /**
      * 查询所有购销合同信息

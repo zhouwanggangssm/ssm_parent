@@ -28,9 +28,9 @@ public class ExtCproduct {
 
     private Integer cnumber;//数量
 
-    private BigDecimal price;//单价
+    private double price;//单价
 
-    private BigDecimal amount;//总金额 　自动计算: 数量x单价
+    private double amount;//总金额 　自动计算: 数量x单价
 
     private String productRequest;//要求
 
@@ -108,19 +108,19 @@ public class ExtCproduct {
         this.cnumber = cnumber;
     }
 
-    public BigDecimal getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public BigDecimal getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

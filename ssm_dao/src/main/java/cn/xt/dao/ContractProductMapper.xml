@@ -40,6 +40,7 @@
       <result column="AMOUNT" jdbcType="DECIMAL" property="amount" />
       <result column="ORDER_NO" jdbcType="INTEGER" property="orderNo" />
       <collection property="extCproducts" ofType="cn.xt.domain.ExtCproduct">
+        <id column="EXT_CPRODUCT_IDE" property="extCproductId"></id>
         <result column="FACTORY_NAMEE" property="factoryName"></result>
         <result column="PRODUCT_NOE" property="productNo"></result>
         <result column="PACKING_UNITE" property="packingUnit"></result>
@@ -114,8 +115,8 @@
   <sql id="withBase_Column_List">
     c.CONTRACT_PRODUCT_ID,  c.CONTRACT_ID, c.FACTORY_ID, c.FACTORY_NAME, c.PRODUCT_NO, c.PRODUCT_IMAGE,
     c.PRODUCT_DESC, c.LOADING_RATE, c.BOX_NUM, c.PACKING_UNIT, c.CNUMBER, c.OUT_NUMBER, c.FINISHED,
-    c.PRODUCT_REQUEST, c.PRICE, c.AMOUNT, c.ORDER_NO, e.FACTORY_NAME FACTORY_NAMEE, e.PRODUCT_NO PRODUCT_NOE, e.PACKING_UNIT PACKING_UNITE,
-    e.CNUMBER CNUMBERE, e.PRICE E, e.AMOUNT AMOUNTE
+    c.PRODUCT_REQUEST, c.PRICE, c.AMOUNT, c.ORDER_NO,e.EXT_CPRODUCT_ID EXT_CPRODUCT_IDE, e.FACTORY_NAME FACTORY_NAMEE,
+    e.PRODUCT_NO PRODUCT_NOE, e.PACKING_UNIT PACKING_UNITE, e.CNUMBER CNUMBERE, e.PRICE PRICEE, e.AMOUNT AMOUNTE
   </sql>
   <!--  /*查询厂家名称，附件*/
     List<ContractProduct> selectByExamplewithcp(@Param("contractProductId") String contractProductId);-->
@@ -124,6 +125,23 @@
     <include refid="withBase_Column_List" />
      FROM CONTRACT_PRODUCT_C c LEFT JOIN ext_cproduct_c e ON c.CONTRACT_PRODUCT_ID=e.CONTRACT_PRODUCT_ID
     WHERE c.CONTRACT_PRODUCT_ID in(select CONTRACT_PRODUCT_ID FROM CONTRACT_PRODUCT_C where  CONTRACT_ID=#{contractId})
+  </select>
+  <!--/*根据货物id查询附件信息 子查询*/
+    ContractProduct selectByPrimaryKeywithcp(String contractProductId);-->
+  <select id="selectByPrimaryKeywithcp" resultMap="withBaseResultMap">
+    select
+    <include refid="withBase_Column_List" />
+    FROM CONTRACT_PRODUCT_C c LEFT JOIN ext_cproduct_c e ON c.CONTRACT_PRODUCT_ID=e.CONTRACT_PRODUCT_ID
+    WHERE e.EXT_CPRODUCT_ID = (select EXT_CPRODUCT_ID FROM ext_cproduct_c where  CONTRACT_PRODUCT_ID=#{contractProductId,jdbcType=VARCHAR})
+  </select>
+
+  <!-- /*根据货物id查询附件id信息*/
+    ContractProduct selectByPrimaryKeywithExport(@Param("contractProductId") String contractProductId);-->
+  <select id="selectByPrimaryKeywithExport" resultMap="withBaseResultMap">
+    select
+    <include refid="withBase_Column_List" />
+    FROM CONTRACT_PRODUCT_C c LEFT JOIN ext_cproduct_c e ON c.CONTRACT_PRODUCT_ID=e.CONTRACT_PRODUCT_ID
+    where c.CONTRACT_PRODUCT_ID = #{contractProductId,jdbcType=VARCHAR}
   </select>
   <select id="selectByExample" parameterType="cn.xt.domain.ContractProductExample" resultMap="BaseResultMap">
     select

@@ -77,6 +77,8 @@
     EXT_EPRODUCT_ID, FACTORY_ID, EXPORT_PRODUCT_ID, PRODUCT_NO, PRODUCT_IMAGE, PRODUCT_DESC, 
     CNUMBER, PACKING_UNIT, PRICE, AMOUNT, PRODUCT_REQUEST, ORDER_NO
   </sql>
+
+
   <select id="selectByExample" parameterType="cn.xt.domain.ExtEproductExample" resultMap="BaseResultMap">
     select
     <if test="distinct">

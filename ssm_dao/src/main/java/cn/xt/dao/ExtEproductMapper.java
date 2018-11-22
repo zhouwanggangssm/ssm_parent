@@ -5,6 +5,9 @@ import cn.xt.domain.ExtEproductExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
+/**
+ * 附件mapper
+ */
 public interface ExtEproductMapper {
     long countByExample(ExtEproductExample example);
 
@@ -17,6 +20,9 @@ public interface ExtEproductMapper {
     int insertSelective(ExtEproduct record);
 
     List<ExtEproduct> selectByExample(ExtEproductExample example);
+
+    /*查询附件信息*/
+    List<ExtEproduct> selectByExamplewithE(ExtEproductExample example);
 
     ExtEproduct selectByPrimaryKey(String extEproductId);
 

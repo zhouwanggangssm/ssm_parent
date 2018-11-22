@@ -111,6 +111,7 @@ public class ContractController {
             for (String i : idss){
                 list.add(i);
             }
+            //批量删除
             contractService.deleteBatch(list);
         }else{
             //单个删除
