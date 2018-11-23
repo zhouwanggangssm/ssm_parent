@@ -30,6 +30,12 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>4.1.4</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.mybatis.generator/mybatis-generator-core mybatis逆向工程-->
         <dependency>
             <groupId>org.mybatis.generator</groupId>
@@ -58,6 +64,8 @@
             <artifactId>httpclient</artifactId>
             <version>4.4</version>
         </dependency>
+
+
         <!-- java ee -->
         <dependency>
             <groupId>javax</groupId>

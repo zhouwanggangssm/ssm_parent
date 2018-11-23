@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface ContractMapper {
-    long countByExample(ContractExample example);
+    int countByExample(ContractExample example);
 
     int deleteByExample(ContractExample example);
 
@@ -18,8 +18,8 @@ public interface ContractMapper {
     /*添加*/
     int insertSelective(Contract record);
 
-    /*查询所有*/
-    List<Contract> selectByExamplewithcp(ContractExample example);
+    /*查询所有 跟分页*/
+    List<Contract> selectByExamplewithcp();
 
     /*根据id查询信息*/
     Contract selectByPrimaryKeywithcp(String contractId);

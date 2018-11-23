@@ -108,10 +108,12 @@ public class ContractProductService {
         //加载购销合同对象
         Contract contract = contractMapper.selectByPrimaryKey(contractProduct.getContractId());
 
-        for (ExtCproduct extCproduct : extCproducts) {
-            contract.setTotalAmount(contract.getTotalAmount()-extCproduct.getAmount());
+        //遍历附件列表，并修改购销合同总金额
+        for(ExtCproduct e : extCproducts){
+            contract.setTotalAmount(contract.getTotalAmount()-e.getAmount());
         }
 
+        //购销合同总金额-货物总金额
         contract.setTotalAmount(contract.getTotalAmount()-contractProduct1.getAmount());
 
         //更新购销合同
@@ -123,6 +125,15 @@ public class ContractProductService {
             //删除
         contractProductMapper.deleteByPrimaryKey(contractProduct.getContractProductId());
 
+    }
+
+    /**
+     * 根据船期查询所有信息
+     * @return
+     */
+    public List<ContractProduct> getShipTimeList(String shipTime){
+        List<ContractProduct> contractProducts = contractProductMapper.selectByExamplewithShipTime(shipTime);
+        return contractProducts;
     }
 
     /**

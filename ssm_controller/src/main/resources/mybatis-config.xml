@@ -9,4 +9,9 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
     <typeAliases>
         <package name="cn.xt.domain"/>
     </typeAliases>
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageHelper">
+            <property name="dialect" value="mysql"/>
+        </plugin>
+    </plugins>
 </configuration>

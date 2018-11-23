@@ -49,6 +49,33 @@
         <result column="AMOUNTE" property="amount"></result>
       </collection>
     </resultMap>
+
+  <resultMap id="ssBaseResultMap" type="cn.xt.domain.ContractProduct">
+    <id column="CONTRACT_PRODUCT_ID" jdbcType="VARCHAR" property="contractProductId" />
+    <result column="CONTRACT_ID" jdbcType="VARCHAR" property="contractId" />
+    <result column="FACTORY_ID" jdbcType="VARCHAR" property="factoryId" />
+    <result column="FACTORY_NAME" jdbcType="VARCHAR" property="factoryName" />
+    <result column="PRODUCT_NO" jdbcType="VARCHAR" property="productNo" />
+    <result column="PRODUCT_IMAGE" jdbcType="VARCHAR" property="productImage" />
+    <result column="PRODUCT_DESC" jdbcType="VARCHAR" property="productDesc" />
+    <result column="LOADING_RATE" jdbcType="VARCHAR" property="loadingRate" />
+    <result column="BOX_NUM" jdbcType="INTEGER" property="boxNum" />
+    <result column="PACKING_UNIT" jdbcType="VARCHAR" property="packingUnit" />
+    <result column="CNUMBER" jdbcType="INTEGER" property="cnumber" />
+    <result column="OUT_NUMBER" jdbcType="INTEGER" property="outNumber" />
+    <result column="FINISHED" jdbcType="INTEGER" property="finished" />
+    <result column="PRODUCT_REQUEST" jdbcType="VARCHAR" property="productRequest" />
+    <result column="PRICE" jdbcType="DECIMAL" property="price" />
+    <result column="AMOUNT" jdbcType="DECIMAL" property="amount" />
+    <result column="ORDER_NO" jdbcType="INTEGER" property="orderNo" />
+    <association property="contract" javaType="Contract">
+      <result column="CONTRACT_NO" property="contractNo"></result>
+      <result column="SHIP_TIME" property="shipTime"></result>
+      <result column="DELIVERY_PERIOD" property="deliveryPeriod"></result>
+      <result column="CUSTOM_NAME" property="customName"></result>
+      <result column="TRADE_TERMS" property="tradeTerms"></result>
+    </association>
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -108,15 +135,23 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    CONTRACT_PRODUCT_ID, CONTRACT_ID, FACTORY_ID, FACTORY_NAME, PRODUCT_NO, PRODUCT_IMAGE, 
-    PRODUCT_DESC, LOADING_RATE, BOX_NUM, PACKING_UNIT, CNUMBER, OUT_NUMBER, FINISHED, 
-    PRODUCT_REQUEST, PRICE, AMOUNT, ORDER_NO
-  </sql>
+  CONTRACT_PRODUCT_ID, CONTRACT_ID, FACTORY_ID, FACTORY_NAME, PRODUCT_NO, PRODUCT_IMAGE,
+  PRODUCT_DESC, LOADING_RATE, BOX_NUM, PACKING_UNIT, CNUMBER, OUT_NUMBER, FINISHED,
+  PRODUCT_REQUEST, PRICE, AMOUNT, ORDER_NO
+</sql>
   <sql id="withBase_Column_List">
     c.CONTRACT_PRODUCT_ID,  c.CONTRACT_ID, c.FACTORY_ID, c.FACTORY_NAME, c.PRODUCT_NO, c.PRODUCT_IMAGE,
     c.PRODUCT_DESC, c.LOADING_RATE, c.BOX_NUM, c.PACKING_UNIT, c.CNUMBER, c.OUT_NUMBER, c.FINISHED,
     c.PRODUCT_REQUEST, c.PRICE, c.AMOUNT, c.ORDER_NO,e.EXT_CPRODUCT_ID EXT_CPRODUCT_IDE, e.FACTORY_NAME FACTORY_NAMEE,
     e.PRODUCT_NO PRODUCT_NOE, e.PACKING_UNIT PACKING_UNITE, e.CNUMBER CNUMBERE, e.PRICE PRICEE, e.AMOUNT AMOUNTE
+  </sql>
+
+  <sql id="ssBase_Column_List">
+    c.CONTRACT_PRODUCT_ID, c.CONTRACT_ID, c.FACTORY_ID, c.FACTORY_NAME, c.PRODUCT_NO, c.PRODUCT_IMAGE,
+    c.PRODUCT_DESC, c.LOADING_RATE, c.BOX_NUM, c.PACKING_UNIT, c.CNUMBER, c.OUT_NUMBER, c.FINISHED,
+    c.PRODUCT_REQUEST, c.PRICE, c.AMOUNT, c.ORDER_NO,s.CONTRACT_NO, s.SHIP_TIME, s.DELIVERY_PERIOD,
+    s.CUSTOM_NAME, s.TRADE_TERMS
+
   </sql>
   <!--  /*查询厂家名称，附件*/
     List<ContractProduct> selectByExamplewithcp(@Param("contractProductId") String contractProductId);-->
@@ -133,6 +168,20 @@
     <include refid="withBase_Column_List" />
     FROM CONTRACT_PRODUCT_C c LEFT JOIN ext_cproduct_c e ON c.CONTRACT_PRODUCT_ID=e.CONTRACT_PRODUCT_ID
     WHERE e.EXT_CPRODUCT_ID = (select EXT_CPRODUCT_ID FROM ext_cproduct_c where  CONTRACT_PRODUCT_ID=#{contractProductId,jdbcType=VARCHAR})
+  </select>
+
+<!--  /*根据购销合同船期，查询货物，购销合同。打印*/
+  List<ContractProduct> selectByExamplewithShipTime(@Param("shipTime") String shipTime);-->
+  <select id="selectByExamplewithShipTime" resultMap="ssBaseResultMap">
+    select
+    <include refid="ssBase_Column_List" />
+     from CONTRACT_PRODUCT_C c,CONTRACT_c s
+    <where>
+      c.CONTRACT_ID=s.CONTRACT_ID AND
+      <if test="shipTime != null">
+        date_format(s.SHIP_TIME,'%Y-%m')=#{shipTime}
+      </if>
+    </where>
   </select>
 
   <!-- /*根据货物id查询附件id信息*/

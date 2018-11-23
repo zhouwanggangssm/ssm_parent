@@ -19,8 +19,16 @@ public class ContractService {
      * @return
      */
     public List<Contract> findpage(){
-         List<Contract> list = contractMapper.selectByExamplewithcp(null);
+         List<Contract> list = contractMapper.selectByExamplewithcp();
         return list;
+    }
+
+    /**
+     * 得到总行数
+     * @return
+     */
+    public int getContractCount(){
+         return contractMapper.countByExample(null);
     }
 
     /**

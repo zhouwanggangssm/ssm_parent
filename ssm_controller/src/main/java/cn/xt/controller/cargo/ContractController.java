@@ -2,6 +2,9 @@ package cn.xt.controller.cargo;
 
 import cn.xt.domain.Contract;
 import cn.xt.service.ContractService;
+import cn.xt.utils.SysConstant;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,21 +17,32 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+
 @Controller
 @RequestMapping("/cargo")
 public class ContractController {
     @Autowired
-    ContractService contractService;
+    private ContractService contractService;
 
     /**
-     * 查询所有的购销合同
+     * 查询所有的购销合同,分页查询
      * @param model
      * @return
      */
     @RequestMapping("/contract_list")
-    public String list(Model model){
+    public String list(@RequestParam(value = "pageIndex",required = false,defaultValue = "1") int pageIndex,
+                       Model model){
+        //使用分页的插件 pageHelper
+        PageHelper.startPage(pageIndex, SysConstant.PAGE_SIZE);
+        //传入当前页，每页显示10条
         List<Contract> list = contractService.findpage();
-        model.addAttribute("results",list);
+        //把查出来的数据放进pageInfo
+        PageInfo pageInfo = new PageInfo(list);
+
+        model.addAttribute("results",pageInfo.getList());//数据
+        model.addAttribute("totalPageCount",pageInfo.getPages());//总页数
+        model.addAttribute("totalCount",pageInfo.getTotal()); //总记录数
+        model.addAttribute("currentPageNo",pageIndex);//当前页
         return "cargo/contract/jContractList";
     }
 
@@ -65,7 +79,7 @@ public class ContractController {
         contract.setContractId(uuid);
         //总金额
         //创建时间
-        contract.setCreateTime(new Date());
+       contract.setCreateTime(new Date());
         contract.setUpdateTime(new Date());
         contract.setTotalAmount(0d);
         contract.setState(0); //0草稿 1已上报 2已报运

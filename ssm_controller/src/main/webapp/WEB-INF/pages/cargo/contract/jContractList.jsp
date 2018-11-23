@@ -9,19 +9,20 @@
 <body>
 <form name="icform" method="post">
 <input type="hidden" name="_method" value="DELETE">
+	<input type="hidden" name="pageIndex" value="1"/>
 <div id="menubar">
 <div id="middleMenubar">
 <div id="innerMenubar">
   <div id="navMenubar">
-<ul>
-<li id="view"><a href="#" onclick="formSubmit('/cargo/contract_toview','_self');this.blur();">查看</a></li>
-<li id="new"><a href="#" onclick="formSubmit('/cargo/contract_tocreate','_self');this.blur();">新增</a></li>
-<li id="update"><a href="#" onclick="formSubmit('/cargo/contract_toupdateUI','_self');this.blur();">修改</a></li>
-<li id="delete"><a href="#" onclick="formSubmit('/cargo/contract_delete','_self');this.blur();">删除</a></li>
-<li id="new"><a href="#" onclick="formSubmit('/cargo/contract_submit','_self');this.blur();">提交</a></li>
-<li id="new"><a href="#" onclick="formSubmit('/cargo/contract_cancel','_self');this.blur();">取消</a></li>
-<li id="new"><a href="#" onclick="formSubmit('/cargo/contract_print','_self');this.blur();">打印</a></li>
-</ul>
+	<ul>
+		<li id="view"><a href="#" onclick="formSubmit('/cargo/contract_toview','_self');this.blur();">查看</a></li>
+		<li id="new"><a href="#" onclick="formSubmit('/cargo/contract_tocreate','_self');this.blur();">新增</a></li>
+		<li id="update"><a href="#" onclick="formSubmit('/cargo/contract_toupdateUI','_self');this.blur();">修改</a></li>
+		<li id="delete"><a href="#" onclick="formSubmit('/cargo/contract_delete','_self');this.blur();">删除</a></li>
+		<li id="new"><a href="#" onclick="formSubmit('/cargo/contract_submit','_self');this.blur();">提交</a></li>
+		<li id="new"><a href="#" onclick="formSubmit('/cargo/contract_cancel','_self');this.blur();">取消</a></li>
+		<li id="new"><a href="#" onclick="formSubmit('/cargo/contract_print','_self');this.blur();">打印</a></li>
+	</ul>
   </div>
 </div>
 </div>
@@ -98,8 +99,14 @@
 	
 	</tbody>
 </table>
+
 </div>
- 
+	<input type="hidden" id="totalPageCount" value="${totalPageCount}"/>
+	<c:import url="../../rollpage.jsp">
+		<c:param name="totalCount" value="${totalCount}"/>
+		<c:param name="currentPageNo" value="${currentPageNo}"/>
+		<c:param name="totalPageCount" value="${totalPageCount}"/>
+	</c:import>
 </div>
  
  

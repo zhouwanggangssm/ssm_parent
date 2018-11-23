@@ -21,6 +21,9 @@ public interface ContractProductMapper {
     /*查询厂家名称，附件*/
     List<ContractProduct> selectByExamplewithcp(@Param("contractId") String contractId);
 
+    /*根据购销合同船期，查询货物，购销合同。打印*/
+    List<ContractProduct> selectByExamplewithShipTime(@Param("shipTime") String shipTime);
+
     /*根据货物id查询附件id信息子查询*/
     ContractProduct selectByPrimaryKeywithcp(@Param("contractProductId") String contractProductId);
 

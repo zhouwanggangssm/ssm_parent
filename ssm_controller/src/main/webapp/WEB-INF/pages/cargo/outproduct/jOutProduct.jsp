@@ -34,7 +34,7 @@
 	            <td class="tableContent">
 					<input type="text" style="width:90px;" name="inputDate"
 	            	 value="2015-01"
-	             	onclick="WdatePicker({el:this,isShowOthers:true,dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
+	             	onclick="WdatePicker({el:this,isShowOthers:true,dateFmt:'yyyy-MM'});"/>
 				</td>
 	        </tr>		
 		</table>

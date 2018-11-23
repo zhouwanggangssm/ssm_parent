@@ -13,6 +13,8 @@ import java.util.Set;
 public class Contract {
     private Set<ContractProduct> contractProducts;		//合同和货物，一对多
 
+    private String contractProductId;
+
     private String contractId;
 
     private String offeror;//收购方
@@ -56,11 +58,11 @@ public class Contract {
     private String createBy;
 
     private String createDept;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createTime;
 
     private String updateBy;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date updateTime;
 
     public String getContractId() {
