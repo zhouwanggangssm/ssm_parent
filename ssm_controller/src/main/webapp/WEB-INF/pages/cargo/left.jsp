@@ -25,8 +25,8 @@
 			<ul>
 				<li><a href="${ctx}/cargo/contract_list" onclick="linkHighlighted(this)" target="main" id="aa_1">购销合同</a></li>
 				<li><a href="${ctx}/cargo/outProduct_toedit" onclick="linkHighlighted(this)" target="main" id="aa_1">出货表</a></li>
-				<li><a href="${ctx}/cargo/export/exportAction_contractList" onclick="linkHighlighted(this)" target="main" id="aa_1">合同查询</a></li>
-				<li><a href="${ctx}/cargo/export/exportAction_list.action" onclick="linkHighlighted(this)" target="main" id="aa_1">出口报运</a></li>
+				<li><a href="${ctx}/cargo/export_List" onclick="linkHighlighted(this)" target="main" id="aa_1">出口报运</a></li>
+				<li><a href="${ctx}/cargo/export_contractlist" onclick="linkHighlighted(this)" target="main" id="aa_1">合同管理</a></li>
 			</ul>
 			<%-- <%@include file="../leftmenu.jsp" %> --%>
         </div>

@@ -7,16 +7,16 @@
 </head>
 
 <body>
-<form name="icform" method="post">
-    
+<form name="icform">
+	<input type="hidden" name="pageIndex" value="1"/>
 <div id="menubar">
 <div id="middleMenubar">
 <div id="innerMenubar">
   <div id="navMenubar">
 <ul>
-<li id="view"><a href="#" onclick="formSubmit('${ctx}/cargo/contractAction_toview','_self');this.blur();">查看</a></li>
+<li id="view"><a href="#" onclick="formSubmit('${ctx}/cargo/contract_toviews','_self');this.blur();">查看</a></li>
 <li id="print"><a href="#" onclick="formSubmit('${ctx}/cargo/contractAction_print','_self');this.blur();">打印</a></li>
-<li id="new"><a href="#" onclick="formSubmit('${ctx}/cargo/exportAction_tocreate','_self');this.blur();">报运</a></li>
+<li id="new"><a href="#" onclick="formSubmit('${ctx}/cargo/export_tocreate','_self');this.blur();">报运</a></li>
 </ul>
   </div>
 </div>
@@ -33,7 +33,7 @@
 <table id="ec_table" class="tableRegion" width="98%" >
 	<thead>
 	<tr>
-		<td class="tableHeader"><input type="checkbox" name="selid" onclick="checkAll('id',this)"></td>
+		<td class="tableHeader"><input type="checkbox" name="selid" onclick="checkAll('contractId',this)"></td>
 		<td class="tableHeader">序号</td>
 		<td class="tableHeader">客户名称</td>
 		<td class="tableHeader">合同号</td>
@@ -52,20 +52,14 @@
 	${links }
 	<c:forEach items="${results}" var="o" varStatus="status">
 	<tr class="odd" onmouseover="this.className='highlight'" onmouseout="this.className='odd'" >
-		<td><input type="checkbox" name="id" value="${o.id}"/></td>
+		<td><input type="checkbox" name="contractId" value="${o.contractId}"/></td>
 		<td>${status.index+1}</td>
 		<td>${o.customName}</td>
 		<td>
-			<a href="contractAction_toview?id=${o.id}">${o.contractNo}</a>
+			<a href="contract_toviews?contractId=${o.contractId}">${o.contractNo}</a>
 		</td>
 		<td align="center">
-			${o.contractProducts.size()}
-			/
-			<c:set var="extNumber" value="0"></c:set><!-- 设置一个变量，用来累加，初始值0 -->
-			<c:forEach items="${o.contractProducts}" var="cp">
-				<c:set var="extNumber" value="${extNumber + cp.extCproducts.size()}"/>
-			</c:forEach>
-			${extNumber}
+				${o.cpnum}/${o.extnum}
 		</td>
 		<td>${o.inputBy}</td>
 		<td>${o.checkBy}</td>
@@ -81,10 +75,14 @@
 	</tbody>
 </table>
 </div>
-
+	<input type="hidden" id="totalPageCount" value="${totalPageCount}"/>
+	<c:import url="../../rollpage.jsp">
+		<c:param name="totalCount" value="${totalCount}"/>
+		<c:param name="currentPageNo" value="${currentPageNo}"/>
+		<c:param name="totalPageCount" value="${totalPageCount}"/>
+	</c:import>
 
 </div>
- 
  
 </form>
 </body>

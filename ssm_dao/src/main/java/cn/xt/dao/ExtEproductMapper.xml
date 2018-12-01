@@ -10,6 +10,7 @@
     <result column="PRODUCT_DESC" jdbcType="VARCHAR" property="productDesc" />
     <result column="CNUMBER" jdbcType="INTEGER" property="cnumber" />
     <result column="PACKING_UNIT" jdbcType="VARCHAR" property="packingUnit" />
+    <result column="FACTORY_NAME" jdbcType="VARCHAR" property="factoryName" />
     <result column="PRICE" jdbcType="DECIMAL" property="price" />
     <result column="AMOUNT" jdbcType="DECIMAL" property="amount" />
     <result column="PRODUCT_REQUEST" jdbcType="VARCHAR" property="productRequest" />
@@ -75,7 +76,7 @@
   </sql>
   <sql id="Base_Column_List">
     EXT_EPRODUCT_ID, FACTORY_ID, EXPORT_PRODUCT_ID, PRODUCT_NO, PRODUCT_IMAGE, PRODUCT_DESC, 
-    CNUMBER, PACKING_UNIT, PRICE, AMOUNT, PRODUCT_REQUEST, ORDER_NO
+    CNUMBER, PACKING_UNIT,FACTORY_NAME, PRICE, AMOUNT, PRODUCT_REQUEST, ORDER_NO
   </sql>
 
 
@@ -112,12 +113,12 @@
   <insert id="insert" parameterType="cn.xt.domain.ExtEproduct">
     insert into ext_eproduct_c (EXT_EPRODUCT_ID, FACTORY_ID, EXPORT_PRODUCT_ID, 
       PRODUCT_NO, PRODUCT_IMAGE, PRODUCT_DESC, 
-      CNUMBER, PACKING_UNIT, PRICE, 
+      CNUMBER, PACKING_UNIT,FACTORY_NAME, PRICE,
       AMOUNT, PRODUCT_REQUEST, ORDER_NO
       )
     values (#{extEproductId,jdbcType=VARCHAR}, #{factoryId,jdbcType=VARCHAR}, #{exportProductId,jdbcType=VARCHAR}, 
       #{productNo,jdbcType=VARCHAR}, #{productImage,jdbcType=VARCHAR}, #{productDesc,jdbcType=VARCHAR}, 
-      #{cnumber,jdbcType=INTEGER}, #{packingUnit,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{cnumber,jdbcType=INTEGER}, #{packingUnit,jdbcType=VARCHAR},#{factoryName,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL},
       #{amount,jdbcType=DECIMAL}, #{productRequest,jdbcType=VARCHAR}, #{orderNo,jdbcType=INTEGER}
       )
   </insert>
@@ -147,6 +148,9 @@
       </if>
       <if test="packingUnit != null">
         PACKING_UNIT,
+      </if>
+      <if test="factoryName != null">
+        FACTORY_NAME,
       </if>
       <if test="price != null">
         PRICE,
@@ -185,6 +189,9 @@
       </if>
       <if test="packingUnit != null">
         #{packingUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryName != null">
+        #{factoryName,jdbcType=VARCHAR},
       </if>
       <if test="price != null">
         #{price,jdbcType=DECIMAL},
@@ -233,6 +240,9 @@
       <if test="record.packingUnit != null">
         PACKING_UNIT = #{record.packingUnit,jdbcType=VARCHAR},
       </if>
+      <if test="record.factoryName != null">
+        FACTORY_NAME = #{record.factoryName,jdbcType=VARCHAR},
+      </if>
       <if test="record.price != null">
         PRICE = #{record.price,jdbcType=DECIMAL},
       </if>
@@ -260,6 +270,7 @@
       PRODUCT_DESC = #{record.productDesc,jdbcType=VARCHAR},
       CNUMBER = #{record.cnumber,jdbcType=INTEGER},
       PACKING_UNIT = #{record.packingUnit,jdbcType=VARCHAR},
+      FACTORY_NAME = #{record.factoryName,jdbcType=VARCHAR},
       PRICE = #{record.price,jdbcType=DECIMAL},
       AMOUNT = #{record.amount,jdbcType=DECIMAL},
       PRODUCT_REQUEST = #{record.productRequest,jdbcType=VARCHAR},
@@ -292,6 +303,9 @@
       <if test="packingUnit != null">
         PACKING_UNIT = #{packingUnit,jdbcType=VARCHAR},
       </if>
+      <if test="factoryName != null">
+        FACTORY_NAME = #{factoryName,jdbcType=VARCHAR},
+      </if>
       <if test="price != null">
         PRICE = #{price,jdbcType=DECIMAL},
       </if>
@@ -316,10 +330,17 @@
       PRODUCT_DESC = #{productDesc,jdbcType=VARCHAR},
       CNUMBER = #{cnumber,jdbcType=INTEGER},
       PACKING_UNIT = #{packingUnit,jdbcType=VARCHAR},
+      FACTORY_NAME = #{factoryName,jdbcType=VARCHAR},
       PRICE = #{price,jdbcType=DECIMAL},
       AMOUNT = #{amount,jdbcType=DECIMAL},
       PRODUCT_REQUEST = #{productRequest,jdbcType=VARCHAR},
       ORDER_NO = #{orderNo,jdbcType=INTEGER}
     where EXT_EPRODUCT_ID = #{extEproductId,jdbcType=VARCHAR}
   </update>
+
+  <!-- /*级联删除*/-->
+  <delete id="deleteByExportProductId" parameterType="string">
+    DELETE FROM ext_eproduct_c WHERE export_product_id
+    in  (SELECT export_product_id FROM export_product_c WHERE export_id=#{exportId})
+  </delete>
 </mapper>

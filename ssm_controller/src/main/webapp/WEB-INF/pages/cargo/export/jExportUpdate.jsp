@@ -14,7 +14,6 @@
 		//发送ajax请求-------------返回json------------后面就去组织数据（调用函数）
 		//当进入更新页面时-----------直接获取服务器返回的串
 		
-		
     });
     
 
@@ -26,12 +25,12 @@
 	function addTRRecord(objId, id, productNo, cnumber, grossWeight, netWeight, sizeLength, sizeWidth, sizeHeight, exPrice, tax) {
 		
 		var _tmpSelect = "";
-		var tableObj = document.getElementById(objId);
-		var rowLength = tableObj.rows.length;
+		var tableObj = document.getElementById(objId); //得到表格对象
+		var rowLength = tableObj.rows.length;	//获取行的长度
 		
-		oTR = tableObj.insertRow();
+		oTR = tableObj.insertRow(); //新增一行
 		
-		oTD = oTR.insertCell(0);
+		oTD = oTR.insertCell(0);	//新增单元格下标从0 开始
 		oTD.style.whiteSpace="nowrap";
 		oTD.ondragover = function(){this.className="drag_over" };	//动态加事件, 改变样式类
 		oTD.ondragleave = function(){this.className="drag_leave" };
@@ -72,14 +71,14 @@
 
 <body>
 <form name="icform" method="post">
-	<input type="hidden" name="id" value="${id}"/>
-
+	<input type="hidden" name="_method" value="PUT">
+	<input type="hidden" name="exportId" value="${export.exportId}"/>
 <div id="menubar">
 <div id="middleMenubar">
 <div id="innerMenubar">
   <div id="navMenubar">
 <ul>
-<li id="save"><a href="#" onclick="formSubmit('exportAction_update','_self');this.blur();">保存</a></li>
+<li id="save"><a href="#" onclick="formSubmit('/cargo/export_update','_self');this.blur();">保存</a></li>
 <li id="back"><a href="#" onclick="history.go(-1);">返回</a></li>
 </ul>
   </div>
@@ -98,37 +97,43 @@
 		<table class="commonTable" cellspacing="1">
 	        <tr>
 	            <td class="columnTitle">报运号：</td>
-	            <td class="tableContent">${customerContract}</td>
+	            <td class="tableContent">${export.customerContract}</td>
 	            <td class="columnTitle">制单日期：</td>
 	            <td class="tableContent">
 					<input type="text" style="width:90px;" name="inputDate"
-	            	 value="<fmt:formatDate value="${inputDate}" pattern="yyyy-MM-dd"/>"
+	            	 value="<fmt:formatDate value="${export.inputDate}" pattern="yyyy-MM-dd"/>"
 	             	onclick="WdatePicker({el:this,isShowOthers:true,dateFmt:'yyyy-MM-dd'});"/>
 				</td>
 	        </tr>	
 	        <tr>
 	            <td class="columnTitle">信用证号</td>
-	            <td class="tableContent"><input type="text" name="lcno" value="${lcno}"/></td>
+	            <td class="tableContent"><input type="text" name="lcno" value="${export.lcno}"/></td>
 	            <td class="columnTitle">收货人及地址：</td>
-	            <td class="tableContent"><input type="text" name="consignee" value="${consignee}"/></td>
+	            <td class="tableContent"><input type="text" name="consignee" value="${export.consignee}"/></td>
 	        </tr>	
 	        <tr>
 	            <td class="columnTitle">装运港：</td>
-	            <td class="tableContent"><input type="text" name="shipmentPort" value="${shipmentPort}"/></td>
+	            <td class="tableContent"><input type="text" name="shipmentPort" value="${export.shipmentPort}"/></td>
 	            <td class="columnTitle">目的港：</td>
-	            <td class="tableContent"><input type="text" name="destinationPort" value="${destinationPort}"/></td>
+	            <td class="tableContent"><input type="text" name="destinationPort" value="${export.destinationPort}"/></td>
 	        </tr>	
 	        <tr>
 	            <td class="columnTitle">运输方式：</td>
-	            <td class="tableContent"><input type="text" name="transportMode" value="${transportMode}"/></td>
+	            <td class="tableContentAuto">
+					<input type="radio" name="transportMode" value="AIR" class=" input"<c:if test="${export.transportMode == 'AIR'}" > checked </c:if>/>AIR
+					<input type="radio" name="transportMode" value="SEA" class=" input"<c:if test="${export.transportMode == 'SEA'}" > checked </c:if>/>SEA
+				</td>
 	            <td class="columnTitle">价格条件：</td>
-	            <td class="tableContent"><input type="text" name="priceCondition" value="${priceCondition}"/></td>
+				<td class="tableContentAuto">
+					<input type="radio" name="priceCondition" value="FOB" class=" input"<c:if test="${export.priceCondition == 'FOB'}" > checked </c:if>/>FOB
+					<input type="radio" name="priceCondition" value="CIF" class=" input"<c:if test="${export.priceCondition == 'CIF'}" > checked </c:if>/>CIF
+				</td>
 	        </tr>
 	        <tr>
 	            <td class="columnTitle">唛头：</td>
-	            <td class="tableContent"><textarea name="marks" style="height:120px;">${marks}</textarea></td>
+	            <td class="tableContent"><textarea name="marks" style="height:120px;">${export.marks}</textarea></td>
 	            <td class="columnTitle">备注：</td>
-	            <td class="tableContent"><textarea name="remark" style="height:120px;">${remark}</textarea></td>
+	            <td class="tableContent"><textarea name="remark" style="height:120px;">${export.remark}</textarea></td>
 	        </tr>
 		</table>
 	</div>

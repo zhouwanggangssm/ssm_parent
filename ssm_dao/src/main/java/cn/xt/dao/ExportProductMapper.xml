@@ -5,6 +5,7 @@
     <id column="EXPORT_PRODUCT_ID" jdbcType="VARCHAR" property="exportProductId" />
     <result column="EXPORT_ID" jdbcType="VARCHAR" property="exportId" />
     <result column="FACTORY_ID" jdbcType="VARCHAR" property="factoryId" />
+    <result column="FACTORY_NAME" jdbcType="VARCHAR" property="factoryName" />
     <result column="PRODUCT_NO" jdbcType="VARCHAR" property="productNo" />
     <result column="PACKING_UNIT" jdbcType="VARCHAR" property="packingUnit" />
     <result column="CNUMBER" jdbcType="INTEGER" property="cnumber" />
@@ -78,7 +79,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    EXPORT_PRODUCT_ID, EXPORT_ID, FACTORY_ID, PRODUCT_NO, PACKING_UNIT, CNUMBER, BOX_NUM, 
+    EXPORT_PRODUCT_ID, EXPORT_ID, FACTORY_ID,FACTORY_NAME, PRODUCT_NO, PACKING_UNIT, CNUMBER, BOX_NUM,
     GROSS_WEIGHT, NET_WEIGHT, SIZE_LENGTH, SIZE_WIDTH, SIZE_HEIGHT, EX_PRICE, PRICE, 
     TAX, ORDER_NO
   </sql>
@@ -113,13 +114,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.xt.domain.ExportProduct">
-    insert into export_product_c (EXPORT_PRODUCT_ID, EXPORT_ID, FACTORY_ID, 
+    insert into export_product_c (EXPORT_PRODUCT_ID, EXPORT_ID, FACTORY_ID,FACTORY_NAME,
       PRODUCT_NO, PACKING_UNIT, CNUMBER, 
       BOX_NUM, GROSS_WEIGHT, NET_WEIGHT, 
       SIZE_LENGTH, SIZE_WIDTH, SIZE_HEIGHT, 
       EX_PRICE, PRICE, TAX, 
       ORDER_NO)
-    values (#{exportProductId,jdbcType=VARCHAR}, #{exportId,jdbcType=VARCHAR}, #{factoryId,jdbcType=VARCHAR}, 
+    values (#{exportProductId,jdbcType=VARCHAR}, #{exportId,jdbcType=VARCHAR}, #{factoryId,jdbcType=VARCHAR},
+     #{factoryName,jdbcType=VARCHAR},
       #{productNo,jdbcType=VARCHAR}, #{packingUnit,jdbcType=VARCHAR}, #{cnumber,jdbcType=INTEGER}, 
       #{boxNum,jdbcType=INTEGER}, #{grossWeight,jdbcType=DECIMAL}, #{netWeight,jdbcType=DECIMAL}, 
       #{sizeLength,jdbcType=DECIMAL}, #{sizeWidth,jdbcType=DECIMAL}, #{sizeHeight,jdbcType=DECIMAL}, 
@@ -137,6 +139,9 @@
       </if>
       <if test="factoryId != null">
         FACTORY_ID,
+      </if>
+      <if test="factoryName != null">
+        FACTORY_NAME,
       </if>
       <if test="productNo != null">
         PRODUCT_NO,
@@ -187,6 +192,9 @@
       </if>
       <if test="factoryId != null">
         #{factoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryName != null">
+        #{factoryName,jdbcType=VARCHAR},
       </if>
       <if test="productNo != null">
         #{productNo,jdbcType=VARCHAR},
@@ -246,6 +254,9 @@
       </if>
       <if test="record.factoryId != null">
         FACTORY_ID = #{record.factoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.factoryName != null">
+        FACTORY_NAME = #{record.factoryName,jdbcType=VARCHAR},
       </if>
       <if test="record.productNo != null">
         PRODUCT_NO = #{record.productNo,jdbcType=VARCHAR},
@@ -322,6 +333,9 @@
       <if test="factoryId != null">
         FACTORY_ID = #{factoryId,jdbcType=VARCHAR},
       </if>
+      <if test="factoryName != null">
+        FACTORY_NAME = #{factoryName,jdbcType=VARCHAR},
+      </if>
       <if test="productNo != null">
         PRODUCT_NO = #{productNo,jdbcType=VARCHAR},
       </if>
@@ -368,6 +382,7 @@
     update export_product_c
     set EXPORT_ID = #{exportId,jdbcType=VARCHAR},
       FACTORY_ID = #{factoryId,jdbcType=VARCHAR},
+      FACTORY_NAME = #{factoryName,jdbcType=VARCHAR},
       PRODUCT_NO = #{productNo,jdbcType=VARCHAR},
       PACKING_UNIT = #{packingUnit,jdbcType=VARCHAR},
       CNUMBER = #{cnumber,jdbcType=INTEGER},
@@ -383,4 +398,9 @@
       ORDER_NO = #{orderNo,jdbcType=INTEGER}
     where EXPORT_PRODUCT_ID = #{exportProductId,jdbcType=VARCHAR}
   </update>
+
+  <!--级联删除-->
+  <delete id="deleteByExportId" parameterType="string">
+    DELETE FROM export_product_c WHERE EXPORT_ID=#{exportId}
+  </delete>
 </mapper>

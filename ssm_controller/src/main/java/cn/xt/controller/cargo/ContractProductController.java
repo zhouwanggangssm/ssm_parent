@@ -26,13 +26,15 @@ public class ContractProductController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/contractProduct_tocreate/{contractId}",method = RequestMethod.GET)
-    public String insertUI(@PathVariable String contractId, Model model){
+    @RequestMapping(value = "/contractProduct_tocreate",method = RequestMethod.GET)
+    public String insertUI(ContractProduct contractProduct, Model model){
+        //传递主表ID，同时作为查询条件
+        model.addAttribute("contractId",contractProduct.getContractId());
         //厂家下拉列表
         List<Factory> list = contractProductService.factoryList("货物", "1");
         model.addAttribute("factoryList",list);
         //厂家附件信息
-        List<ContractProduct> contractProducts = contractProductService.queryListAll(contractId);
+        List<ContractProduct> contractProducts = contractProductService.queryListAll(contractProduct);
         model.addAttribute("results",contractProducts);
         return "cargo/contract/jContractProductCreate";
     }
@@ -45,7 +47,7 @@ public class ContractProductController {
     @RequestMapping(value = "/contract_inserts",method = RequestMethod.POST)
     public String insertCP(ContractProduct contractProduct){
         contractProductService.add(contractProduct);
-        return "redirect:/cargo/contractProduct_tocreate/"+contractProduct.getContractId();
+        return "redirect:/cargo/contractProduct_tocreate?contractId="+contractProduct.getContractId();
     }
 
     /**
@@ -55,7 +57,7 @@ public class ContractProductController {
     @RequestMapping("/contractProduct_deletes")
     public String deleteCP(ContractProduct contractProduct) throws Exception {
         contractProductService.delete(contractProduct);
-        return "redirect:/cargo/contractProduct_tocreate/"+contractProduct.getContractId();
+        return "redirect:/cargo/contractProduct_tocreate?contractId="+contractProduct.getContractId();
     }
 
     /**
@@ -83,6 +85,6 @@ public class ContractProductController {
     @RequestMapping(value = "/contractProduct_updates",method = RequestMethod.PUT)
     public String updates(ContractProduct contractProduct){
         contractProductService.update(contractProduct);
-        return "redirect:/cargo/contractProduct_tocreate/"+contractProduct.getContractId();
+        return "redirect:/cargo/contractProduct_tocreate?contractId="+contractProduct.getContractId();
     }
 }

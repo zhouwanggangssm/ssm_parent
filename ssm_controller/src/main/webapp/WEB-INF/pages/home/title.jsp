@@ -12,7 +12,7 @@
     <link rel="stylesheet" rev="stylesheet" type="text/css" href="${ctx}/skin/default/css/title.css" media="all"/>
 
 	<script type="text/javascript" src="${ctx}/components/jquery-ui/jquery-1.2.6.js"></script>    	
-	<script language="javascript" src="${ctx}/js/pngfix_map.js"></script>
+	<%--<script language="javascript" src="${ctx}/js/pngfix_map.js"></script>--%>
 	<script language="javascript" src="${ctx}/js/common.js"></script>
     <!-- 调用外部 JavaScript 脚本语言 -->
 	
@@ -36,7 +36,7 @@
 		var links=document.getElementsByTagName('span');
 		for(var i=0;i<links.length;i++){
 			if(links[i].id.indexOf('topmenu')!=-1){
-				links[i].style.background = 'url("${ctx}/skin/default/images/title/li_dot.gif1") no-repeat right 8px';
+				/*links[i].style.background = 'url("${ctx}/skin/default/images/title/li_dot.gif1") no-repeat right 8px';*/
 				links[i].style.color = '';
 				links[i].style.fontWeight  = '';
 				links[i].style.borderTop = '';
@@ -45,11 +45,11 @@
 				links[i].style.padding = '';
 			}
 		}
-		obj.style.background ='url("${ctx}/skin/default/images/title/button_bg.jpg") no-repeat';
-		obj.style.color = "#fff";                                                                                                                                                                                                                                                   
+		/*obj.style.background ='url("${ctx}/skin/default/images/title/button_bg.jpg") no-repeat';*/
+		/*obj.style.color = "#fff";
 		obj.style.fontWeight  = 'bold';
 		obj.style.padding= '6px 11x 5px 13px;';
-		obj.blur();		//去掉图片的焦点框,使界面看起来漂亮 updated by tony
+		obj.blur();*/		//去掉图片的焦点框,使界面看起来漂亮 updated by tony
 	}
 
 	//sendRequest('000001');	

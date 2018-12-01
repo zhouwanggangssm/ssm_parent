@@ -1,11 +1,12 @@
 package cn.xt.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  * 附件类
  */
-public class ExtCproduct {
+public class ExtCproduct implements Serializable {
     private ContractProduct contractProduct;	//附件和货物，多对一
 
     private Factory factory;					//附件和厂家，多对一
@@ -17,6 +18,8 @@ public class ExtCproduct {
     private String factoryId;
 
     private String factoryName;//工厂名
+
+    private String ctype;//类型
 
     private String productNo;//产品号
 
@@ -154,5 +157,13 @@ public class ExtCproduct {
 
     public void setFactory(Factory factory) {
         this.factory = factory;
+    }
+
+    public String getCtype() {
+        return ctype;
+    }
+
+    public void setCtype(String ctype) {
+        this.ctype = ctype;
     }
 }

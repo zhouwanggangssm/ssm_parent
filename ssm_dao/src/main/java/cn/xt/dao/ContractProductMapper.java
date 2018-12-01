@@ -1,8 +1,13 @@
 package cn.xt.dao;
 
+import cn.xt.domain.Contract;
 import cn.xt.domain.ContractProduct;
 import cn.xt.domain.ContractProductExample;
+
+import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface ContractProductMapper {
@@ -12,11 +17,29 @@ public interface ContractProductMapper {
 
     int deleteByPrimaryKey(String contractProductId);
 
+    /*级联删除*/
+    int deleteByContactProductById(List<String> ids);
+
     int insert(ContractProduct record);
 
     int insertSelective(ContractProduct record);
 
     List<ContractProduct> selectByExample(ContractProductExample example);
+
+    /*查询所有*/
+    List<ContractProduct> find(ContractProduct contractProduct);
+
+    /**
+     * 根据id查询
+     * @param contractProductId
+     * @return
+     */
+    ContractProduct get(String contractProductId);
+
+    int inserts(ContractProduct contractProduct);
+
+    /*根据id In查询*/
+    List<ContractProduct> selectByExamplewithIn(ContractProductExample example);
 
     /*查询厂家名称，附件*/
     List<ContractProduct> selectByExamplewithcp(@Param("contractId") String contractId);

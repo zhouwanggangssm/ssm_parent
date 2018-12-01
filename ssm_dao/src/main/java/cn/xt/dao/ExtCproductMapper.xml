@@ -108,6 +108,29 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+
+  <!--级联删除,货物-->
+  <delete id="deleteByContractProduct" parameterType="string">
+    delete from ext_cproduct_c
+    WHERE CONTRACT_PRODUCT_ID IN
+    <foreach collection="array" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+
+  <!--删除某个合同下的附件，级联删除-->
+  <delete id="deleteByContractId" parameterType="string">
+    DELETE FROM ext_cproduct_c
+    WHERE CONTRACT_PRODUCT_ID IN
+    (
+      SELECT CONTRACT_PRODUCT_ID FROM contract_product_c
+      WHERE CONTRACT_ID IN
+      <foreach collection="list" item="id" open="(" close=")" separator=",">
+        #{id}
+      </foreach>
+    )
+  </delete>
+
   <insert id="insert" parameterType="cn.xt.domain.ExtCproduct">
     insert into ext_cproduct_c (EXT_CPRODUCT_ID, CONTRACT_PRODUCT_ID, 
       FACTORY_ID, FACTORY_NAME, PRODUCT_NO, 

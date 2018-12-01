@@ -1,11 +1,18 @@
 package cn.xt.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class ExtEproduct {
+public class ExtEproduct implements Serializable{
+    private ExportProduct exportProduct;		//附件和货物，多对一
+
+    private Factory factory;					//附件和厂家，多对一
+
     private String extEproductId;
 
     private String factoryId;
+
+    private String factoryName;//工厂名
 
     private String exportProductId;
 
@@ -17,15 +24,23 @@ public class ExtEproduct {
 
     private Integer cnumber;
 
-    private String packingUnit;
+    private String packingUnit;//PCS/SETS
 
-    private BigDecimal price;
+    private Double price;
 
-    private BigDecimal amount;
+    private Double amount;//自动计算: 数量x单价
 
     private String productRequest;
 
     private Integer orderNo;
+
+    public String getFactoryName() {
+        return factoryName;
+    }
+
+    public void setFactoryName(String factoryName) {
+        this.factoryName = factoryName;
+    }
 
     public String getExtEproductId() {
         return extEproductId;
@@ -91,19 +106,19 @@ public class ExtEproduct {
         this.packingUnit = packingUnit == null ? null : packingUnit.trim();
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public BigDecimal getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
@@ -121,5 +136,21 @@ public class ExtEproduct {
 
     public void setOrderNo(Integer orderNo) {
         this.orderNo = orderNo;
+    }
+
+    public ExportProduct getExportProduct() {
+        return exportProduct;
+    }
+
+    public void setExportProduct(ExportProduct exportProduct) {
+        this.exportProduct = exportProduct;
+    }
+
+    public Factory getFactory() {
+        return factory;
+    }
+
+    public void setFactory(Factory factory) {
+        this.factory = factory;
     }
 }

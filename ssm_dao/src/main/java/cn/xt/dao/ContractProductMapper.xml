@@ -1,6 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.xt.dao.ContractProductMapper">
+
+  <resultMap type="cn.xt.domain.ContractProduct" id="contractProductRM">
+    <id property="contractProductId" column="CONTRACT_PRODUCT_ID"/>
+
+    <result property="contractId" column="CONTRACT_ID"/>
+    <result property="factoryId" column="FACTORY_ID"/>
+
+    <result property="factoryName" column="FACTORY_NAME"/>
+    <result property="productNo" column="PRODUCT_NO"/>
+    <result property="productImage" column="PRODUCT_IMAGE"/>
+    <result property="productDesc" column="PRODUCT_DESC"/>
+    <result property="cnumber" column="CNUMBER"/>
+    <result property="outNumber" column="OUT_NUMBER"/>
+    <result property="loadingRate" column="LOADING_RATE"/>
+    <result property="boxNum" column="BOX_NUM"/>
+    <result property="packingUnit" column="PACKING_UNIT"/>
+    <result property="price" column="PRICE"/>
+    <result property="amount" column="AMOUNT"/>
+    <result property="finished" column="FINISHED"/>
+    <result property="exts" column="EXTS"/>
+    <result property="orderNo" column="ORDER_NO"/>
+  </resultMap>
+
+<!--查询所有-->
+  <select id="find" parameterType="cn.xt.domain.ContractProduct" resultMap="contractProductRM">
+    select * from contract_product_c
+    where 1=1
+    <if test="contractId != null"> and CONTRACT_ID=#{contractId}</if>
+  </select>
+
+  <select id="get" parameterType="string" resultMap="contractProductRM">
+    select * from contract_product_c
+    where contract_product_id=#{pid}
+  </select>
+
+  <insert id="inserts" parameterType="cn.xt.domain.ContractProduct">
+    insert into contract_product_c
+    (CONTRACT_PRODUCT_ID,CONTRACT_ID,FACTORY_ID,FACTORY_NAME,PRODUCT_NO,
+    PRODUCT_IMAGE,PRODUCT_DESC,CNUMBER,OUT_NUMBER,LOADING_RATE,BOX_NUM,
+    PACKING_UNIT,PRICE,AMOUNT,FINISHED,EXTS,ORDER_NO)
+    values(
+    #{contractProductId},
+    #{contractId},
+    #{factoryId},
+    #{factoryName, jdbcType=VARCHAR},
+    #{productNo, jdbcType=VARCHAR},
+    #{productImage, jdbcType=VARCHAR},
+    #{productDesc, jdbcType=VARCHAR},
+    #{cnumber, jdbcType=INTEGER},
+    #{outNumber, jdbcType=INTEGER},
+    #{loadingRate, jdbcType=VARCHAR},
+    #{boxNum, jdbcType=INTEGER},
+    #{packingUnit, jdbcType=VARCHAR},
+    #{price, jdbcType=DOUBLE},
+    #{amount, jdbcType=DOUBLE},
+    0,
+    #{exts, jdbcType=VARCHAR},
+    #{orderNo, jdbcType=INTEGER}
+    )
+  </insert>
+
+  <!--级联删除 删除货物前，先删除附件-->
+  <delete id="deleteByContactProductById" parameterType="string">
+    DELETE FROM contract_product_c 
+    WHERE CONTRACT_ID IN
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+  
+  <!--逆向工程 生成的-->
   <resultMap id="BaseResultMap" type="cn.xt.domain.ContractProduct">
     <id column="CONTRACT_PRODUCT_ID" jdbcType="VARCHAR" property="contractProductId" />
     <result column="CONTRACT_ID" jdbcType="VARCHAR" property="contractId" />
@@ -151,8 +222,8 @@
     c.PRODUCT_DESC, c.LOADING_RATE, c.BOX_NUM, c.PACKING_UNIT, c.CNUMBER, c.OUT_NUMBER, c.FINISHED,
     c.PRODUCT_REQUEST, c.PRICE, c.AMOUNT, c.ORDER_NO,s.CONTRACT_NO, s.SHIP_TIME, s.DELIVERY_PERIOD,
     s.CUSTOM_NAME, s.TRADE_TERMS
-
   </sql>
+
   <!--  /*查询厂家名称，附件*/
     List<ContractProduct> selectByExamplewithcp(@Param("contractProductId") String contractProductId);-->
   <select id="selectByExamplewithcp" resultMap="withBaseResultMap">
@@ -182,6 +253,24 @@
         date_format(s.SHIP_TIME,'%Y-%m')=#{shipTime}
       </if>
     </where>
+  </select>
+
+  <!-- /*根据id In查询*/
+    List<ContractProduct> selectByExamplewithIn(ContractProductExample example);
+-->
+  <select id="selectByExamplewithIn" resultMap="withBaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="withBase_Column_List" />
+    from contract_product_c c LEFT JOIN ext_cproduct_c e ON c.CONTRACT_PRODUCT_ID=e.CONTRACT_PRODUCT_ID
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
   </select>
 
   <!-- /*根据货物id查询附件id信息*/

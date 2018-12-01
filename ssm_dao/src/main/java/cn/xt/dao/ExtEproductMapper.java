@@ -2,6 +2,8 @@ package cn.xt.dao;
 
 import cn.xt.domain.ExtEproduct;
 import cn.xt.domain.ExtEproductExample;
+
+import java.io.Serializable;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,6 +16,9 @@ public interface ExtEproductMapper {
     int deleteByExample(ExtEproductExample example);
 
     int deleteByPrimaryKey(String extEproductId);
+
+    /*级联删除*/
+    int deleteByExportProductId(Serializable exportId);
 
     int insert(ExtEproduct record);
 

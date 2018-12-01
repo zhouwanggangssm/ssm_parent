@@ -14,7 +14,7 @@
 
 <body>
 <form name="icform" method="post">
-	<%--<input type="hidden" name="contractId" value="${o.contractId}"/>--%>
+	<input type="hidden" name="contractId" value="${contractId}"/>
 
 <div id="menubar">
 <div id="middleMenubar">
@@ -119,7 +119,6 @@
  	<c:forEach items="${results}" var="o" varStatus="status">
 	<tr <c:if test="${o.productNo== null}">hidden</c:if> class="odd" onmouseover="this.className='highlight'" onmouseout="this.className='odd'" >
 		<td><input type="checkbox" name="contractProductId" value="${o.contractProductId}"/></td>
-		<input type="hidden" name="contractId" value="${o.contractId}"/>
 		<td>${status.index+1}</td>
 		<td>${o.factoryName}</td>
 		<td>${o.productNo}</td>

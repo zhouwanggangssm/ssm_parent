@@ -76,7 +76,7 @@
 	        </tr>		
 	        <tr>
 	            <td class="columnTitle">要求：</td>
-	            <td class="tableContent"><pre>${contract.crequest }</pre></td>
+	            <td class="tableContent"><textarea>${contract.crequest }</textarea></td>
 	            <td class="columnTitle">说明：</td>
 	            <td class="tableContent"><pre>${contract.remark }</pre></td>
 	        </tr>		
@@ -107,10 +107,10 @@
 	</thead>
 	<tbody class="tableBody" >
 	
-	<c:forEach items="${contractProducts}" var="cp" varStatus="status">
+	<c:forEach items="${contract.contractProducts}" var="cp" varStatus="status">
 	<tr bgcolor="#c3f3c3" height="30" class="odd" onmouseover="this.className='highlight'" onmouseout="this.className='odd'" >
 		<td>${status.index+1}</td>
-		<td>${cp.factoryName}</td>
+		<td>${cp.factory.factoryName}</td>
 		<td>${cp.productNo}</td>
 		<td>${cp.loadingRate}</td>
 		<td>${cp.boxNum}</td>
@@ -122,7 +122,7 @@
 	<c:forEach items="${cp.extCproducts}" var="ext" varStatus="status">
 	<tr height="30" class="odd" onmouseover="this.className='highlight'" onmouseout="this.className='odd'" >
 		<td align="right"><font color="blue">附件：${status.index+1}&nbsp;</font></td>
-		<td>${ext.factoryName}</td>
+		<td>${ext.factory.factoryName}</td>
 		<td>${ext.productNo}</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>

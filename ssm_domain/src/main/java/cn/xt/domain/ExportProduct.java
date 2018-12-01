@@ -1,39 +1,58 @@
 package cn.xt.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Set;
 
-public class ExportProduct {
+public class ExportProduct implements Serializable{
+    private Export export;			//报运货物和报运的关系，多对一
+
+    private Factory factory;		//报运货物和厂家的关系，多对一
+
+    private List<ExtEproduct> extEproducts;		//报运货物和报运附件的关系，一对多
+
     private String exportProductId;
 
     private String exportId;
 
     private String factoryId;
 
+    private String factoryName;
+
     private String productNo;
 
-    private String packingUnit;
+    private String packingUnit; //PCS/SETS
 
     private Integer cnumber;
 
     private Integer boxNum;
 
-    private BigDecimal grossWeight;
+    private Double grossWeight;
 
-    private BigDecimal netWeight;
+    private Double netWeight;
 
-    private BigDecimal sizeLength;
+    private Double sizeLength;
 
-    private BigDecimal sizeWidth;
+    private Double sizeWidth;
 
-    private BigDecimal sizeHeight;
+    private Double sizeHeight;
 
-    private BigDecimal exPrice;
+    private Double exPrice; //sales confirmation 中的价格（手填）
 
-    private BigDecimal price;
+    private Double price;
 
-    private BigDecimal tax;
+    private Double tax; //收购单价=合同单价
 
     private Integer orderNo;
+
+    public String getFactoryName() {
+        return factoryName;
+    }
+
+    public void setFactoryName(String factoryName) {
+        this.factoryName = factoryName;
+    }
 
     public String getExportProductId() {
         return exportProductId;
@@ -91,67 +110,67 @@ public class ExportProduct {
         this.boxNum = boxNum;
     }
 
-    public BigDecimal getGrossWeight() {
+    public Double getGrossWeight() {
         return grossWeight;
     }
 
-    public void setGrossWeight(BigDecimal grossWeight) {
+    public void setGrossWeight(Double grossWeight) {
         this.grossWeight = grossWeight;
     }
 
-    public BigDecimal getNetWeight() {
+    public Double getNetWeight() {
         return netWeight;
     }
 
-    public void setNetWeight(BigDecimal netWeight) {
+    public void setNetWeight(Double netWeight) {
         this.netWeight = netWeight;
     }
 
-    public BigDecimal getSizeLength() {
+    public Double getSizeLength() {
         return sizeLength;
     }
 
-    public void setSizeLength(BigDecimal sizeLength) {
+    public void setSizeLength(Double sizeLength) {
         this.sizeLength = sizeLength;
     }
 
-    public BigDecimal getSizeWidth() {
+    public Double getSizeWidth() {
         return sizeWidth;
     }
 
-    public void setSizeWidth(BigDecimal sizeWidth) {
+    public void setSizeWidth(Double sizeWidth) {
         this.sizeWidth = sizeWidth;
     }
 
-    public BigDecimal getSizeHeight() {
+    public Double getSizeHeight() {
         return sizeHeight;
     }
 
-    public void setSizeHeight(BigDecimal sizeHeight) {
+    public void setSizeHeight(Double sizeHeight) {
         this.sizeHeight = sizeHeight;
     }
 
-    public BigDecimal getExPrice() {
+    public Double getExPrice() {
         return exPrice;
     }
 
-    public void setExPrice(BigDecimal exPrice) {
+    public void setExPrice(Double exPrice) {
         this.exPrice = exPrice;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public BigDecimal getTax() {
+    public Double getTax() {
         return tax;
     }
 
-    public void setTax(BigDecimal tax) {
+    public void setTax(Double tax) {
         this.tax = tax;
     }
 
@@ -161,5 +180,29 @@ public class ExportProduct {
 
     public void setOrderNo(Integer orderNo) {
         this.orderNo = orderNo;
+    }
+
+    public Export getExport() {
+        return export;
+    }
+
+    public void setExport(Export export) {
+        this.export = export;
+    }
+
+    public Factory getFactory() {
+        return factory;
+    }
+
+    public void setFactory(Factory factory) {
+        this.factory = factory;
+    }
+
+    public List<ExtEproduct> getExtEproducts() {
+        return extEproducts;
+    }
+
+    public void setExtEproducts(List<ExtEproduct> extEproducts) {
+        this.extEproducts = extEproducts;
     }
 }

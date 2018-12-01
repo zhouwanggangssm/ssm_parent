@@ -1,33 +1,35 @@
 package cn.xt.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class PackingList {
     private String packingListId;
 
-    private String seller;
+    private String seller; //卖方
 
-    private String buyer;
+    private String buyer; //买方
 
-    private String invoiceNo;
+    private String invoiceNo;//发票号
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date invoiceDate;//发票日期
 
-    private Date invoiceDate;
+    private String marks;//唛头
 
-    private String marks;
+    private String descriptions;//描述
 
-    private String descriptions;
+    private String exportIds;//存储报运的串
 
-    private String exportIds;
+    private String exportNos;//存储报运号
 
-    private String exportNos;
+    private Integer state;//状态 0 草稿 1上报
 
-    private Integer state;
+    private String createBy;//创建人
 
-    private String createBy;
+    private String createDept;//创建部门
 
-    private String createDept;
-
-    private Date createTime;
+    private Date createTime;//创建日期
 
     public String getPackingListId() {
         return packingListId;

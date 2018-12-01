@@ -20,9 +20,9 @@
 	
 </head>
 <script language="javascript"> 
-if(top.location!=main.location){
+/*if(top.location!=main.location){
 	top.location = main.location;
-}
+}*/
 //-- 控制层移动start of script -->
 var Obj='';
 var index=10000;//z-index;

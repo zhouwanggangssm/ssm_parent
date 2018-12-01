@@ -1,6 +1,8 @@
 package cn.xt.controller.cargo;
 
 import cn.xt.domain.Contract;
+import cn.xt.print.ContractPrint;
+import cn.xt.print.ContractPrintTemplate;
 import cn.xt.service.ContractService;
 import cn.xt.utils.SysConstant;
 import com.github.pagehelper.PageHelper;
@@ -12,10 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.*;
 
 
 @Controller
@@ -80,7 +83,6 @@ public class ContractController {
         //总金额
         //创建时间
        contract.setCreateTime(new Date());
-        contract.setUpdateTime(new Date());
         contract.setTotalAmount(0d);
         contract.setState(0); //0草稿 1已上报 2已报运
             contractService.add(contract);
@@ -93,7 +95,7 @@ public class ContractController {
      */
     @RequestMapping("/contract_toupdateUI")
     public String updateUI(@RequestParam("contractId") String id,Model model){
-        Contract contract = contractService.getIdInfo(id);
+        Contract contract = contractService.get(id);
         model.addAttribute("contract",contract);
         return "cargo/contract/jContractUpdate";
     }
@@ -141,7 +143,7 @@ public class ContractController {
     @RequestMapping("/contract_submit")
     public String submit(@RequestParam("contractId") String id){
         //传入id,状态：1 表示已上报
-        contractService.changeState(id,1);
+        this.changeState(1,id.split(","));
         return "redirect:/cargo/contract_list";
     }
 
@@ -152,8 +154,53 @@ public class ContractController {
     @RequestMapping("/contract_cancel")
     public String cancel(@RequestParam("contractId") String id){
         //传入id,状态：0 表示草稿
-        contractService.changeState(id,0);
+        this.changeState(0,id.split(","));
         return "redirect:/cargo/contract_list";
     }
 
+    /**
+     * 改变状态
+     * 1上报
+     * 0草稿
+     * @param stateValue
+     * @param ids
+     */
+    private void changeState(Integer stateValue,String[]ids){
+        Map<String,Object> map = new HashMap<>();
+        map.put("state",stateValue);
+        map.put("ids",ids);
+        contractService.updateState(map);
+    }
+
+    /**
+     * 购销合同打印
+     */
+    @RequestMapping("/contract_print")
+    public void print(String contractId, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        //实例化打印的工具类
+        ContractPrint cp = new ContractPrint();
+        //得到要打印的数据
+        Contract contract = contractService.getIdInfo(contractId);
+        //调用模板打印的方法
+        cp.print(contract,request.getSession().getServletContext().getRealPath("/"),request,response);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

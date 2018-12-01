@@ -3,6 +3,8 @@ package cn.xt.dao;
 import cn.xt.domain.Export;
 import cn.xt.domain.ExportExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface ExportMapper {
@@ -17,6 +19,9 @@ public interface ExportMapper {
     int insertSelective(Export record);
 
     List<Export> selectByExample(ExportExample example);
+
+    /*查询所有报运单*/
+    List<Export> find();
 
     Export selectByPrimaryKey(String exportId);
 

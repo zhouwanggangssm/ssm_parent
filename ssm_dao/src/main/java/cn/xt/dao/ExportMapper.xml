@@ -22,6 +22,32 @@
     <result column="CREATE_DEPT" jdbcType="VARCHAR" property="createDept" />
     <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
+
+  <resultMap id="WithBaseResultMap" type="cn.xt.domain.Export">
+    <id column="EXPORT_ID" jdbcType="VARCHAR" property="exportId" />
+
+    <result property="epnum" column="PNUM"/>
+    <result property="extnum" column="EXTNUM"/>
+
+    <result column="INPUT_DATE" jdbcType="TIMESTAMP" property="inputDate" />
+    <result column="CONTRACT_IDS" jdbcType="VARCHAR" property="contractIds" />
+    <result column="CUSTOMER_CONTRACT" jdbcType="VARCHAR" property="customerContract" />
+    <result column="LCNO" jdbcType="VARCHAR" property="lcno" />
+    <result column="CONSIGNEE" jdbcType="VARCHAR" property="consignee" />
+    <result column="MARKS" jdbcType="VARCHAR" property="marks" />
+    <result column="SHIPMENT_PORT" jdbcType="VARCHAR" property="shipmentPort" />
+    <result column="DESTINATION_PORT" jdbcType="VARCHAR" property="destinationPort" />
+    <result column="TRANSPORT_MODE" jdbcType="VARCHAR" property="transportMode" />
+    <result column="PRICE_CONDITION" jdbcType="VARCHAR" property="priceCondition" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="BOX_NUMS" jdbcType="INTEGER" property="boxNums" />
+    <result column="GROSS_WEIGHTS" jdbcType="DECIMAL" property="grossWeights" />
+    <result column="MEASUREMENTS" jdbcType="DECIMAL" property="measurements" />
+    <result column="STATE" jdbcType="INTEGER" property="state" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_DEPT" jdbcType="VARCHAR" property="createDept" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -85,6 +111,19 @@
     DESTINATION_PORT, TRANSPORT_MODE, PRICE_CONDITION, REMARK, BOX_NUMS, GROSS_WEIGHTS, 
     MEASUREMENTS, STATE, CREATE_BY, CREATE_DEPT, CREATE_TIME
   </sql>
+
+  <!--  /*查询所有报运单*/
+    List<Export> find();-->
+  <select id="find"  resultMap="WithBaseResultMap">
+    SELECT
+       (SELECT COUNT(*) FROM export_product_c WHERE EXPORT_ID=e.EXPORT_ID)as epnum,
+       (SELECT COUNT(*) FROM ext_eproduct_c WHERE EXPORT_PRODUCT_ID in
+       (SELECT EXPORT_PRODUCT_ID FROM export_product_c WHERE EXPORT_ID=e.EXPORT_ID)) as extnum,
+	  e.*
+      from export_c e
+    where 1=1
+  </select>
+
   <select id="selectByExample" parameterType="cn.xt.domain.ExportExample" resultMap="BaseResultMap">
     select
     <if test="distinct">

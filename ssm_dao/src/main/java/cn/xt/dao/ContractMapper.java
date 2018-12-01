@@ -2,7 +2,11 @@ package cn.xt.dao;
 
 import cn.xt.domain.Contract;
 import cn.xt.domain.ContractExample;
+
+import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface ContractMapper {
@@ -18,11 +22,32 @@ public interface ContractMapper {
     /*添加*/
     int insertSelective(Contract record);
 
-    /*查询所有 跟分页*/
-    List<Contract> selectByExamplewithcp();
+    /*根据状态查询购销合同信息*/
+    List<Contract> selectByExamplewithState(@Param(("state")) Integer state);
 
     /*根据id查询信息*/
     Contract selectByPrimaryKeywithcp(String contractId);
+
+    /**
+     *查询所有
+     * @param paramMap
+     * @return
+     */
+    public  List<Contract> find(Map paramMap);
+
+    /**
+     * 根据id查询对象
+     * @param paramString
+     * @return
+     */
+    public Contract view(Serializable paramString);
+
+    /**
+     * 修改状态
+     * @param paramString
+     * @return
+     */
+    public int updateState(Map paramString);
 
     List<Contract> selectByExample(ContractExample example);
 

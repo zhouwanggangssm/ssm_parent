@@ -2,33 +2,40 @@ package cn.xt.service;
 
 
 import cn.xt.dao.ContractMapper;
+import cn.xt.dao.ContractProductMapper;
+import cn.xt.dao.ExtCproductMapper;
 import cn.xt.domain.Contract;
 import cn.xt.domain.ContractExample;
+import cn.xt.domain.ExtCproduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ContractService {
     @Autowired
     private ContractMapper contractMapper;
+    @Autowired
+    private ContractProductMapper contractProductMapper;
+    @Autowired
+    private ExtCproductMapper extCproductMapper;
+    /**
+     * 根据状态查询购销合同
+     * @return
+     */
+    public List<Contract> getStateFindPage(Integer state){
+        return contractMapper.selectByExamplewithState(state);
+    }
 
     /**
      * 查询所有购销合同信息
      * @return
      */
     public List<Contract> findpage(){
-         List<Contract> list = contractMapper.selectByExamplewithcp();
-        return list;
-    }
-
-    /**
-     * 得到总行数
-     * @return
-     */
-    public int getContractCount(){
-         return contractMapper.countByExample(null);
+        return contractMapper.find(null);
     }
 
     /**
@@ -36,8 +43,7 @@ public class ContractService {
      * @return
      */
     public Contract getIdInfo(String id){
-        Contract contract = contractMapper.selectByPrimaryKeywithcp(id);
-        return contract;
+        return contractMapper.view(id);
     }
 
     /**
@@ -62,31 +68,68 @@ public class ContractService {
      * @param id
      */
     public void delete(String id){
+
+        List<String> ids = new ArrayList<>();
+        ids.add(id);
+        //级联删除附件
+        extCproductMapper.deleteByContractId(ids);
+        //级联删除货物
+        contractProductMapper.deleteByContactProductById(ids);
+        //删除购销合同
         contractMapper.deleteByPrimaryKey(id);
     }
 
     /**
      * 批量删除
-     * @param idss
+     * @param ids
      */
-    public void deleteBatch(List<String> idss) {
+    public void deleteBatch(List<String> ids) {
+        //级联删除附件
+        extCproductMapper.deleteByContractId(ids);
+
+        //删除货物表的数据
+        contractProductMapper.deleteByContactProductById(ids);
+
+        //删除购销合同
         ContractExample example = new ContractExample();
         ContractExample.Criteria criteria =  example.createCriteria();
-        criteria.andContractIdIn(idss);
+        criteria.andContractIdIn(ids);
         contractMapper.deleteByExample(example);
     }
 
     /**
      * 改变状态
      */
-    public void changeState(String id,Integer state){
-        //获取已选中的id
-        String [] ids = id.split(",");
-        for (String s : ids) {
-            Contract contract = contractMapper.selectByPrimaryKeywithcp(s);
+    public int updateState(Map<String,Object> map){
             //状态改为1，已上报
-            contract.setState(state);
-            contractMapper.updateByPrimaryKeySelective(contract);
-        }
+           return contractMapper.updateState(map);
+    }
+
+    /**
+     * 修改页面
+     * @param id
+     * @return
+     */
+    public Contract get(String id) {
+        return contractMapper.selectByPrimaryKey(id);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

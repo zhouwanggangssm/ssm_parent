@@ -5,10 +5,12 @@ import cn.xt.dao.ContractProductMapper;
 import cn.xt.dao.ExtCproductMapper;
 import cn.xt.dao.FactoryMapper;
 import cn.xt.domain.*;
+import cn.xt.utils.Arith;
 import cn.xt.utils.UtilFuns;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -38,52 +40,21 @@ public class ContractProductService {
      * 查询厂家信息，附件信息
      * @return
      */
-    public List<ContractProduct> queryListAll(String contractId){
-        List<ContractProduct> list = contractProductMapper.selectByExamplewithcp(contractId);
-        if (list==null||list.size()==0) {
-            list = new ArrayList<>();
-            ContractProduct contractProduct = new ContractProduct();
-            contractProduct.setContractId(contractId);
-            list.add(contractProduct);
-        }
-        return list;
+    public List<ContractProduct> queryListAll(ContractProduct contractProduct){
+        return contractProductMapper.find(contractProduct);
     }
 
     /**
      * 添加货物
      */
     public void add(ContractProduct contractProduct){
-        //获取id
-        contractProduct.setContractId(contractProduct.getContractId().split(",")[0]);
-
-        //定义double类型的变量
-        double amount = 0d;
-
-        //随机生成UUID
-        String uuid = UUID.randomUUID().toString();
-        //把"-" 替换成""
-        uuid = uuid.replace("-","");
-
-        //货物id
-        contractProduct.setContractProductId(uuid);
-        if(UtilFuns.isNotEmpty(contractProduct.getPrice()) && UtilFuns.isNotEmpty(contractProduct.getCnumber())){
-            amount=contractProduct.getPrice()*contractProduct.getCnumber(); //货物总金额
-            contractProduct.setAmount(amount);//把总金额放进实体
+        //id
+        contractProduct.setContractProductId(UUID.randomUUID().toString().replace("-",""));
+        if(contractProduct.getPrice() != 0 && contractProduct.getCnumber() != null){
+            Arith arith = new Arith(); //java精度工具类
+            contractProduct.setAmount(arith.mul(contractProduct.getCnumber(),contractProduct.getPrice())); //总金额
         }
-        contractProductMapper.insertSelective(contractProduct);
-        //修改购销合同的总金额
-        Contract contract = getContractById(contractProduct.getContractId());
-        //如果购销合同总金额不等于0
-        if (contract.getTotalAmount() != 0) {
-            //购销合同金额加货物金额
-            contract.setTotalAmount(contract.getTotalAmount()+contractProduct.getAmount());
-        }else{
-            //否则直接把查出来的金额赋值
-            contract.setTotalAmount(contractProduct.getAmount());
-        }
-        //调用修改方法
-        updateAmount(contract);
-
+        contractProductMapper.inserts(contractProduct);
     }
 
     /**
@@ -91,6 +62,11 @@ public class ContractProductService {
      * @param contractProduct
      */
     public void update(ContractProduct contractProduct){
+        if(contractProduct.getPrice() != 0 && contractProduct.getCnumber() != null){
+            Arith arith = new Arith(); //java精度工具类
+            contractProduct.setAmount(arith.mul(contractProduct.getCnumber(),contractProduct.getPrice())); //总金额
+        }
+        //修改
         contractProductMapper.updateByPrimaryKeySelective(contractProduct);
     }
 
@@ -99,30 +75,11 @@ public class ContractProductService {
      * @param contractProduct
      */
     public void delete(ContractProduct contractProduct) throws Exception {
-        //加载要删除的货物对象
-        ContractProduct contractProduct1 = contractProductMapper.selectByPrimaryKeywithExport(contractProduct.getContractProductId());
-
-        //得到货物下面的附件列表
-        Set<ExtCproduct> extCproducts = contractProduct1.getExtCproducts();
-
-        //加载购销合同对象
-        Contract contract = contractMapper.selectByPrimaryKey(contractProduct.getContractId());
-
-        //遍历附件列表，并修改购销合同总金额
-        for(ExtCproduct e : extCproducts){
-            contract.setTotalAmount(contract.getTotalAmount()-e.getAmount());
-        }
-
-        //购销合同总金额-货物总金额
-        contract.setTotalAmount(contract.getTotalAmount()-contractProduct1.getAmount());
-
-        //更新购销合同
-        contractMapper.updateByPrimaryKeySelective(contract);
-
-        //删除附件信息
-        deleteExtCproductKeys(contractProduct.getContractProductId());
-
-            //删除
+        //转换成数组
+        Serializable[] ids = {contractProduct.getContractProductId()};
+        //先删除子表的数据
+        extCproductMapper.deleteByContractProduct(ids);
+        //删除自身的数据
         contractProductMapper.deleteByPrimaryKey(contractProduct.getContractProductId());
 
     }

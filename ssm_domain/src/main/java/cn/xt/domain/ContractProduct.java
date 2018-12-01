@@ -1,15 +1,17 @@
 package cn.xt.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 /**
  * 货物合同类
  */
-public class ContractProduct {
+public class ContractProduct implements Serializable {
     private Contract contract;		//货物和合同，多对一
     private Factory factory;		//货物和厂家，多对一
-    private Set<ExtCproduct> extCproducts;	//货物和附件，一对多
+    private List<ExtCproduct> extCproducts;	//货物和附件，一对多
 
     private String contractProductId;
 
@@ -43,7 +45,19 @@ public class ContractProduct {
 
     private double amount;//总金额，冗余
 
+    private String exts;
+
     private Integer orderNo;//排序号
+
+
+
+    public String getExts() {
+        return exts;
+    }
+
+    public void setExts(String exts) {
+        this.exts = exts;
+    }
 
     public String getContractProductId() {
         return contractProductId;
@@ -197,37 +211,11 @@ public class ContractProduct {
         this.factory = factory;
     }
 
-    public Set<ExtCproduct> getExtCproducts() {
+    public List<ExtCproduct> getExtCproducts() {
         return extCproducts;
     }
 
-    public void setExtCproducts(Set<ExtCproduct> extCproducts) {
+    public void setExtCproducts(List<ExtCproduct> extCproducts) {
         this.extCproducts = extCproducts;
-    }
-
-    @Override
-    public String toString() {
-        return "ContractProduct{" +
-                "contract=" + contract +
-                ", factory=" + factory +
-                ", extCproducts=" + extCproducts +
-                ", contractProductId='" + contractProductId + '\'' +
-                ", contractId='" + contractId + '\'' +
-                ", factoryId='" + factoryId + '\'' +
-                ", factoryName='" + factoryName + '\'' +
-                ", productNo='" + productNo + '\'' +
-                ", productImage='" + productImage + '\'' +
-                ", productDesc='" + productDesc + '\'' +
-                ", loadingRate='" + loadingRate + '\'' +
-                ", boxNum=" + boxNum +
-                ", packingUnit='" + packingUnit + '\'' +
-                ", cnumber=" + cnumber +
-                ", outNumber=" + outNumber +
-                ", finished=" + finished +
-                ", productRequest='" + productRequest + '\'' +
-                ", price=" + price +
-                ", amount=" + amount +
-                ", orderNo=" + orderNo +
-                '}';
     }
 }

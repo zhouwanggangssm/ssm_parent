@@ -69,19 +69,9 @@
 		<td><input type="checkbox" name="contractId" value="${o.contractId}"/></td>
 		<td>${status.index+1}</td>
 		<td>${o.customName}</td>
-		<td><a href="contractAction_toview?id=${o.contractId}">${o.contractNo}</a></td>
+		<td><a href="/cargo/contract_toview?contractId=${o.contractId}">${o.contractNo}</a></td>
 		<td>
-		    ${o.contractProducts.size() }
-		    /
-		    <c:set var="extNo" value="0"></c:set>
-		    <c:forEach items="${o.contractProducts }"  var="cp" >
-
-		        <c:if test="${cp.extCproducts.size()!=0 }">
-		            <c:set var="extNo" value="${extNo+cp.extCproducts.size() }"></c:set>
-		        </c:if>
-		    	
-		    </c:forEach>
-		    ${extNo }
+			${o.cpnum}/${o.extnum}
 		</td>
 		<td>${o.inputBy}</td>
 		<td>${o.checkBy}</td>
@@ -93,7 +83,7 @@
 		<td>${o.totalAmount}</td>
 		<td><c:if test="${o.state==0}">草稿</c:if>
 		<c:if test="${o.state==1}"><font color="green">已上报</font></c:if></td>
-		<td><a href="${ctx }/cargo/contractProduct_tocreate/${o.contractId}">[货物]</a></td>
+		<td><a href="${ctx }/cargo/contractProduct_tocreate?contractId=${o.contractId}">[货物]</a></td>
 	</tr>
 	</c:forEach>
 	

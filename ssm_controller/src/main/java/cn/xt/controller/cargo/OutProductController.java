@@ -7,6 +7,7 @@ import cn.xt.utils.UtilFuns;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
@@ -52,10 +53,10 @@ public class OutProductController {
         Cell cell = null;
 
         //1.读取工作簿
-        String path = request.getSession().getServletContext().getRealPath("/")+"/make/xlsprint/tOUTPRODUCT.xls";
+        String path = request.getSession().getServletContext().getRealPath("/")+"/make/xlsprint/tOUTPRODUCT.xlsx";
         //创建流
         InputStream is = new FileInputStream(path);
-        Workbook wb = new HSSFWorkbook(is);
+        Workbook wb = new XSSFWorkbook(is); //Excel导出 2007以上
 
         //2.创建工作表
         Sheet sheet = wb.getSheetAt(0);
@@ -167,7 +168,7 @@ public class OutProductController {
         //关闭
         baos.close();
         //调用下载方法
-        downloadUtil.download(baos ,response ,request,"出货表.xls");
+        downloadUtil.download(baos ,response ,request,"出货表.xlsx");
 
         return null;
     }

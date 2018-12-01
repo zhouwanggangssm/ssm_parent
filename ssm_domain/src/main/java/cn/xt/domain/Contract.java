@@ -3,19 +3,23 @@ package cn.xt.domain;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
  * 购销合同类
  */
-public class Contract {
-    private Set<ContractProduct> contractProducts;		//合同和货物，一对多
-
-    private String contractProductId;
+public class Contract implements Serializable {
+    private List<ContractProduct> contractProducts;		//合同和货物，一对多
 
     private String contractId;
+
+    private String cpnum;//货物数
+
+    private String extnum; //附件数
 
     private String offeror;//收购方
 
@@ -64,6 +68,22 @@ public class Contract {
     private String updateBy;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date updateTime;
+
+    public String getCpnum() {
+        return cpnum;
+    }
+
+    public void setCpnum(String cpnum) {
+        this.cpnum = cpnum;
+    }
+
+    public String getExtnum() {
+        return extnum;
+    }
+
+    public void setExtnum(String extnum) {
+        this.extnum = extnum;
+    }
 
     public String getContractId() {
         return contractId;
@@ -257,11 +277,12 @@ public class Contract {
         this.updateTime = updateTime;
     }
 
-    public Set<ContractProduct> getContractProducts() {
+
+    public List<ContractProduct> getContractProducts() {
         return contractProducts;
     }
 
-    public void setContractProducts(Set<ContractProduct> contractProducts) {
+    public void setContractProducts(List<ContractProduct> contractProducts) {
         this.contractProducts = contractProducts;
     }
 }
