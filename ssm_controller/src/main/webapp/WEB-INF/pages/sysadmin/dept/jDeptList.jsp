@@ -24,7 +24,7 @@
 	     }
 	     function toView(){
 	    	 if(isOnlyChecked()){
-	    		 formSubmit('deptAction_toview','_self');
+	    		 formSubmit('/sysadmin/toview','_self');
 	    	 }else{
 	    		 alert("请先选择一项并且只能选择一项，再进行操作！");
 	    	 }
@@ -32,7 +32,7 @@
 	     //实现更新
 	     function toUpdate(){
 	    	 if(isOnlyChecked()){
-	    		 formSubmit('deptAction_toupdate','_self');
+	    		 formSubmit('/sysadmin/updateUI','_self');
 	    	 }else{
 	    		 alert("请先选择一项并且只能选择一项，再进行操作！");
 	    	 }
@@ -47,11 +47,12 @@
 <div id="middleMenubar">
 <div id="innerMenubar">
   <div id="navMenubar">
+	  <input type="hidden" name="pageIndex" value="1"/>
 <ul>
 <li id="view"><a href="#" onclick="javascript:toView()">查看</a></li>
-<li id="new"><a href="#" onclick="formSubmit('deptAction_tocreate','_self');this.blur();">新增</a></li>
+<li id="new"><a href="#" onclick="formSubmit('/sysadmin/tocreate','_self');this.blur();">新增</a></li>
 <li id="update"><a href="#" onclick="javascript:toUpdate()">修改</a></li>
-<li id="delete"><a href="#" onclick="formSubmit('deptAction_delete','_self');this.blur();">删除</a></li>
+<li id="delete"><a href="#" onclick="formSubmit('/sysadmin/deleteDept','_self');this.blur();">删除</a></li>
 </ul>
   </div>
 </div>
@@ -82,25 +83,30 @@
 	</tr>
 	</thead>
 	<tbody class="tableBody" >
-  <%--  ${links }--%>
 
-  <c:forEach items="${depts }" var="dept" varStatus="st">
-		<tr class="odd" onmouseover="this.className='highlight'" onmouseout="this.className='odd'" >
-			  <td><input type="checkbox" name="id" value="${dept.id }"/></td>
-			  <td>${st.count }</td>
-			  <td>${dept.id }</td>
-			  <td>${dept.parent.deptName }</td>
-			  <td><a href="deptAction_toview?id=${dept.id }">${dept.deptName }</a></td>
+
+  <c:forEach items="${deptList }" var="dept" varStatus="status">
+		<tr class="odd" onmouseover="this.className='highlight'" onmouseout="this.className='odd'" align="left">
+			  <td><input type="checkbox" name="id" value="${dept.deptId }"/></td>
+			  <td>${(currentPageNo-1)*pageSize+status.count }</td>
+			  <td>${dept.deptId }</td>
+			  <td>${dept.parentId.deptName }</td>
+			  <td><a href="/sysadmin/toview?id=${dept.deptId }">${dept.deptName }</a></td>
 		</tr>
   </c:forEach>
-
 	</tbody>
 </table>
+	<input type="hidden" id="totalPageCount" value="${totalPageCount}"/>
+	<c:import url="../../rollpage.jsp">
+		<c:param name="totalCount" value="${totalCount}"/>
+		<c:param name="currentPageNo" value="${currentPageNo}"/>
+		<c:param name="totalPageCount" value="${totalPageCount}"/>
+	</c:import>
 </div>
  
 </div>
- 
- 
+</div>
+
 </form>
 </body>
 </html>

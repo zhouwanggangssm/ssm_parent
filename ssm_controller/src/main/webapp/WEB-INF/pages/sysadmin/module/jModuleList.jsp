@@ -13,11 +13,12 @@
 <div id="middleMenubar">
 <div id="innerMenubar">
   <div id="navMenubar">
+	             <input type="hidden" name="pageIndex" value="1"/>
 <ul>
-<li id="view"><a href="#" onclick="formSubmit('moduleAction_toview','_self');this.blur();">查看</a></li>
-<li id="new"><a href="#" onclick="formSubmit('moduleAction_tocreate','_self');this.blur();">新增</a></li>
-<li id="update"><a href="#" onclick="formSubmit('moduleAction_toupdate','_self');this.blur();">修改</a></li>
-<li id="delete"><a href="#" onclick="formSubmit('moduleAction_delete','_self');this.blur();">删除</a></li>
+<li id="view"><a href="#" onclick="formSubmit('/module/findmodulebyid','_self');this.blur();">查看</a></li>
+<li id="new"><a href="#" onclick="formSubmit('/module/addmoduleUI','_self');this.blur();">新增</a></li>
+<li id="update"><a href="#" onclick="formSubmit('/module/updateModuleUI','_self');this.blur();">修改</a></li>
+<li id="delete"><a href="#" onclick="formSubmit('/module/deleteModule','_self');this.blur();">删除</a></li>
 </ul>
   </div>
 </div>
@@ -52,28 +53,34 @@
 	</tr>
 	</thead>
 	<tbody class="tableBody" >
-	${links }
-	<c:forEach items="${results}" var="o" varStatus="status">
-	<tr class="odd" onmouseover="this.className='highlight'" onmouseout="this.className='odd'" >
-		<td><input type="checkbox" name="id" value="${o.id}"/></td>
-		<td>${status.index+1}</td>
-		<td><a href="moduleAction_toview?id=${o.id}">${o.name}</a></td>
-		<td>${o.layerNum}</td>
-		<td>${o.cpermission}</td>
-		<td>${o.curl}</td>
-		<td>${o.ctype}</td>
-		<td>${o.belong}</td>
-		<td>${o.state}</td>
+
+	<c:forEach items="${moduleList}" var="m" varStatus="status">
+	<tr class="odd" onmouseover="this.className='highlight'" onmouseout="this.className='odd'" align="left">
+		<td><input type="checkbox" name="id" value="${m.moduleId}"/></td>
+		<td>${(currentPageNo-1)*pageSize+status.count}</td>
+		<td><a href="/module/findmodulebyid?id=${m.moduleId}">${m.parentName}</a></td>
+		<td>${m.layerNum}</td>
+		<td>${m.cpermission}</td>
+		<td>${m.curl}</td>
+		<td>${m.ctype}</td>
+		<td>${m.belong}</td>
+		<td>${m.state}</td>
 	</tr>
 	</c:forEach>
 	
 	</tbody>
 </table>
+	<input type="hidden" id="totalPageCount" value="${totalPageCount}"/>
+	<c:import url="../../rollpage.jsp">
+		<c:param name="totalCount" value="${totalCount}"/>
+		<c:param name="currentPageNo" value="${currentPageNo}"/>
+		<c:param name="totalPageCount" value="${totalPageCount}"/>
+	</c:import>
 </div>
  
 </div>
  
- 
+</div>
 </form>
 </body>
 </html>

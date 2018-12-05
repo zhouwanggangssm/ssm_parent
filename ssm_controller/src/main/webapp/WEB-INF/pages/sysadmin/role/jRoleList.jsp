@@ -13,12 +13,14 @@
 <div id="middleMenubar">
 <div id="innerMenubar">
   <div id="navMenubar">
+
+	         <input type="hidden" name="pageIndex" value="1"/>
 <ul>
-<li id="view"><a href="#" onclick="formSubmit('roleAction_toview','_self');this.blur();">查看</a></li>
-<li id="new"><a href="#" onclick="formSubmit('roleAction_tocreate','_self');this.blur();">新增</a></li>
-<li id="update"><a href="#" onclick="formSubmit('roleAction_toupdate','_self');this.blur();">修改</a></li>
-<li id="delete"><a href="#" onclick="formSubmit('roleAction_delete','_self');this.blur();">删除</a></li>
-<li id="new"><a href="#" onclick="formSubmit('roleAction_tomodule','_self');this.blur();" title="分配权限">权限</a></li>
+<li id="view"><a href="#" onclick="formSubmit('/role/findRoleById','_self');this.blur();">查看</a></li>
+<li id="new"><a href="#" onclick="formSubmit('/role/addRoleUI','_self');this.blur();">新增</a></li>
+<li id="update"><a href="#" onclick="formSubmit('/role/updateRoleUI','_self');this.blur();">修改</a></li>
+<li id="delete"><a href="#" onclick="formSubmit('/role/deleteRole','_self');this.blur();">删除</a></li>
+<li id="new"><a href="#" onclick="formSubmit('/role/rolemoduleUI','_self');this.blur();" title="分配权限">权限</a></li>
 </ul>
   </div>
 </div>
@@ -49,24 +51,29 @@
 	</tr>
 	</thead>
 	<tbody class="tableBody" >
-	${links }
-	<c:forEach items="${results}" var="o" varStatus="status">
-	<tr class="odd" onmouseover="this.className='highlight'" onmouseout="this.className='odd'" >
-		<td><input type="checkbox" name="id" value="${o.id}"/></td>
-		<td>${status.index+1}</td>
-		<td>${o.id}</td>
-		<td><a href="roleAction_toview?id=${o.id}">${o.name}</a></td>
+	<c:forEach items="${roleList}" var="o" varStatus="status">
+	<tr class="odd" onmouseover="this.className='highlight'" onmouseout="this.className='odd'" align="left">
+		<td><input type="checkbox" name="id" value="${o.roleId}"/></td>
+		<td>${(currentPageNo-1)*pageSize+status.count}</td>
+		<td>${o.roleId}</td>
+		<td><a href="roleAction_toview?id=${o.roleId}">${o.name}</a></td>
 		<td>${o.remark}</td>
 	</tr>
 	</c:forEach>
 	
 	</tbody>
 </table>
+	<input type="hidden" id="totalPageCount" value="${totalPageCount}"/>
+	<c:import url="../../rollpage.jsp">
+		<c:param name="totalCount" value="${totalCount}"/>
+		<c:param name="currentPageNo" value="${currentPageNo}"/>
+		<c:param name="totalPageCount" value="${totalPageCount}"/>
+	</c:import>
 </div>
  
 </div>
- 
- 
+
+</div>
 </form>
 </body>
 </html>

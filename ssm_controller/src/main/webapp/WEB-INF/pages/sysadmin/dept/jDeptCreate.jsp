@@ -13,7 +13,7 @@
 <div id="innerMenubar">
   <div id="navMenubar">
 <ul>
-<li id="save"><a href="#" onclick="formSubmit('deptAction_insert','_self');this.blur();">保存</a></li>
+<li id="save"><a href="#" onclick="formSubmit('/sysadmin/adddept','_self');this.blur();">保存</a></li>
 <li id="back"><a href="#" onclick="history.go(-1);">返回</a></li>
 </ul>
   </div>
@@ -33,7 +33,12 @@
 	        <tr>
 	            <td class="columnTitle">上级部门：</td>
 	            <td class="tableContent">
-	            	<s:select name="parent.id" list="#deptList" headerKey="" headerValue="--请选择--" listKey="id" listValue="deptName"></s:select>
+	            	<select name="parentId.deptId">
+						    <option value="">-- 请选择 --</option>
+						<c:forEach items="${deptList}" var="dept">
+							<option value="${dept.deptId}">${dept.deptName}</option>
+						</c:forEach>
+					</select>
 	            </td>
 	        </tr>		
 	        <tr>

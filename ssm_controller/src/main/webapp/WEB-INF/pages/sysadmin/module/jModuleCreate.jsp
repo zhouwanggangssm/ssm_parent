@@ -13,7 +13,7 @@
 <div id="innerMenubar">
   <div id="navMenubar">
 <ul>
-<li id="save"><a href="#" onclick="formSubmit('moduleAction_insert','_self');this.blur();">保存</a></li>
+<li id="save"><a href="#" onclick="formSubmit('/module/addmodule','_self');this.blur();">保存</a></li>
 <li id="back"><a href="#" onclick="history.go(-1);">返回</a></li>
 </ul>
   </div>
@@ -36,7 +36,9 @@
 		<table class="commonTable" cellspacing="1">
 	        <tr>
 	            <td class="columnTitle">模块名：</td>
-	            <td class="tableContent"><input type="text" name="name" value=""/></td>
+	            <td class="tableContent"><input type="text" name="parentName" value=""/></td>
+                <td class="columnTitle">权限标识：</td>
+                <td class="tableContent"><input type="text" name="name" value=""/></td>
 	            <td class="columnTitle">层数：</td>
 	            <td class="tableContent"><input type="text" name="layerNum" value=""/></td>
 	        </tr>		
@@ -78,7 +80,7 @@
 		</table>
 	</div>
  
- 
+</div>
 </form>
 </body>
 </html>

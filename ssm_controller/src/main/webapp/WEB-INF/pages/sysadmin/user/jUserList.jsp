@@ -24,7 +24,7 @@
 	     }
 	     function toView(){
 	    	 if(isOnlyChecked()){
-	    		 formSubmit('userAction_toview','_self');
+	    		 formSubmit('/user/findByIdUser','_self');
 	    	 }else{
 	    		 alert("请先选择一项并且只能选择一项，再进行操作！");
 	    	 }
@@ -32,7 +32,7 @@
 	     //实现更新
 	     function toUpdate(){
 	    	 if(isOnlyChecked()){
-	    		 formSubmit('userAction_toupdate','_self');
+	    		 formSubmit('/user/getUpdateUI','_self');
 	    	 }else{
 	    		 alert("请先选择一项并且只能选择一项，再进行操作！");
 	    	 }
@@ -46,12 +46,13 @@
 <div id="middleMenubar">
 <div id="innerMenubar">
   <div id="navMenubar">
+	        <input type="hidden" name="pageIndex" value="1"/>
 <ul>
 <li id="view"><a href="javascript:toView()">查看</a></li>
-<li id="new"><a href="#" onclick="formSubmit('userAction_tocreate','_self');this.blur();">新增</a></li>
+<li id="new"><a href="#" onclick="formSubmit('/user/getUpUserUI','_self');this.blur();">新增</a></li>
 <li id="update"><a href="#" onclick="javascript:toUpdate()">修改</a></li>
-<li id="update"><a href="#" onclick="formSubmit('userAction_torole','_self');this.blur();">角色</a></li>
-<li id="delete"><a href="#" onclick="formSubmit('userAction_delete','_self');this.blur();">删除</a></li>
+<li id="update"><a href="#" onclick="formSubmit('/user/UserRoleUI','_self');this.blur();">角色</a></li>
+<li id="delete"><a href="#" onclick="formSubmit('/user/deleteUser','_self');this.blur();">删除</a></li>
 </ul>
   </div>
 </div>
@@ -81,24 +82,37 @@
 	</tr>
 	</thead>
 	<tbody class="tableBody" >
-${links}
+
 	
-	<c:forEach items="${results}" var="o" varStatus="status">
-	<tr class="odd" onmouseover="this.className='highlight'" onmouseout="this.className='odd'" >
-		<td><input type="checkbox" name="id" value="${o.id}"/></td>
-		<td>${status.index+1}</td>
-		<td><a href="userAction_toview?id=${o.id}">${o.userName}</a></td>
-		<td>${o.state }</td>
+	<c:forEach items="${userList}" var="user" varStatus="status">
+	<tr class="odd" onmouseover="this.className='highlight'" onmouseout="this.className='odd'" align="left">
+		<td><input type="checkbox" name="id" value="${user.userId}"/></td>
+		<td>${(currentPageNo-1)*pageSize+status.count}</td>
+		<td><a href="/user/findByIdUser?id=${user.userId}">${user.userName}</a></td>
+		<c:choose>
+			<c:when test="${user.state==1}">
+				<td>启用</td>
+			</c:when>
+			<c:otherwise>
+                <td>停用</td>
+			</c:otherwise>
+		</c:choose>
 	</tr>
 	</c:forEach>
 	
 	</tbody>
 </table>
+	<input type="hidden" id="totalPageCount" value="${totalPageCount}"/>
+	<c:import url="../../rollpage.jsp">
+		<c:param name="totalCount" value="${totalCount}"/>
+		<c:param name="currentPageNo" value="${currentPageNo}"/>
+		<c:param name="totalPageCount" value="${totalPageCount}"/>
+	</c:import>
 </div>
  
 </div>
- 
- 
+
+</div>
 </form>
 </body>
 </html>

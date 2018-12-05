@@ -15,7 +15,7 @@
 		<div class="zck">
 			<div class="inputstyle">
 				<div class="inputlable">用户名：
-					<input type="text" value="" name="userName" id="userName" onFocus="this.select();" title="请您输入用户名"/>
+					<input type="text" value="" name="username" id="userName" onFocus="this.select();" title="请您输入用户名"/>
 					<div id="ts" style="z-index:1;">
 					</div>
 				</div>
@@ -26,11 +26,11 @@
 				</div>
 			</div>
 			<div class="btnstyle">
-				<input  class="loginImgOut" value="" type="button" onclick="formSubmit('${ctx}/fmain.action','_self');"
+				<input  class="loginImgOut" value="" type="button" onclick="formSubmit('${ctx}/dologin','_self');"
 				  onmouseover="this.className='loginImgOver'" 
 				  onmouseout="this.className='loginImgOut'"
 				/>
-				<input class="resetImgOut" value="" type="button"   
+				<input class="resetImgOut" value="" type="reset"
 				  onmouseover="this.className='resetImgOver'" 
 				  onmouseout="this.className='resetImgOut'"
 				/>

@@ -14,7 +14,7 @@
 	<div class="box">
 			<div class="inputstyle">
 				<div class="inputlable">用户名：
-					<input type="text" value="${userName}" name="username" id="userName" onFocus="this.select();" title="请您输入用户名"/>
+					<input type="text" value="${userName}" name="username" id="usename" onFocus="this.select();" title="请您输入用户名"/>
 					<div id="ts" style="z-index:1;">
 					</div>
 				</div>
@@ -25,11 +25,11 @@
 				</div>
 			</div>
 			<div class="btnstyle">
-				<input  class="loginImgOut" value="" type="button" onclick="formSubmit('${ctx}/login.action','_self');"
+				<input  class="loginImgOut" value="" type="button" onclick="formSubmit('${ctx}/dologin','_self');"
 				  onmouseover="this.className='loginImgOver'" 
 				  onmouseout="this.className='loginImgOut'"
 				/>
-				<input class="resetImgOut" value="" type="button"   
+				<input class="resetImgOut" value="" type="button"
 				  onmouseover="this.className='resetImgOver'" 
 				  onmouseout="this.className='resetImgOut'"
 				/>

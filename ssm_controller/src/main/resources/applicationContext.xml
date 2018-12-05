@@ -31,13 +31,17 @@
 	<bean id="sqlDao" class="cn.xt.dao.springDao.SqlDao">
 		<property name="jdbcTemplate" ref="jdbcTemplate"></property>
 	</bean>
-	
+
+    <!--Shiro安全框架产生代理子类的方式：使用cglib方式-->
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+
+
 	<!-- 事务管理器 -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 
-	<!-- 开启的事务，使用xml配置形式的事务(必要主要的都是使用配置式) -->
+	<!-- 开启基于注解的事务，使用xml配置形式的事务(必要主要的都是使用配置式) -->
 	<aop:config>
 		<!-- 切入点表达式 -->
 		<aop:pointcut expression="execution(* cn.xt.service..*(..))" id="pointcut"/>

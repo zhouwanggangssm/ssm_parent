@@ -6,6 +6,17 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface RoleModuleMapper {
+
+    /****
+     * 查询角色所拥有的模块
+     * @param roleId
+     * @return
+     * @throws Exception
+     */
+    List<RoleModule> findRoleModuleroleId(@Param("roleId") String roleId) throws Exception;
+
+
+
     long countByExample(RoleModuleExample example);
 
     int deleteByExample(RoleModuleExample example);

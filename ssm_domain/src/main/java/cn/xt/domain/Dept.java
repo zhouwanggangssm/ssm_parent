@@ -1,13 +1,17 @@
 package cn.xt.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Dept {
-    private String deptId;
+    private String deptId;//部门id
+    private Set<User> users=new HashSet<User>(0);//一个部门对应多个用户
 
-    private String deptName;
+    private String deptName;//部门名称
 
-    private String parentId;
+    private Dept parentId;//上级部门id  自关联
 
-    private Integer state;
+    private Integer state;//状态
 
     public String getDeptId() {
         return deptId;
@@ -25,12 +29,12 @@ public class Dept {
         this.deptName = deptName == null ? null : deptName.trim();
     }
 
-    public String getParentId() {
+    public Dept getParentId() {
         return parentId;
     }
 
-    public void setParentId(String parentId) {
-        this.parentId = parentId == null ? null : parentId.trim();
+    public void setParentId(Dept parentId) {
+        this.parentId = parentId ;
     }
 
     public Integer getState() {
@@ -39,5 +43,13 @@ public class Dept {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }

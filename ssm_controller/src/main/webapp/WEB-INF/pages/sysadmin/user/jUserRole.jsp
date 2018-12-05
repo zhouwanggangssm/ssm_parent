@@ -12,15 +12,15 @@
 
 <body>
 <form name="icform" method="post">
-	<input type="hidden" name="id" value="${id}"/>
+	<input type="hidden" name="userId" value="${userInfo.userInfoId}"/>
 
 <div id="menubar">
 <div id="middleMenubar">
 <div id="innerMenubar">
   <div id="navMenubar">
 <ul>
-<li id="save"><a href="#" onclick="formSubmit('userAction_role','_self');this.blur();">保存</a></li>
-<li id="back"><a href="#" onclick="formSubmit('userAction_list','_self');this.blur();">返回</a></li>
+<li id="save"><a href="#" onclick="formSubmit('/user/saveUserRole','_self');this.blur();">保存</a></li>
+<li id="back"><a href="#" onclick="formSubmit('/user/user_list','_self');this.blur();">返回</a></li>
 </ul>
   </div>
 </div>
@@ -42,19 +42,19 @@
 <div style="text-align:left">
 	<c:forEach items="${roleList}" var="o">
 		<span style="padding:3px;">
-		<input type="checkbox" name="roleIds" value="${o.id}" class="input"
+		<input type="checkbox" name="roleId" value="${o.roleId}" class="input"
 			<c:if test="${fn:contains(userRoleStr,o.name)}">checked</c:if>
 		>
 		${o.name}
 		</span>
-		
+
 	</c:forEach>
 	
 </div>
  
 </div>
- 
- 
+
+</div>
 </form>
 </body>
 </html>

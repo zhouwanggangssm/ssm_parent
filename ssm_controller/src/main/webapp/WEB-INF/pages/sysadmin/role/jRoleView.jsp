@@ -35,16 +35,16 @@
 		<table class="commonTable" cellspacing="1">
 	        <tr>
 	            <td class="columnTitle">名称：</td>
-	            <td class="tableContent">${name}</td>
+	            <td class="tableContent">${role.name}</td>
 	        </tr>		
 	        <tr>
 	            <td class="columnTitle">说明：</td>
-	            <td class="tableContent">${remark}</td>
+	            <td class="tableContent">${role.remark}</td>
 	        </tr>		
 		</table>
 	</div>
  
- 
+</div>
 </form>
 </body>
 </html>

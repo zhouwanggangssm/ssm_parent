@@ -1,49 +1,53 @@
 package cn.xt.domain;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Module {
-    private String moduleId;
+    private String moduleId;//模块id
 
-    private String parentId;
+    private Set<Role> roles=new HashSet<Role>(0);//模块与角色 多对多
 
-    private String parentName;
+    private String parentId;//父模块的编号
 
-    private String name;
+    private String parentName;//父模块的名称 用空间换时间
 
-    private Integer layerNum;
+    private String name;//模块名
 
-    private Integer isLeaf;
+    private Integer layerNum;//层数
 
-    private String ico;
+    private Integer isLeaf;//叶子
 
-    private String cpermission;
+    private String ico;//图片
 
-    private String curl;
+    private String cpermission;//权限
 
-    private Integer ctype;
+    private String curl;//路径
 
-    private Integer state;
+    private Integer ctype;//菜单的类型：主菜单，左侧菜单，按钮
 
-    private String belong;
+    private Integer state;//状态
 
-    private String cwhich;
+    private String belong;//从属于
 
-    private Integer quoteNum;
+    private String cwhich;//
 
-    private String remark;
+    private Integer quoteNum;//引用次数
 
-    private Integer orderNo;
+    private String remark;//备注
 
-    private String createBy;
+    private Integer orderNo;//排序号
 
-    private String createDept;
+    private String createBy;//创建人id
 
-    private Date createTime;
+    private String createDept;//创建人部门
 
-    private String updateBy;
+    private Date createTime;//创建时间
 
-    private Date updateTime;
+    private String updateBy;//修改人id
+
+    private Date updateTime;//修改时间
 
     public String getModuleId() {
         return moduleId;
@@ -211,5 +215,13 @@ public class Module {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

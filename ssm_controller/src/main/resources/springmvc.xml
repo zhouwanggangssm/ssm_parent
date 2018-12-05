@@ -41,4 +41,7 @@
 		<property name="defaultEncoding" value="UTF-8"></property>
 		<property name="maxUploadSize" value="5000000"></property>
 	</bean>
+
+
+	<bean class="org.springframework.web.servlet.HandlerInterceptor" abstract="true"></bean>
 </beans>

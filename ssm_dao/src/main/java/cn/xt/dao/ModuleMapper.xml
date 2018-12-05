@@ -1,6 +1,148 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.xt.dao.ModuleMapper">
+
+  <resultMap id="moduleMap1" type="cn.xt.domain.Module">
+    <id column="MODULE_ID" jdbcType="VARCHAR" property="moduleId" />
+    <result column="PARENT_ID" jdbcType="VARCHAR" property="parentId" />
+    <result column="PARENT_NAME" jdbcType="VARCHAR" property="parentName" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="LAYER_NUM" jdbcType="INTEGER" property="layerNum" />
+    <result column="IS_LEAF" jdbcType="INTEGER" property="isLeaf" />
+    <result column="ICO" jdbcType="VARCHAR" property="ico" />
+    <result column="CPERMISSION" jdbcType="VARCHAR" property="cpermission" />
+    <result column="CURL" jdbcType="VARCHAR" property="curl" />
+    <result column="CTYPE" jdbcType="INTEGER" property="ctype" />
+    <result column="STATE" jdbcType="INTEGER" property="state" />
+    <result column="BELONG" jdbcType="VARCHAR" property="belong" />
+    <result column="CWHICH" jdbcType="VARCHAR" property="cwhich" />
+    <result column="QUOTE_NUM" jdbcType="INTEGER" property="quoteNum" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="ORDER_NO" jdbcType="INTEGER" property="orderNo" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_DEPT" jdbcType="VARCHAR" property="createDept" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <select id="findModule" resultMap="moduleMap1">
+    select * from module_p
+  </select>
+
+
+  <select id="CountModule" resultType="int">
+    select count(1) as count from module_p
+  </select>
+
+
+
+
+
+    <resultMap id="moduleMap2" type="cn.xt.domain.Module">
+        <id column="MODULE_ID" jdbcType="VARCHAR" property="moduleId" />
+        <result column="PARENT_ID" jdbcType="VARCHAR" property="parentId" />
+        <result column="PARENT_NAME" jdbcType="VARCHAR" property="parentName" />
+        <result column="NAME" jdbcType="VARCHAR" property="name" />
+        <result column="LAYER_NUM" jdbcType="INTEGER" property="layerNum" />
+        <result column="IS_LEAF" jdbcType="INTEGER" property="isLeaf" />
+        <result column="ICO" jdbcType="VARCHAR" property="ico" />
+        <result column="CPERMISSION" jdbcType="VARCHAR" property="cpermission" />
+        <result column="CURL" jdbcType="VARCHAR" property="curl" />
+        <result column="CTYPE" jdbcType="INTEGER" property="ctype" />
+        <result column="STATE" jdbcType="INTEGER" property="state" />
+        <result column="BELONG" jdbcType="VARCHAR" property="belong" />
+        <result column="CWHICH" jdbcType="VARCHAR" property="cwhich" />
+        <result column="QUOTE_NUM" jdbcType="INTEGER" property="quoteNum" />
+        <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+        <result column="ORDER_NO" jdbcType="INTEGER" property="orderNo" />
+        <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+        <result column="CREATE_DEPT" jdbcType="VARCHAR" property="createDept" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    </resultMap>
+  <select id="findModuleById" resultMap="moduleMap2">
+    select * from module_p
+    <where>
+      <if test="moduleId!=null">MODULE_ID=#{moduleId}</if>
+    </where>
+  </select>
+
+
+
+  <insert id="addModule" parameterType="Module">
+    insert into
+    module_p(MODULE_ID,PARENT_NAME,NAME,LAYER_NUM,CPERMISSION,CURL,CTYPE,STATE,BELONG,CWHICH,REMARK,ORDER_NO,CREATE_BY,CREATE_DEPT,CREATE_TIME,UPDATE_TIME)
+    values(#{moduleId},#{parentName},#{name},#{layerNum},#{cpermission},#{curl},#{state},#{ctype},#{belong},#{cwhich},#{remark},#{orderNo},#{createBy},#{createDept},#{createTime},#{updateTime})
+  </insert>
+
+
+
+  <update id="updateModule" parameterType="Module">
+    update module_p
+    <set>
+      <if test="parentName!=null">PARENT_NAME=#{parentName},</if>
+      <if test="name!=null">NAME=#{name},</if>
+      <if test="layerNum!=null">LAYER_NUM=#{layerNum},</if>
+      <if test="cpermission!=null">CPERMISSION=#{cpermission},</if>
+      <if test="curl!=null">CURL=#{curl},</if>
+      <if test="state!=null">STATE=#{state},</if>
+      <if test="ctype!=null">CTYPE=#{ctype},</if>
+      <if test="belong!=null">BELONG=#{belong},</if>
+      <if test="cwhich=null">CWHICH=#{cwhich},</if>
+      <if test="remark!=null">REMARK=#{remark},</if>
+      <if test="orderNo!=null">ORDER_NO=#{orderNo},</if>
+      <if test="updateBy!=null">UPDATE_BY=#{updateBy},</if>
+      <if test="updateTime!=null">UPDATE_TIME=#{updateTime}</if>
+    </set>
+    where MODULE_ID=#{moduleId}
+  </update>
+
+
+  <delete id="deleteModule">
+    delete from module_p
+    <where>
+      <if test="moduleId!=null">MODULE_ID=#{moduleId}</if>
+    </where>
+  </delete>
+
+
+  <delete id="deleteModuleList" parameterType="java.util.List">
+    delete from module_p where 1>2
+    or MODULE_ID in
+    <foreach collection="moduleIds" item="moduleId" open="(" close=")" separator=",">
+      #{moduleId}
+    </foreach>
+  </delete>
+
+  <delete id="deleteRoleModuleId">
+    delete from  role_module_p
+    <where>
+      <if test="moduleId!=null">MODULE_ID=#{moduleId}</if>
+    </where>
+  </delete>
+
+
+
+
+  <delete id="deleteRoleModuleList" parameterType="java.util.List">
+    delete from role_module_p where 1>2
+    or MODULE_ID in
+    <foreach collection="moduleIds" item="moduleId" open="(" close=")" separator=",">
+      #{moduleId}
+    </foreach>
+  </delete>
+
+
+
+
+
+
+
+
+
+
+
   <resultMap id="BaseResultMap" type="cn.xt.domain.Module">
     <id column="MODULE_ID" jdbcType="VARCHAR" property="moduleId" />
     <result column="PARENT_ID" jdbcType="VARCHAR" property="parentId" />

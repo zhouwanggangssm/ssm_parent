@@ -1,5 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ include file="../../base.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title></title>
@@ -14,7 +15,7 @@
 <div id="innerMenubar">
   <div id="navMenubar">
 <ul>
-<li id="save"><a href="#" onclick="formSubmit('userAction_insert','_self');this.blur();">保存</a></li>
+<li id="save"><a href="#" onclick="formSubmit('/user/addUserOraddUserInfo','_self');this.blur();">保存</a></li>
 <li id="back"><a href="#" onclick="history.go(-1);">返回</a></li>
 </ul>
   </div>
@@ -38,10 +39,12 @@
        		<tr>
 	            <td class="columnTitle">所在部门：</td>
 	            <td class="tableContent">
-	            	<s:select name="dept.id" list="deptList"
-	            		listKey="id" listValue="deptName"
-	            		headerKey="" headerValue="--请选择--"
-	            	></s:select>
+                    <select name="dept.deptId">
+                        <option value="">-- 请选择 --</option>
+                        <c:forEach items="${deptList}" var="dept">
+                            <option value="${dept.deptId}">${dept.deptName}</option>
+                        </c:forEach>
+                    </select>
 	            </td>
 	        </tr>
         	<tr>
@@ -55,62 +58,63 @@
 	        </tr>
         	<tr>
 	            <td class="columnTitle">姓名：</td>
-	            <td class="tableContent"><input type="text" name="userInfo.name" value=""/></td>
+	            <td class="tableContent"><input type="text" name="name" value=""/></td>
 	            <td class="columnTitle">直属领导：</td>
 	            <td class="tableContent">
-	            	<s:select name="userInfo.manager.id" list="userList"
-	            		listKey="id" listValue="userInfo.name"
-	            		headerKey="" headerValue="--请选择--"
-	            	></s:select>
+                    <select name="manager.userId">
+                        <option value="">-- 请选择 --</option>
+                        <c:forEach items="${userList}" var="userlist">
+                            <option value="${userlist.userInfoId}">${userlist.name}</option>
+                        </c:forEach>
+                    </select>
 	            </td>
 	        </tr>		
 	        <tr>
 	            <td class="columnTitle">入职时间：</td>
 	            <td class="tableContent">
-					<input type="text" style="width:90px;" name="userInfo.joinDate"
+					<input type="text" style="width:90px;" name="joinDate"
 	            	 value=""
-	             	onclick="WdatePicker({el:this,isShowOthers:true,dateFmt:'yyyy-MM-dd'});"/>
+	             	onclick="WdatePicker({el:this,isShowOthers:true,dateFmt:'yyyy-MM-dd HH'});"/>
 				</td>
 				<td class="columnTitle">薪水：</td>
-	            <td class="tableContent"><input type="text" name="userInfo.salary" value=""/></td>
+	            <td class="tableContent"><input type="text" name="salary" value=""/></td>
 	        </tr>		
 	        <tr>
 	            <td class="columnTitle">等级：</td>
 	            <td class="tableContentAuto">
-	            	<input type="radio" name="userInfo.degree" value="0" class="input"/>超级管理员
-	            	<input type="radio" name="userInfo.degree" value="1" class="input"/>跨部门跨人员
-	            	<input type="radio" name="userInfo.degree" value="2" class="input"/>管理所有下属部门和人员
-	            	<input type="radio" name="userInfo.degree" value="3" class="input"/>管理本部门
-	            	<input type="radio" name="userInfo.degree" value="4" class="input"/>普通员工
+	            	<input type="radio" name="degree" value="0" class="input"/>超级管理员
+	            	<input type="radio" name="degree" value="1" class="input"/>跨部门跨人员
+	            	<input type="radio" name="degree" value="2" class="input"/>管理所有下属部门和人员
+	            	<input type="radio" name="degree" value="3" class="input"/>管理本部门
+	            	<input type="radio" name="degree" value="4" class="input"/>普通员工
 	            </td>
 				<td class="columnTitle">性别：</td>
 	            <td class="tableContentAuto">
-	            	<input type="radio" name="userInfo.gender" value="1" class="input"/>男
-	            	<input type="radio" name="userInfo.gender" value="0" class="input"/>女
+	            	<input type="radio" name="gender" value="1" class="input"/>男
+	            	<input type="radio" name="gender" value="0" class="input"/>女
 	            </td>
 	        </tr>	
         	<tr>
 	            <td class="columnTitle">岗位：</td>
-	            <td class="tableContent"><input type="text" name="userInfo.station" value=""/></td>
+	            <td class="tableContent"><input type="text" name="station" value=""/></td>
 	            <td class="columnTitle">电话：</td>
-	            <td class="tableContent"><input type="text" name="userInfo.telephone" value=""/></td>
+	            <td class="tableContent"><input type="text" name="telephone" value=""/></td>
 	        </tr>	
         	<tr>
-        	    <td class="columnTitle">邮箱：</td>
-	            <td class="tableContent"><input type="text" name="userInfo.email" value=""/></td>
+
 	            <td class="columnTitle">出生年月：</td>
 	            <td class="tableContent">
-					<input type="text" style="width:90px;" name="userInfo.birthday"
+					<input type="text" style="width:90px;" name="birthday"
 	            	 value=""
 	             	onclick="WdatePicker({el:this,isShowOthers:true,dateFmt:'yyyy-MM-dd'});"/>
 				</td>
 	        </tr>	
         	<tr>
         	    <td class="columnTitle">排序号：</td>
-	            <td class="tableContent"><input type="text" name="userInfo.orderNo" value=""/></td>
+	            <td class="tableContent"><input type="text" name="orderNo" value=""/></td>
 	            <td class="columnTitle">说明：</td>
 	            <td class="tableContent">
-	            	<textarea name="userInfo.remark" style="height:120px;"></textarea>
+	            	<textarea name="remark" style="height:120px;"></textarea>
 	            </td>
 	        </tr>	
 		</table>

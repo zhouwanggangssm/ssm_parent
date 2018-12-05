@@ -1,5 +1,6 @@
 package cn.xt.domain;
 
+
 public class RoleUser {
     private String roleId;
 
@@ -19,5 +20,14 @@ public class RoleUser {
 
     public void setUserId(String userId) {
         this.userId = userId == null ? null : userId.trim();
+    }
+
+
+    @Override
+    public String toString() {
+        return "RoleUser{" +
+                "roleId='" + roleId + '\'' +
+                ", userId='" + userId + '\'' +
+                '}';
     }
 }

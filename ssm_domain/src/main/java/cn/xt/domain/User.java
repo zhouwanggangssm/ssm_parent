@@ -1,27 +1,35 @@
 package cn.xt.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class User {
     private String userId;
 
-    private String deptId;
+    private Dept dept;//用户与部门  多对一
 
-    private String userName;
+    private UserInfo userInfo;//用户与用户扩展 一对一
 
-    private String password;
+    private Set<Role> roles=new HashSet<Role>(0);//用户与角色 多对多
 
-    private Integer state;
+    private String userName;//用户名
 
-    private String createBy;
+    private String password;//密码 要加密
 
-    private String createDept;
+    private Integer state;//状态
 
-    private Date createTime;
+    private String createBy;//创建者的id
 
-    private String updateBy;
+    private String createDept;//创建者所在部门的id
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date createTime;//创建时间
 
-    private Date updateTime;
+    private String updateBy;//更新者的id
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date updateTime;//更新时间
 
     public String getUserId() {
         return userId;
@@ -31,12 +39,12 @@ public class User {
         this.userId = userId == null ? null : userId.trim();
     }
 
-    public String getDeptId() {
-        return deptId;
+    public Dept getDept() {
+        return dept;
     }
 
-    public void setDeptId(String deptId) {
-        this.deptId = deptId == null ? null : deptId.trim();
+    public void setDept(Dept dept) {
+        this.dept = dept;
     }
 
     public String getUserName() {
@@ -101,5 +109,21 @@ public class User {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

@@ -7,14 +7,14 @@
 
 <body>
 <form name="icform" method="post">
-      <input type="hidden" name="id" value="${id}"/>
+      <input type="hidden" name="deptId" value="${dept.deptId}"/>
       
 <div id="menubar">
 <div id="middleMenubar">
 <div id="innerMenubar">
   <div id="navMenubar">
 <ul>
-<li id="save"><a href="#" onclick="formSubmit('deptAction_update','_self');this.blur();">保存</a></li>
+<li id="save"><a href="#" onclick="formSubmit('/sysadmin/updateDept','_self');this.blur();">保存</a></li>
 <li id="back"><a href="#" onclick="history.go(-1);">返回</a></li>
 </ul>
   </div>
@@ -34,15 +34,18 @@
 	        <tr>
 	            <td class="columnTitle">上级部门：</td>
 	            <td class="tableContent">
-	            	<s:select name="parent.id" list="deptList"
-	            		listKey="id" listValue="deptName"
-	            		headerKey="" headerValue="--请选择--"
-	            	></s:select>
+					<select name="parentId.deptId">
+						<c:forEach items="${deptList}" var="deptlist">
+								<c:if test="${deptlist.deptId!=dept.deptId}">
+									<option value="${deptlist.deptId}" selected="selected">${deptlist.deptName}</option>
+								</c:if>
+						</c:forEach>
+					</select>
 	            </td>
 	        </tr>		
 	        <tr>
 	            <td class="columnTitle">部门名称：</td>
-	            <td class="tableContent"><input type="text" name="deptName" value="${deptName }"/>
+	            <td class="tableContent"><input type="text" name="deptName" value="${dept.deptName }"/>
 	            </td>
 	        </tr>		
 		</table>

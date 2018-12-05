@@ -1,25 +1,33 @@
 package cn.xt.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Role {
     private String roleId;
 
-    private String name;
+    private Set<User> users=new HashSet<User>(0);//角色与用户 多对多
 
-    private String remark;
+    private Set<Module> modules=new HashSet<>(0);//角色与模块 多对多
 
-    private Integer orderNo;
+    private String name;//角色名
 
-    private String createBy;
+    private String remark;//备注
 
-    private String createDept;
+    private Integer orderNo;//排序号
 
-    private Date createTime;
+    private String createBy;//创建者id
 
-    private String updateBy;
+    private String createDept;//创建者部门
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date createTime;//创建时间
 
-    private Date updateTime;
+    private String updateBy;//更新者id
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date updateTime;//更新时间
 
     public String getRoleId() {
         return roleId;
@@ -91,5 +99,21 @@ public class Role {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
+    public Set<Module> getModules() {
+        return modules;
+    }
+
+    public void setModules(Set<Module> modules) {
+        this.modules = modules;
     }
 }

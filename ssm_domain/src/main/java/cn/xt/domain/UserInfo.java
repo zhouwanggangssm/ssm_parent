@@ -1,42 +1,44 @@
 package cn.xt.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
 public class UserInfo {
     private String userInfoId;
 
-    private String name;
+    private String name;//姓名
 
-    private String managerId;
+    private User manager;//用户与直属领导  多对一
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date joinDate;//入职时间
 
-    private Date joinDate;
+    private BigDecimal salary;//薪水
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date birthday;//出生年月
 
-    private BigDecimal salary;
+    private String gender;//性别
 
-    private Date birthday;
+    private String station;//岗位
 
-    private String gender;
+    private String telephone;//电话
 
-    private String station;
+    private Integer degree;//等级
 
-    private String telephone;
+    private String remark;//备注
 
-    private Integer degree;
+    private Integer orderNo;//排序号
 
-    private String remark;
+    private String createBy;//创建者id
 
-    private Integer orderNo;
+    private String createDept;//创建者所在部门
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date createTime;//创建时间
 
-    private String createBy;
-
-    private String createDept;
-
-    private Date createTime;
-
-    private String updateBy;
-
-    private Date updateTime;
+    private String updateBy;//更新者id
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date updateTime;//更新时间
 
     public String getUserInfoId() {
         return userInfoId;
@@ -54,12 +56,12 @@ public class UserInfo {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getManagerId() {
-        return managerId;
+    public User getManager() {
+        return manager;
     }
 
-    public void setManagerId(String managerId) {
-        this.managerId = managerId == null ? null : managerId.trim();
+    public void setManager(User manager) {
+        this.manager = manager;
     }
 
     public Date getJoinDate() {
@@ -173,4 +175,6 @@ public class UserInfo {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+
 }

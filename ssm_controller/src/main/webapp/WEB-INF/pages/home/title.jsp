@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%--<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro" %>--%>
 <jsp:useBean id="now" class="java.util.Date"  />
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<shiro:hasRole name="user"></shiro:hasRole>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
@@ -214,15 +216,15 @@
 			    	<div class="mavMeau_top"></div>
 			    	<div id="mask">
 <div id="menuContent">
-	 <span id="topmenu" onclick="toModule('home');">系统首页</span><span id="tm_separator"></span>
-	<span id="topmenu" onclick="toModule('cargo');">货运管理</span><span id="tm_separator"></span>
-	<span id="topmenu" onclick="toModule('stat');">统计分析</span><span id="tm_separator"></span>
-	<span id="topmenu" onclick="toModule('baseinfo');">基础信息</span><span id="tm_separator"></span>
-	<span id="topmenu" onclick="toModule('sysadmin');">系统管理</span> 
+	 <%--<span id="topmenu" onclick="toModule('home');">系统首页</span><span id="tm_separator"></span>--%>
+	<%--<span id="topmenu" onclick="toModule('cargo');">货运管理</span><span id="tm_separator"></span>--%>
+	<%--<span id="topmenu" onclick="toModule('stat');">统计分析</span><span id="tm_separator"></span>--%>
+	<%--<span id="topmenu" onclick="toModule('baseinfo');">基础信息</span><span id="tm_separator"></span>--%>
+	<%--<span id="topmenu" onclick="toModule('sysadmin');">系统管理</span> --%>
 	 
 	 
 	 <!-- 当jsp页面碰到shiro标签时就执行AuthRealm中授权方法 -->
-	<%-- <shiro:hasPermission name="系统首页">
+	<shiro:hasPermission name="系统首页">
 	<span id="topmenu" onclick="toModule('home');">系统首页</span><span id="tm_separator"></span>
 	</shiro:hasPermission>
 	<shiro:hasPermission name="货运管理">
@@ -239,7 +241,7 @@
 	</shiro:hasPermission>
 	<shiro:hasPermission name="流程管理">
 	<span id="topmenu" onclick="toModule('activiti');">流程管理</span>
-	</shiro:hasPermission> --%>
+	</shiro:hasPermission>
 
 </div>
 					<span id="rightKey" onmouseover="periodOffset(this, 'right')"><img src="${ctx}/skin/default/images/title/right_arrow.png"/></span>
