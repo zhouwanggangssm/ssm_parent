@@ -24,11 +24,26 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <!--整合CXF WebService-->
+    <servlet>
+        <servlet-name>cxf</servlet-name>
+        <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+        <init-param>
+            <param-name>config-location</param-name>
+            <param-value>classpath:cxf-servlet.xml</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>cxf</servlet-name>
+        <url-pattern>/cxf/*</url-pattern>
+    </servlet-mapping>
+
     <!-- needed for ContextLoaderListener -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:applicationContext.xml</param-value>
     </context-param>
+
 
     <!-- Bootstraps the root web application context before servlet initialization -->
     <listener>

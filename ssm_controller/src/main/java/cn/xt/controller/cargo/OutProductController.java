@@ -26,6 +26,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 出货表打印
+ */
 @Controller
 @RequestMapping("/cargo")
 public class OutProductController {

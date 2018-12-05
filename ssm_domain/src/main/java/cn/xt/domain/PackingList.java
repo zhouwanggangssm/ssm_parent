@@ -23,7 +23,7 @@ public class PackingList {
 
     private String exportNos;//存储报运号
 
-    private Integer state;//状态 0 草稿 1上报
+    private Integer state;//状态 0 草稿 1上报 2委托
 
     private String createBy;//创建人
 

@@ -7,9 +7,14 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
+@WebService
 public class ExportService {
     @Autowired
     private ExportMapper exportMapper;
@@ -20,10 +25,16 @@ public class ExportService {
     @Autowired
     private ExtEproductMapper extEproductMapper;
 
+    @WebMethod(exclude = true)
+    public void setExportMapper(ExportMapper exportMapper) {
+        this.exportMapper = exportMapper;
+    }
+
     /**
      * 查询所有报运单
      * @return
      */
+    @WebMethod(exclude = true)
    public List<Export> findList(){
        return exportMapper.find();
    }
@@ -32,6 +43,7 @@ public class ExportService {
      * 查询购销合同，已上报的
      * @return
      */
+    @WebMethod(exclude = true)
     public List<Contract> getContractInfo(){
         Map<String,Object> map = new HashMap<>();
         map.put("state",1);
@@ -42,12 +54,16 @@ public class ExportService {
      * 添加报运
      * @return
      */
-    public void add(Export export,String[] ids){
+    @WebMethod(exclude = true)
+    public void add(Export export,String[] ids) {
         //生成UUID,再替换
        String s = UUID.randomUUID().toString();
         s = s.replace("-","");
         //报运单id
         export.setExportId(s);
+
+        //制单日期  为当前日期
+        export.setInputDate(new Date());
 
         //1.根据合同ID获得合同对象，获取合同号
         //2.将合同下的货物信息搬家到报运下货物表中
@@ -132,6 +148,7 @@ public class ExportService {
      * 修改加货物批量修改
      * @return
      */
+    @WebMethod(exclude = true)
     public void upadte(Export export,
                       String[] mr_id,
                       Integer[] mr_orderNo,
@@ -173,6 +190,7 @@ public class ExportService {
      * addTRRecord(objId, id, productNo, cnumber, grossWeight, netWeight, sizeLength, sizeWidth, sizeHeight, exPrice, tax)
      * @return
      */
+    @WebMethod(exclude = true)
     public String getMrecordData(String exportId){
         ExportProductExample example = new ExportProductExample();
         ExportProductExample.Criteria criteria = example.createCriteria();
@@ -191,6 +209,7 @@ public class ExportService {
      * 删除单个，级联
      * @param exportId
      */
+    @WebMethod(exclude = true)
     public void delete(String[] exportId) {
         List<String> list = new ArrayList<>();
         for (String id : exportId) {
@@ -211,6 +230,14 @@ public class ExportService {
         ExportExample.Criteria criteria = example.createCriteria();
         criteria.andExportIdIn(list);
         exportMapper.deleteByExample(example);
+    }
+
+    /**
+     * 修改状态
+     * @return
+     */
+    public int updateState(Map<String,Object> map){
+        return exportMapper.updateState(map);
     }
 }
 

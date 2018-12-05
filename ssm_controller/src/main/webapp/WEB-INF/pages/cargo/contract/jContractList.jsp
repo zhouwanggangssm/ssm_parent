@@ -19,9 +19,10 @@
 		<li id="new"><a href="#" onclick="formSubmit('/cargo/contract_tocreate','_self');this.blur();">新增</a></li>
 		<li id="update"><a href="#" onclick="formSubmit('/cargo/contract_toupdateUI','_self');this.blur();">修改</a></li>
 		<li id="delete"><a href="#" onclick="formSubmit('/cargo/contract_delete','_self');this.blur();">删除</a></li>
-		<li id="new"><a href="#" onclick="formSubmit('/cargo/contract_submit','_self');this.blur();">提交</a></li>
-		<li id="new"><a href="#" onclick="formSubmit('/cargo/contract_cancel','_self');this.blur();">取消</a></li>
-		<li id="new"><a href="#" onclick="formSubmit('/cargo/contract_print','_self');this.blur();">打印</a></li>
+		<li id="submit"><a href="#" onclick="formSubmit('/cargo/contract_submit','_self');this.blur();">提交</a></li>
+		<li id="delete"><a href="#" onclick="formSubmit('/cargo/contract_cancel','_self');this.blur();">取消</a></li>
+		<li id="print"><a href="#" onclick="formSubmit('/cargo/contract_print','_self');this.blur();">打印</a></li>
+		<li id="new"><a href="#" onclick="formSubmit('${ctx}/cargo/contracthis/pigeinhole','_self');this.blur();">归档</a></li>
 	</ul>
   </div>
 </div>

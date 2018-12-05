@@ -102,7 +102,7 @@ public class DownloadUtil {
 	 */
 	public void download(ByteArrayOutputStream byteArrayOutputStream, HttpServletResponse response,HttpServletRequest request, String returnName) throws IOException{
 		response.setContentType("application/octet-stream;charset=utf-8");
-		/*returnName = response.encodeURL(new String(returnName.getBytes(),"iso8859-1"));		*/	//保存的文件名,必须和页面编码一致,否则乱码
+			//保存的文件名,必须和页面编码一致,否则乱码
 		String header = request.getHeader("user-agent");
 		returnName = encodeDownloadFilename(returnName,header);
 

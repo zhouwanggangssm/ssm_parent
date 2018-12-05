@@ -8,16 +8,18 @@
 
 <body>
 <form name="icform" method="post">
-
+	<input type="hidden" name="_method" value="DELETE">
+	<input type="hidden" name="pageIndex" value="1"/>
 <div id="menubar">
 <div id="middleMenubar">
 <div id="innerMenubar">
   <div id="navMenubar">
 <ul>
-<li id="view"><a href="#" onclick="formSubmit('packingListAction_toview','_self');this.blur();">查看</a></li>
-<li id="new"><a href="#" onclick="formSubmit('packingListAction_tocreate','_self');this.blur();">新增</a></li>
-<li id="update"><a href="#" onclick="formSubmit('packingListAction_toupdate','_self');this.blur();">修改</a></li>
-<li id="delete"><a href="#" onclick="formSubmit('packingListAction_delete','_self');this.blur();">删除</a></li>
+	<li id="view"><a href="#" onclick="formSubmit('/cargo/packingList_toview','_self');this.blur();">查看</a></li>
+	<li id="update"><a href="#" onclick="formSubmit('/cargo/packingList_toupdate','_self');this.blur();">修改</a></li>
+	<li id="delete"><a href="#" onclick="formSubmit('/cargo/packingList_delete','_self');this.blur();">删除</a></li>
+	<li id="submit"><a href="#" onclick="formSubmit('/cargo/packingList_submit','_self');this.blur();">提交</a></li>
+	<li id="new"><a href="#" onclick="formSubmit('/cargo/packingList_cancel','_self');this.blur();">取消</a></li>
 </ul>
   </div>
 </div>
@@ -36,7 +38,7 @@
 <table id="ec_table" class="tableRegion" width="98%" >
 	<thead>
 	<tr>
-		<td class="tableHeader"><input type="checkbox" name="selid" onclick="checkAll('id',this)"></td>
+		<td class="tableHeader"><input type="checkbox" name="selid" onclick="checkAll('packingListId',this)"></td>
 		<td class="tableHeader">序号</td>
 		<td class="tableHeader">卖方</td>
 		<td class="tableHeader">买方</td>
@@ -48,14 +50,14 @@
 	<tbody class="tableBody" >
 ${page.links}
 	
-	<c:forEach items="${page.results}" var="o" varStatus="status">
+	<c:forEach items="${results}" var="o" varStatus="status">
 	<tr class="odd" onmouseover="this.className='highlight'" onmouseout="this.className='odd'" >
-		<td><input type="checkbox" name="id" value="${o.id}"/></td>
+		<td><input type="checkbox" name="packingListId" value="${o.packingListId}"/></td>
 		<td>${status.index+1}</td>
 		<td>${o.seller}</td>
 		<td>${o.buyer}</td>
 		<td>${o.invoiceNo}</td>
-		<td>${o.invoiceDate}</td>
+		<td><fmt:formatDate value="${o.invoiceDate}" pattern="yyyy-MM-dd"/></td>
 		<td>
 		<c:if test="${o.state==0}">草稿</c:if>
 		<c:if test="${o.state==1}"><b><font color="green">已上报</font></b></c:if>
@@ -66,7 +68,12 @@ ${page.links}
 	</tbody>
 </table>
 </div>
- 
+	<input type="hidden" id="totalPageCount" value="${totalPageCount}"/>
+	<c:import url="../../rollpage.jsp">
+		<c:param name="totalCount" value="${totalCount}"/>
+		<c:param name="currentPageNo" value="${currentPageNo}"/>
+		<c:param name="totalPageCount" value="${totalPageCount}"/>
+	</c:import>
 </div>
  
  

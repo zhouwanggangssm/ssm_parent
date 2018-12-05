@@ -1,10 +1,12 @@
 package cn.xt.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Finance {
     private String financeId;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date inputDate;
 
     private String inputBy;

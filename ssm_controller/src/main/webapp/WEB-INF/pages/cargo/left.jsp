@@ -27,6 +27,12 @@
 				<li><a href="${ctx}/cargo/outProduct_toedit" onclick="linkHighlighted(this)" target="main" id="aa_1">出货表</a></li>
 				<li><a href="${ctx}/cargo/export_List" onclick="linkHighlighted(this)" target="main" id="aa_1">出口报运</a></li>
 				<li><a href="${ctx}/cargo/export_contractlist" onclick="linkHighlighted(this)" target="main" id="aa_1">合同管理</a></li>
+				<li><a href="${ctx}/cargo/packinglist_packing_list" onclick="linkHighlighted(this)" target="main" id="aa_1">装箱</a></li>
+				<li><a href="${ctx}/cargo/jshipping_list" onclick="linkHighlighted(this)" target="main" id="aa_1">委托</a></li>
+				<li><a href="${ctx}/cargo/invoice_list" onclick="linkHighlighted(this)" target="main" id="aa_1">发票</a></li>
+				<li><a href="${ctx}/cargo/finance_list" onclick="linkHighlighted(this)" target="main" id="aa_1">财务</a></li>
+				<li><a href="${ctx}/cargo/contracthis/list" onclick="linkHighlighted(this)" target="main" id="aa_1">历史购销合同</a></li>
+				<li><a href="${ctx}/cargo/export_toedit" onclick="linkHighlighted(this)" target="main" id="aa_1">WS出口报运单</a></li>
 			</ul>
 			<%-- <%@include file="../leftmenu.jsp" %> --%>
         </div>

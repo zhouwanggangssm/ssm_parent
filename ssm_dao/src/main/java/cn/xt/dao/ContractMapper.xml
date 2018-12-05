@@ -103,8 +103,6 @@
     ,0)
     ) as total_amount,
     c.CONTRACT_ID,c.OFFEROR,c.CONTRACT_NO,c.SIGNING_DATE,c.INPUT_BY,c.CHECK_BY,c.INSPECTOR,c.IMPORT_NUM,c.CREQUEST,c.CUSTOM_NAME,c.DELIVERY_PERIOD,c.SHIP_TIME,c.TRADE_TERMS,c.REMARK,c.PRINT_STYLE,c.OLD_STATE,c.STATE,c.OUT_STATE
-
-
     from contract_c c
     where 1=1
     <if test="state!=null"> and c.state=#{state}</if>
@@ -183,6 +181,7 @@
     where c.contract_id=#{contractId}
   </select>
 
+  <!--修改状态-->
   <update id="updateState" parameterType="map">
     UPDATE contract_c SET STATE=#{state}
     WHERE CONTRACT_ID IN 

@@ -335,4 +335,18 @@
       CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
     where PACKING_LIST_ID = #{packingListId,jdbcType=VARCHAR}
   </update>
+
+  <!-- /**
+     * 修改状态
+     * @param paramString
+     * @return
+     */
+    public int updateState(Map paramString);-->
+  <update id="updateState" parameterType="map">
+    UPDATE packing_list_c SET state=#{state} WHERE packing_list_id in
+    <foreach collection="ids" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+
+  </update>
 </mapper>

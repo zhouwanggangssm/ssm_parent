@@ -16,11 +16,12 @@
 <div id="innerMenubar">
   <div id="navMenubar">
 <ul>
-<li id="view"><a href="#" onclick="formSubmit('/cargo/export_toview','_self');this.blur();">查看</a></li>
-<li id="update"><a href="#" onclick="formSubmit('/cargo/export_toupdate','_self');this.blur();">修改</a></li>
-<li id="delete"><a href="#" onclick="formSubmit('/cargo/export_delete','_self');this.blur();">删除</a></li>
-<li id="new"><a href="#" onclick="formSubmit('/cargo/exportAction_submit','_self');this.blur();">提交</a></li>
-<li id="new"><a href="#" onclick="formSubmit('/cargo/exportAction_cancel','_self');this.blur();">取消</a></li>
+	<li id="view"><a href="#" onclick="formSubmit('/cargo/export_toview','_self');this.blur();">查看</a></li>
+	<li id="update"><a href="#" onclick="formSubmit('/cargo/export_toupdate','_self');this.blur();">修改</a></li>
+	<li id="delete"><a href="#" onclick="formSubmit('/cargo/export_delete','_self');this.blur();">删除</a></li>
+	<li id="submit"><a href="#" onclick="formSubmit('/cargo/export_submit','_self');this.blur();">提交</a></li>
+	<li id="new"><a href="#" onclick="formSubmit('/cargo/export_cancel','_self');this.blur();">取消</a></li>
+	<li id="new"><a href="#" onclick="formSubmit('${ctx}/cargo/packinglist_tocreate','_self');this.blur();">装箱</a></li>
 </ul>
   </div>
 </div>

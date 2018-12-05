@@ -20,7 +20,9 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
 
-
+/**
+ * 购销合同
+ */
 @Controller
 @RequestMapping("/cargo")
 public class ContractController {

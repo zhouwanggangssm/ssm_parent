@@ -8,6 +8,13 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 public interface ExportMapper {
+    /**
+     * 修改状态
+     * @param paramString
+     * @return
+     */
+    public int updateState(Map paramString);
+
     long countByExample(ExportExample example);
 
     int deleteByExample(ExportExample example);

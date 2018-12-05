@@ -1,50 +1,56 @@
 package cn.xt.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class ShippingOrder {
-    private String shippingOrderId;
+/**
+ * 委托
+ */
+public class ShippingOrder implements Serializable{
+    private String shippingOrderId; //id
 
-    private String orderType;
+    private String orderType;//海运/空运
 
-    private String shipper;
+    private String shipper;//货主
 
-    private String consignee;
+    private String consignee;//提单抬头
 
-    private String notifyParty;
+    private String notifyParty;//正本通知人
 
-    private String lcNo;
+    private String lcNo;//信用证
 
-    private String portOfLoading;
+    private String portOfLoading;//portOfLoading
 
-    private String portOfTrans;
+    private String portOfTrans;//转船港
 
-    private String portOfDischarge;
+    private String portOfDischarge;//卸货港
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date loadingDate;//装期
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date limitDate;//效期
 
-    private Date loadingDate;
+    private String isBatch;//是否分批
 
-    private Date limitDate;
+    private String isTrans;//是否转船
 
-    private String isBatch;
+    private String copyNum;//份数
 
-    private String isTrans;
+    private String remark;//扼要说明
 
-    private String copyNum;
+    private String specialCondition;//运输要求
 
-    private String remark;
+    private String freight;//运费说明
 
-    private String specialCondition;
+    private String checkBy;//复核人
 
-    private String freight;
-
-    private String checkBy;
-
-    private Integer state;
+    private Integer state;//状态0 草稿 1已上报 2已装箱 3已生成发票
 
     private String createBy;
 
     private String createDept;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createTime;
 
     public String getShippingOrderId() {

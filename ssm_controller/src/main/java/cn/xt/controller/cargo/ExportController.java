@@ -16,8 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+/**
+ * 报运
+ */
 @Controller
 @RequestMapping("/cargo")
 public class ExportController {
@@ -150,6 +155,38 @@ public class ExportController {
         //接收id,分割
         exportService.delete(exportId.split(","));
         return "redirect:/cargo/export_List";
+    }
+
+    /**
+     * 提交
+     * @return
+     */
+    @RequestMapping("/export_submit")
+    public String submit(String exportId){
+        String[] ids = exportId.split(",");
+        this.changeState(1,ids);
+        return "redirect:/cargo/export_List";
+    }
+
+    /**
+     * 取消
+     * @return
+     */
+    @RequestMapping("/export_cancel")
+    public String cancel(String exportId){
+        String[] ids = exportId.split(",");
+        this.changeState(0,ids);
+        return "redirect:/cargo/export_List";
+    }
+
+    /**
+     * 改变状态
+     */
+    private void changeState(Integer state,String[] ids){
+        Map<String,Object> map = new HashMap<>();
+        map.put("state",state);
+        map.put("ids",ids);
+        exportService.updateState(map);
     }
 }
 

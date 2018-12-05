@@ -36,7 +36,9 @@
 	            <td class="columnTitle">报运号：</td>
 	            <td class="tableContent">${export.customerContract}</td>
 	            <td class="columnTitle">制单日期：</td>
-	            <td class="tableContent">${export.inputDate}</td>
+	            <td class="tableContent">
+					<fmt:formatDate value='${export.inputDate}' pattern='yyyy-MM-dd' />
+				</td>
 	        </tr>	
 	        <tr>
 	            <td class="columnTitle">信用证号</td>

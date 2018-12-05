@@ -255,4 +255,18 @@
       CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
     where INVOICE_ID = #{invoiceId,jdbcType=VARCHAR}
   </update>
+
+  <!-- /**
+   * 修改状态
+   * @param paramString
+   * @return
+   */
+  public int updateState(Map paramString);-->
+  <update id="updateState" parameterType="map">
+    UPDATE invoice_c SET state=#{state} WHERE INVOICE_ID in
+    <foreach collection="ids" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+
+  </update>
 </mapper>

@@ -240,4 +240,17 @@
       CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
     where FINANCE_ID = #{financeId,jdbcType=VARCHAR}
   </update>
+
+   <!-- /**
+   * 修改状态
+   * @param paramString
+   * @return
+   */
+  public int updateState(Map paramString);-->
+  <update id="updateState" parameterType="map">
+    UPDATE finance_c SET state=#{state} WHERE FINANCE_ID in
+    <foreach collection="ids" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </update>
 </mapper>

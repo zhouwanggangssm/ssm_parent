@@ -3,9 +3,18 @@ package cn.xt.dao;
 import cn.xt.domain.Invoice;
 import cn.xt.domain.InvoiceExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface InvoiceMapper {
+    /**
+     * 修改状态
+     * @param paramString
+     * @return
+     */
+    public int updateState(Map paramString);
+
     long countByExample(InvoiceExample example);
 
     int deleteByExample(InvoiceExample example);

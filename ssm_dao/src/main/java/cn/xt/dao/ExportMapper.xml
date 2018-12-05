@@ -469,4 +469,17 @@
       CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
     where EXPORT_ID = #{exportId,jdbcType=VARCHAR}
   </update>
+
+  <!-- /**
+   * 修改状态
+   * @param paramString
+   * @return
+   */
+  public int updateState(Map paramString);-->
+  <update id="updateState" parameterType="map">
+    UPDATE export_c SET state=#{state} WHERE EXPORT_ID in
+    <foreach collection="ids" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </update>
 </mapper>

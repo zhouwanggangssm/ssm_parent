@@ -3,9 +3,18 @@ package cn.xt.dao;
 import cn.xt.domain.Finance;
 import cn.xt.domain.FinanceExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface FinanceMapper {
+    /**
+     * 修改状态
+     * @param paramString
+     * @return
+     */
+    public int updateState(Map paramString);
+
     long countByExample(FinanceExample example);
 
     int deleteByExample(FinanceExample example);
