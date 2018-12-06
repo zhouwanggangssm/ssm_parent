@@ -1,5 +1,6 @@
 package cn.xt.dao;
 
+import cn.xt.domain.Factory;
 import cn.xt.domain.Product;
 import cn.xt.domain.ProductExample;
 import java.util.List;
@@ -27,4 +28,16 @@ public interface ProductMapper {
     int updateByPrimaryKeySelective(Product record);
 
     int updateByPrimaryKey(Product record);
+    //查询
+    public List<Product> selectProdList(@Param("id")String id,
+                                        @Param("factoryName")String factoryName);
+
+    //根据ID查询
+    public Product productList(@Param("productId")String productId);
+    //删除
+    int detproduct(@Param("productId")String productId);
+
+    //查询厂家信息的厂家简称
+    List<Factory> selectfactoryadd();
+
 }

@@ -30,4 +30,24 @@ public interface FactoryMapper {
 
     /*查询厂家列表*/
     List<Factory> selectByExamplewithf(@Param("ctype") String ctype,@Param("state") String state);
+
+    //查询所有
+    public List<Factory> selectFactoryList( @Param("text")String text,
+
+                                            @Param("f_type")String f_type);
+    //根据ID查询
+    public Factory selectFactoryId(@Param("factoryId")String factoryId);
+
+
+    //添加厂家信息
+    public  int addFactory(@Param("factory")Factory factory);
+    //启动状态
+    public int upstate(@Param("factoryId")String factoryId,@Param("state")String state);
+    //分页查询
+    public List<Factory> fyFactory(@Param("text")String text,
+                                   @Param("currentPageNo")int currentPageNo,
+                                   @Param("f_type")String f_type
+    );
+    public int listC(@Param("text")String text,
+                     @Param("f_type")String f_type);
 }

@@ -1,5 +1,7 @@
 package cn.xt.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -47,13 +49,13 @@ public class Product {
     private BigDecimal mpsizeHeight;
 
     private String remark;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date inputTime;
 
     private String createBy;
 
     private String createDept;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createTime;
 
     public String getProductId() {

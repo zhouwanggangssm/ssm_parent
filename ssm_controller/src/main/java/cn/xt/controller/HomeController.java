@@ -26,6 +26,8 @@ public class HomeController {
             return "sysadmin/left";
         }else if(moduleName.equals("cargo")){
             return "cargo/left";
+        }else if(moduleName.equals("baseinfo")){//
+            return "baseinfo/left";
         }
         return "home/left";
     }
@@ -36,7 +38,10 @@ public class HomeController {
             return "sysadmin/main";
         }else if(moduleName.equals("cargo")){
             return "cargo/main";
+        }else if(moduleName.equals("baseinfo")){
+            return "baseinfo/main";
         }
+
         return "home/main";
     }
 }

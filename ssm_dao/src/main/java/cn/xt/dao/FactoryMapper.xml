@@ -419,4 +419,72 @@
   <select id="selectByExamplewithf" resultType="factory">
     SELECT FACTORY_ID,FACTORY_NAME from factory_c WHERE CTYPE=#{ctype} AND STATE=#{state}
   </select>
+  <!-- 查询所有-->
+  <select id="selectFactoryList"  resultType="cn.xt.domain.Factory">
+    select *  from factory_c
+    <where>
+
+      <if test="text!=null and text!=''">
+
+        CONTACTS like CONCAT('%',#{text},'%')
+      </if>
+      <if test="f_type!=null">
+
+        and FULL_NAME LIKE  concat('%',#{f_type},'%')
+      </if>
+    </where>
+  </select>
+  <!--根据id查询-->
+  <select id="selectFactoryId" resultType="cn.xt.domain.Factory">
+    select * from factory_c WHERE factory_Id=#{factoryId}
+  </select>
+  <!--修改-->
+  <update id="upstate">
+    UPDATE  factory_c SET state=#{state} WHERE  FACTORY_ID=#{factoryId}
+  </update>
+
+  <resultMap id="factmap" type="cn.xt.domain.Factory">
+    <id column="FACTORY_ID" property="factoryId"></id>
+    <result column="CTYPE" property="ctype"></result>
+    <result column="FULL_NAME" property="fullName"></result>
+    <result column="FACTORY_NAME" property="factoryName"></result>
+    <result column="CONTACTS" property="contacts"></result>
+    <result column="PHONE" property="phone"></result>
+    <result column="MOBILE" property="mobile"></result>
+    <result column="FAX" property="fax"></result>
+    <result column="ADDRESS" property="address"></result>
+    <result column="INSPECTOR" property="inspector"></result>
+    <result column="REMARK" property="remark"></result>
+    <result column="ORDER_NO" property="orderNo"></result>
+    <result column="STATE" property="state"></result>
+  </resultMap>
+  <!--分页查询 factory-->
+  <select id="fyFactory" resultMap="factmap">
+    select *  from factory_c
+    <where>
+
+      <if test="text!=null and text!=''">
+
+        CONTACTS like CONCAT('%',#{text},'%')
+      </if>
+      <if test="f_type!=null">
+
+        and FULL_NAME LIKE  concat('%',#{f_type},'%')
+      </if>
+    </where>
+    LIMIT #{currentPageNo},5
+  </select>
+  <!--查询总条数-->
+  <select id="listC"  resultType="int">
+    SELECT  count(1) as count FROM factory_c
+    <where>
+      <if test="text!=null and text!=''">
+        CONTACTS like CONCAT('%',#{text},'%')
+      </if>
+      <if test="f_type!=null">
+        and FULL_NAME LIKE  concat('%',#{f_type},'%')
+      </if>
+    </where>
+  </select>
+
 </mapper>

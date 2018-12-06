@@ -1,5 +1,7 @@
 package cn.xt.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /**
@@ -35,11 +37,11 @@ public class Factory {
     private String createBy;
 
     private String createDept;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createTime;
 
     private String updateBy;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date updateTime;
 
     public String getFactoryId() {

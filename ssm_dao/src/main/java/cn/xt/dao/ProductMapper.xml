@@ -540,4 +540,37 @@
       CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
     where PRODUCT_ID = #{productId,jdbcType=VARCHAR}
   </update>
+
+  <!--查询-->
+  <select id="selectProdList" resultType="cn.xt.domain.Product">
+    SELECT * FROM product_c
+
+    <where>
+
+      <if test="id!=null and id!=''">
+        PRODUCT_NO  like CONCAT('%',#{id},'%')
+      </if>
+
+      <if test="factoryName!=null and factoryName!=''">
+        AND FACTORY_NAME  like CONCAT('%',#{factoryName},'%')
+      </if>
+
+    </where>
+  </select>
+  <!--/* SELECT * FROM product_c where PRODUCT_NO like  '%001%'
+  and FACTORY_NAME  like  '%平%'*/-->
+  <select id="productList" resultType="cn.xt.domain.Product">
+    SELECT  * FROM  product_c WHERE  PRODUCT_ID=#{productId}
+  </select>
+
+  <delete id="detproduct">
+    DELETE FROM product_c WHERE PRODUCT_ID=#{productId}
+  </delete>
+
+  <!--  //查询厂家信息的厂家简称-->
+
+  <select id="selectfactoryadd" resultType="cn.xt.domain.Factory">
+    select FACTORY_NAME  from factory_c
+  </select>
+
 </mapper>
