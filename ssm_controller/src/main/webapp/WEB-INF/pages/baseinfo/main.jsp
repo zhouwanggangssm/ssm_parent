@@ -22,7 +22,7 @@
         	</tr>        	
 			<tr>
 				<td class="model_intro_left" width="169">系统代码：</td>
-				<td class="model_intro_right" width="81%">统一管理系统中的基础代码, 相比“基础代码”它结果将形成多级树型结构。</td>
+				<td class="model_intro_right" width="81%">维护公司产品信息，方便购销合同中选取。</td>
 			</tr>   	
 
 			<tr>
