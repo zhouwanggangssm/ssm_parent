@@ -21,7 +21,7 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping("/sysadmin")
+@RequestMapping("/dept")
 public class DeptController {
     @Autowired
     DeptService deptService;

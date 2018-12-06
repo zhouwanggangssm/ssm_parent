@@ -23,7 +23,7 @@
         <div class="panel-title">权限管理</div>
         <div class="panel-content">
 			 <ul>
-				<li><a href="${ctx}/sysadmin/dept_list" onclick="linkHighlighted(this)" target="main" id="aa_1">部门管理</a></li>
+				<li><a href="${ctx}/dept/dept_list" onclick="linkHighlighted(this)" target="main" id="aa_1">部门管理</a></li>
 				<li><a href="${ctx}/user/user_list" onclick="linkHighlighted(this)" target="main" id="aa_1">用户管理</a></li>
 				<li><a href="${ctx}/role/role_list" onclick="linkHighlighted(this)" target="main" id="aa_1">角色管理</a></li>
 				<li><a href="${ctx}/module/module_list" onclick="linkHighlighted(this)" target="main" id="aa_1">模块管理</a></li>

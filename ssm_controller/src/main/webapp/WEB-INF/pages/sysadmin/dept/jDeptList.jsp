@@ -24,7 +24,7 @@
 	     }
 	     function toView(){
 	    	 if(isOnlyChecked()){
-	    		 formSubmit('/sysadmin/toview','_self');
+	    		 formSubmit('/dept/toview','_self');
 	    	 }else{
 	    		 alert("请先选择一项并且只能选择一项，再进行操作！");
 	    	 }
@@ -32,7 +32,7 @@
 	     //实现更新
 	     function toUpdate(){
 	    	 if(isOnlyChecked()){
-	    		 formSubmit('/sysadmin/updateUI','_self');
+	    		 formSubmit('/dept/updateUI','_self');
 	    	 }else{
 	    		 alert("请先选择一项并且只能选择一项，再进行操作！");
 	    	 }
@@ -50,9 +50,9 @@
 	  <input type="hidden" name="pageIndex" value="1"/>
 <ul>
 <li id="view"><a href="#" onclick="javascript:toView()">查看</a></li>
-<li id="new"><a href="#" onclick="formSubmit('/sysadmin/tocreate','_self');this.blur();">新增</a></li>
+<li id="new"><a href="#" onclick="formSubmit('/dept/tocreate','_self');this.blur();">新增</a></li>
 <li id="update"><a href="#" onclick="javascript:toUpdate()">修改</a></li>
-<li id="delete"><a href="#" onclick="formSubmit('/sysadmin/deleteDept','_self');this.blur();">删除</a></li>
+<li id="delete"><a href="#" onclick="formSubmit('/dept/deleteDept','_self');this.blur();">删除</a></li>
 </ul>
   </div>
 </div>
@@ -91,7 +91,7 @@
 			  <td>${(currentPageNo-1)*pageSize+status.count }</td>
 			  <td>${dept.deptId }</td>
 			  <td>${dept.parentId.deptName }</td>
-			  <td><a href="/sysadmin/toview?id=${dept.deptId }">${dept.deptName }</a></td>
+			  <td><a href="/dept/toview?id=${dept.deptId }">${dept.deptName }</a></td>
 		</tr>
   </c:forEach>
 	</tbody>

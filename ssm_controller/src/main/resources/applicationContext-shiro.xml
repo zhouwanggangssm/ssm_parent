@@ -35,10 +35,15 @@
         <property name="loginUrl" value="/dologin"></property>
         <!-- 登录成功后 -->
         <property name="successUrl" value="/dologin"></property>
+        <property name="filters">
+            <map>
+                <entry key="authc" value-ref="loginFormAuthenticationFilter"></entry>
+            </map>
+        </property>
         <property name="filterChainDefinitions">
             <!-- /**代表下面的多级目录也过滤 -->
             <value>
-                /static/common/images/favicon.ico = anon
+                /static/common/images/favicon.ico = authc
                 /index.jsp* = anon
                 /home* = anon
                 /sysadmin/login/login.jsp* = anon
@@ -66,6 +71,7 @@
 
 
 
+    <bean id="loginFormAuthenticationFilter" class="cn.xt.shiro.loginFormAuthenticationFilter"/>
 
     <!-- 缓存配置  -->
     <bean id="ehCacheManager"

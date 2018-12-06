@@ -25,14 +25,14 @@
 				</div>
 			</div>
 			<div class="btnstyle">
-				<input  class="loginImgOut" value="" type="button" onclick="formSubmit('${ctx}/dologin','_self');"
+				<button  class="loginImgOut" value="" type="submit" onclick="formSubmit('${ctx}/dologin','_self');"
 				  onmouseover="this.className='loginImgOver'" 
 				  onmouseout="this.className='loginImgOut'"
-				/>
-				<input class="resetImgOut" value="" type="button"
+                ></button>
+				<button class="resetImgOut" value="" type="reset"
 				  onmouseover="this.className='resetImgOver'" 
 				  onmouseout="this.className='resetImgOut'"
-				/>
+                ></button>
 			</div>
 		  	<div class="msgtip">
 				<c:if test="${!empty errorInfo}">
