@@ -97,24 +97,33 @@ public class product {
     }
 //删除
     @RequestMapping(value = "/detproduct",method = RequestMethod.DELETE)
-    public String detproduct(@RequestParam(value = "productId")String productId) {
-        System.out.println("========================="+productId);
-        int i = prductSercice.detproduct(productId);
-        if (i > 0) {
+    public String detproduct(@RequestParam(value = "productId",required = false)String productId) {
+
+        if (productId !=null) {
+            prductSercice.detproduct(productId);
             return "redirect:/product/productList";
         } else {
             return "";
         }
+
+
     }
 //根据id查询修改
     @RequestMapping(value = "/selectp")
-    public String selectproduct(@RequestParam(value = "productId")String productId,
+    public String selectproduct(@RequestParam(value = "productId",required = false)String productId,
                                 Model model){
-        Product product=prductSercice.productsList(productId);
-        List<Factory> list =prductSercice.Factory();
-        model.addAttribute("list",product);
-        model.addAttribute("list2",list);
-        return "/baseinfo/UPproduct";
+        if (productId!=null){
+            //根据id查询方法
+            Product product=prductSercice.productsList(productId);
+            //查询厂家信息
+            List<Factory> list =prductSercice.Factory();
+            model.addAttribute("list",product);
+            model.addAttribute("list2",list);
+            return "/baseinfo/UPproduct";
+        }else{
+            return "";
+        }
+
     }
     @RequestMapping(value = "/upProduct")
     public String upProduct(Product product){
@@ -127,15 +136,20 @@ public class product {
     }
     //根据id查询
     @RequestMapping(value = "/listProductId")
-    public  String listProductId(@RequestParam(value = "productId")String productId,
+    public  String listProductId(@RequestParam(value = "productId",required = false)String productId,
                                  Model model){
 
-        Product product=prductSercice.productsList(productId);
-        System.out.println("上传图片到:" + product.getProductImage());
+        if(productId!=null){
+            Product product=prductSercice.productsList(productId);
+            System.out.println("上传图片到:" + product.getProductImage());
 
-        model.addAttribute("fileUrl",product.getProductImage());
-        model.addAttribute("list1",product);
-        return "/baseinfo/ProductID";
+            model.addAttribute("fileUrl",product.getProductImage());
+            model.addAttribute("list1",product);
+            return "/baseinfo/ProductID";
+        }else {
+            return "";
+        }
+
     }
 
 

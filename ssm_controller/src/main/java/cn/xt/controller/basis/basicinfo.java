@@ -54,13 +54,18 @@ public class   basicinfo{
     //根据ID查询
     @RequestMapping(value = "/selectFactoryId")
     public String selectFactoryId(
-            @RequestParam(value = "factoryId")String factoryId,
+            @RequestParam(value = "factoryId",required = false)String factoryId,
             Model model
     ){
         //selectFactory方法
+        if(factoryId!=null){
             Factory factory=factorySercice.selectFactoryId(factoryId);
             model.addAttribute("factory",factory);
-        return  "baseinfo/jFactoryID";
+            return  "baseinfo/jFactoryID";
+        }else {
+            return "redirect:/basicinfo/factoryActionlist_list";
+        }
+
     }
     @RequestMapping(value = "/goadd")
     public String goadd(){
@@ -83,29 +88,34 @@ public class   basicinfo{
 
     //根据id删除
     @RequestMapping(value = "/deleFactryID")
-    public String deleFactryID(@RequestParam(value = "factoryId")String factoryId){
-        int i=factorySercice.delFactory(factoryId);
-        //判断返回值 i是否null
-        if(i>0){
-            //redirect到查询方法
+    public String deleFactryID(@RequestParam(value = "factoryId",required = false)String factoryId,Model model){
+
+        if(factoryId!=null){
+            int i=factorySercice.delFactory(factoryId);
             return "redirect:/basicinfo/factoryActionlist_list";
         }else {
-            return "";
+            String aeixnhgg="删除错误，请选择ID";
+            model.addAttribute("outt",aeixnhgg);
+            return "redirect:/basicinfo/factoryActionlist_list";
         }
     }
 
     //根据id查询修改
     //获得factoryId
     @RequestMapping(value = "/upFactoryId")
-    public String upFactoryId( @RequestParam(value = "factoryId")String factoryId,
+    public String upFactoryId( @RequestParam(value = "factoryId",required = false)String factoryId,
                                Model model){
         //先跳查询页面
+        if(factoryId!=null){
+            Factory factory=factorySercice.selectFactoryId(factoryId);
 
-        Factory factory=factorySercice.selectFactoryId(factoryId);
+            model.addAttribute("factory1",factory);
 
-        model.addAttribute("factory1",factory);
+            return "baseinfo/upFactoryID";
+        }else{
+            return "redirect:/basicinfo/factoryActionlist_list";
+        }
 
-        return "baseinfo/upFactoryID";
     }
     //修改方法upFactory 获得factory
     @RequestMapping(value = "/upFactory")
@@ -126,18 +136,22 @@ public class   basicinfo{
     }
 
     //根据id修改状态upType
-
     //获得factoryId state
     @RequestMapping(value = "/upType")
     public String upType(
-            @RequestParam(value = "factoryId")String factoryId,
+            @RequestParam(value = "factoryId",required = false)String factoryId,
             @RequestParam(value = "state")String state
     ){
-        int i=factorySercice.upstate(factoryId,state);
+        if(factoryId!=null){
+            int i=factorySercice.upstate(factoryId,state);
 
-        //返回查询方法
+            //返回查询方法
 
-        return "redirect:/basicinfo/factoryActionlist_list";
+            return "redirect:/basicinfo/factoryActionlist_list";
+        }else {
+             return "redirect:/basicinfo/factoryActionlist_list";
+        }
+
     }
 
 }

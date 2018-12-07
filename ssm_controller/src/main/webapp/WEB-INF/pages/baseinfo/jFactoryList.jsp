@@ -10,6 +10,20 @@
     <link rel="stylesheet" rev="stylesheet" type="text/css" href="../../css/extreme/extremesite.css" />
     <script type="text/javascript" src="../../js/common.js"></script>
 </head>
+<style type="text/css">
+    #new1{
+        border: solid 1px #000;
+        background-color: #a6caf0;
+        margin-bottom: 10px;
+        height: 15px;
+        width: 30px;
+    }
+    #new2{
+        border: solid 1px #000;
+        background-color: #a6caf0;
+    }
+
+</style>
 
 <body>
 <%--+++++++--%>
@@ -22,7 +36,7 @@
                         <li id="view"><a href="#"   methods="post" onclick="formSubmit('/basicinfo/selectFactoryId','_self');this.blur();">查看</a></li>
                         <li id="new"><a href="/basicinfo/goadd">新建</a></li>
                         <li id="update"><a href="#" methods="post" onclick="formSubmit('/basicinfo/upFactoryId','_self');this.blur();">修改</a></li>
-                        <li id="delete"><a href="#" onclick="formSubmit('/basicinfo/deleFactryID','_self');this.blur();">删除</a></li>
+                        <li id="delete"><a href="#" onclick="formSubmit('/basicinfo/deleFactryID','_self');this.blur();">删除${outt}</a></li>
                         <li id="new1"><a href="#" onclick="formSubmit('/basicinfo/upType?state=1','_self');this.blur();">启用</a></li>
                         <li id="new2"><a href="#" onclick="formSubmit('/basicinfo/upType?state=0','_self');this.blur();">停止</a></li>
 
