@@ -20,47 +20,28 @@
         <script type="text/javascript" src="${ctx }/js/datepicker/WdatePicker.js"></script>
     </head>
 
-
         <%
 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 String date= format.format(new Date());
 %>
+
+    <script>
+        $(document).ready(function () {
+            var time = new Date();
+            var day = ("0" + time.getDate()).slice(-2);
+            var month = ("0" + (time.getMonth() + 1)).slice(-2);
+            var today = time.getFullYear() + "-" + (month) + "-" + (day);
+            $('#date_info').val(today);
+        })
+
+    </script>
+
+
 <body>
 <div class="right">
 
     <div class="providerView" >
         <form action="/product/addprodct" method="post" enctype="multipart/form-data">
-            <%--<p><span>编号:</span><span><input  type="text" name="productNo"></span></p>
-            <p><span>照片：</span><span><input  type="text" name="productImage"></span></p>
-            <p><span>描述：</span><span><input  type="text" name="description"></span></p>
-            <p><span>厂家简称：</span><span><input  type="text" name="factoryName"></span></p>
-            <p><span>市场价：</span><span><input  type="text" name="price"></span></p>
-            <p><span>尺寸长：</span><span><input  type="text" name="sizeLenght"></span></p>
-            <p><span>尺寸宽：</span><span><input  type="text" name="sizeWidth"></span></p>
-            <p><span>尺寸高：</span><span><input  type="text" name="sizeHeight"></span></p>
-            <p><span>颜色：</span><span><input  type="text" name="color"></span></p>
-            <p><span>包装：</span><span><input  type="text" name="packing"></span></p>
-            <p><span>包装单位：</span><span><input  type="text" name="packingUnit"></span></p>
-            <p><span>集装箱类别20：</span><span><input  type="text" name="type20"></span></p>
-            <p><span>集装箱类别40：</span><span><input  type="text" name="type40"></span></p>
-            <p><span>集装箱类别40HC：</span><span><input  type="text" name="type40hc"></span></p>
-            <p><span>数量：</span><span><input  type="text" name="qty"></span></p>
-            <p><span>体积：</span><span><input  type="text" name="cbm"></span></p>
-            <p><span>大箱尺寸长：</span><span><input  type="text" name="mpsizeLenght"></span></p>
-            <p><span>大箱尺寸宽：</span><span><input  type="text" name="mpsizeWidth"></span></p>
-            <p><span>大箱尺寸高：</span><span><input  type="text" name="mpsizeHeight"></span></p>
-            <p><span>备注：</span><span><input  type="text" name="remark"></span></p>
-          &lt;%&ndash;  <p><span>录入时间：</span><span><input  type="text" name="inputTime"></span></p>&ndash;%&gt;
-            <input type=text style="display:none" name="inputTime"
-                   value="<%=date%>"
-            />
-            <p><span>创 建 人：</span><span><input  type="text" name="createBy"></span></p>
-            <p><span>创建部门：</span><span><input  type="text" name="createDept"></span></p>
-            <p><span>创建日期：</span><span>
-                    <input type="text" style="width:90px;" name="createTime"
-                           onclick="WdatePicker({el:this,isShowOthers:true,dateFmt:'yyyy-MM-dd'});"/>
-                </span></p>--%>
-
 
 
             <table>
@@ -171,12 +152,14 @@ String date= format.format(new Date());
                         <input type=text style="display:none" name="createTime"
                                value="<%=date%>"
                         />
+                        <input type="date" id="date_info2" style="display:none" name="createTime" />
                     </td>
                     <td>&nbsp;</td> <td>&nbsp;</td>
                     <td>录入日期：
                         <input type=text style="display:none" name="inputTime"
                                value="<%=date%>"
                         />
+                        <input type="date" id="date_info" style="display:none" name="inputTime" />
                     </td>
                 </tr>
 
@@ -187,7 +170,6 @@ String date= format.format(new Date());
                 <tr>
                     <td>备 注:<textarea rows="7" cols="30"></textarea></td>
                     <td>&nbsp;</td> <td>&nbsp;</td>
-
                     <td>描 述:<textarea rows="7" cols="30"></textarea></td>
                 </tr>
 
@@ -205,7 +187,13 @@ String date= format.format(new Date());
 
     </div>
 </div>
-
+<script>
+    Date.prototype.format = function(format){
+        var o = {
+            "M+": this.getMonth() + 1, //month
+            "d+": this.getDate(),
+    //day
+        </script>
 
 </body>
 </html>

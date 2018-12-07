@@ -1,5 +1,5 @@
 
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -23,29 +23,7 @@
 <body>
 <div>
     <form action="/product/productList" method="post">
-     <%--   <input type=text style="display:none" name="productId"  value="${list1.productId}"/>
-        <p><span>编号:</span><span><input  type="text" name="productNo" value="${list1.productNo}"></span></p>
-        <p><span>照片：</span><span><input  type="text" name="productImage" value="${list1.productImage}"></span></p>
-        <p><span>描述：</span><span><input  type="text" name="description" value="${list1.description}"></span></p>
-        <p><span>厂家简称：</span><span><input  type="text" name="factoryName"  value="${list1.factoryName}"></span></p>
-        <p><span>市场价：</span><span><input  type="text" name="price"  value="${list1.price}"></span></p>
-        <p><span>尺寸长：</span><span><input  type="text" name="sizeLenght"  value="${list1.sizeLenght}"></span></p>
-        <p><span>尺寸宽：</span><span><input  type="text" name="sizeWidth"  value="${list1.sizeWidth}"></span></p>
-        <p><span>尺寸高：</span><span><input  type="text" name="sizeHeight"  value="${list1.sizeHeight}"></span></p>
-        <p><span>颜色：</span><span><input  type="text" name="color"  value="${list1.color}"></span></p>
-        <p><span>包装：</span><span><input  type="text" name="packing"  value="${list1.packing}"></span></p>
-        <p><span>包装单位：</span><span><input  type="text" name="packingUnit"  value="${list1.packingUnit}"></span></p>
-        <p><span>集装箱类别20：</span><span><input  type="text" name="type20"  value="${list1.type20}"></span></p>
-        <p><span>集装箱类别40：</span><span><input  type="text" name="type40"  value="${list1.type40}"></span></p>
-        <p><span>集装箱类别40HC：</span><span><input  type="text" name="type40hc"  value="${list1.type40hc}"></span></p>
-        <p><span>数量：</span><span><input  type="text" name="qty" value="${list1.qty}"></span></p>
-        <p><span>体积：</span><span><input  type="text" name="cbm" value="${list1.cbm}"></span></p>
-        <p><span>大箱尺寸长：</span><span><input  type="text" name="mpsizeLenght" value="${list1.mpsizeLenght}"></span></p>
-        <p><span>大箱尺寸宽：</span><span><input  type="text" name="mpsizeWidth" value="${list1.mpsizeWidth}"></span></p>
-        <p><span>大箱尺寸高：</span><span><input  type="text" name="mpsizeHeight" value="${list1.mpsizeHeight}"></span></p>
-        <p><span>备注：</span><span><input  type="text" name="remark" value="${list1.remark}"></span></p>
-        <p><span>创 建 人：</span><span><input  type="text" name="createBy" value="${list1.createBy}"></span></p>
-        <p><span>创建部门：</span><span><input  type="text" name="createDept" value="${list1.createDept}"></span></p>--%>
+
 
         <table>
             <tr>

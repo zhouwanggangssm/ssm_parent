@@ -141,7 +141,6 @@ public class product {
 
         if(productId!=null){
             Product product=prductSercice.productsList(productId);
-            System.out.println("上传图片到:" + product.getProductImage());
 
             model.addAttribute("fileUrl",product.getProductImage());
             model.addAttribute("list1",product);

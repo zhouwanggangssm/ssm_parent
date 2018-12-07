@@ -49,12 +49,14 @@ public class Product {
     private BigDecimal mpsizeHeight;
 
     private String remark;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date inputTime;
 
     private String createBy;
 
     private String createDept;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createTime;
 
