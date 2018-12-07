@@ -33,15 +33,21 @@ public class   basicinfo{
 
             Model model
     ){
-
+        //调用pagehelper.startpage的方法  传pageindex和sysconstant
         PageHelper.startPage(pageIndex, SysConstant.PAGE_SIZE);
+        //调用sercice的方法serviceFactpry
         List<Factory> list=factorySercice.serviceFactory(text, f_type);
+        //实例化Pageinfo
         PageInfo pageInfo = new PageInfo(list);
-
-        model.addAttribute("list",pageInfo.getList());//数据
-        model.addAttribute("totalPageCount",pageInfo.getPages());//总页数
-        model.addAttribute("totalCount",pageInfo.getTotal()); //总记录数
-        model.addAttribute("currentPageNo",pageIndex);//当前页
+        //用model返回分页数据
+        //list接
+        model.addAttribute("list",pageInfo.getList());  //返回数据  pageinfo.getList
+        //totalPageCount接
+        model.addAttribute("totalPageCount",pageInfo.getPages());//总页数 pageinfo.getPages
+        //totalCount
+        model.addAttribute("totalCount",pageInfo.getTotal()); //总记录数 pageinfo.getTotal
+        //currentPageNo
+        model.addAttribute("currentPageNo",pageIndex);//当前页 pageindex
         return "baseinfo/jFactoryList";
     }
 
@@ -51,6 +57,7 @@ public class   basicinfo{
             @RequestParam(value = "factoryId")String factoryId,
             Model model
     ){
+        //selectFactory方法
             Factory factory=factorySercice.selectFactoryId(factoryId);
             model.addAttribute("factory",factory);
         return  "baseinfo/jFactoryID";
