@@ -1,6 +1,8 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ include file="../base.jsp" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<shiro:hasRole name="user"></shiro:hasRole>
 <head>
     <title></title>
     <link rel="stylesheet" rev="stylesheet" type="text/css" href="${ctx}/skin/default/css/left.css" media="all"/>
@@ -10,8 +12,7 @@
 	<script language="javascript" src="${ctx}/js/pngfix_map.js"></script>--%>
 	<script type="text/javascript" src="${ctx}/components/jquery-ui/jquery-1.2.6.js"></script>
 	<script type="text/javascript" src="${ctx}/skin/default/js/toggle.js"></script>
- 
-	
+
     <script language="javascript">
     	$().ready(function(){
 			$(fastMenu).hide();
@@ -31,6 +32,12 @@
  
     
 </head>
+
+<style type="text/css">
+    .home{
+        margin-top: 10px;
+    }
+</style>
  
 <body id="left_frame">
 <div class="PositionFrame_black" id="PositionFrame"></div>
@@ -47,12 +54,28 @@
 	       <div class="panel-header">
 	        <div class="panel-title">个人工作台</div>
 	        <div class="panel-content">
-				<ul>
-					<li><a href="${ctx}/tomain.action?modelName=home" target="main" id="aa_3" onclick="linkHighlighted(this)">我的留言板</a></li>
-					<li><a href="${ctx}/home/workflow/tasklist.action" target="main" id="aa_2" onclick="linkHighlighted(this)">我的代办任务</a></li>
-					<li><a href="${ctx}/baseinfo/leavebill/list.action" target="main" id="aa_1" onclick="linkHighlighted(this)">意见反馈</a></li>
-				</ul>
-	        </div>
+                <div class="home">
+                <!-- 当jsp页面碰到shiro标签时就执行AuthRealm中授权方法 -->
+                <shiro:hasPermission name="我的留言板">
+                <span id="topmenu" onclick="toModule('tomain.action');">
+					<a href="${ctx}/tomain.action?modelName=home" target="main" id="aa_3" onclick="linkHighlighted(this)">我的留言板</a>
+                     </span>
+                </shiro:hasPermission>
+                </div>
+                <div class="home">
+                    <shiro:hasPermission name="我的代办任务">
+                    <span id="topmenu" onclick="toModule('home/workflow/tasklist.action');">
+                    <a href="${ctx}/home/workflow/tasklist.action" target="main" id="aa_2" onclick="linkHighlighted(this)">我的代办任务</a>
+                        </span>
+                    </shiro:hasPermission>
+                </div>
+                <div class="home">
+                    <shiro:hasPermission name="我的代办任务">
+                    <span id="topmenu" onclick="toModule('baseinfo/leavebill/list.action');">
+                    <a href="${ctx}/baseinfo/leavebill/list.action" target="main" id="aa_1" onclick="linkHighlighted(this)">意见反馈</a>
+                         </span>
+                    </shiro:hasPermission>
+                </div>
 	        
 	       </div>
 	   </div>

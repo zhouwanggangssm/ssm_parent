@@ -1,4 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<shiro:hasRole name="user"></shiro:hasRole>
 <html>
 <head>
 <title>商务综合管理平台</title>

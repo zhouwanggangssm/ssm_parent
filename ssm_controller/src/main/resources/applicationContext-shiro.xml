@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+	http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
     <description>Shiro的配置</description>
 
@@ -32,26 +33,28 @@
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <!--登录页面  -->
-        <property name="loginUrl" value="/dologin"></property>
+        <property name="loginUrl" value="/index.jsp"></property>
         <!-- 登录成功后 -->
         <property name="successUrl" value="/dologin"></property>
         <property name="filters">
-            <map>
+            <util:map>
+                <!--登录过滤器-->
                 <entry key="authc" value-ref="loginFormAuthenticationFilter"></entry>
-            </map>
+                <!--退出过滤器-->
+                <entry key="logout" value-ref="systemLogoutFilter"></entry>
+            </util:map>
         </property>
         <property name="filterChainDefinitions">
             <!-- /**代表下面的多级目录也过滤 -->
             <value>
                 /static/common/images/favicon.ico = authc
                 /index.jsp* = anon
-                /home* = anon
+                /dologin*=anon
+                /home/** = anon
                 /sysadmin/login/login.jsp* = anon
                 /sysadmin/login/logout.jsp* = anon
                 /login* = anon
                 /logout* = anon
-                /controller/LoginController* = anon
-                /controller/HomeController* = anon
                 /components/** = anon
                 /css/** = anon
                 /images/** = anon
@@ -62,7 +65,6 @@
                 /ufiles/** = anon
                 /validator/** = anon
                 /resource/** = anon
-                # everything else requires authentication:
                 /** = authc
                 /*.* = authc
             </value>
@@ -70,8 +72,12 @@
     </bean>
 
 
-
+    <!--登录成功清空上个页面地址，重定向到主页-->
     <bean id="loginFormAuthenticationFilter" class="cn.xt.shiro.loginFormAuthenticationFilter"/>
+
+    <!--退出系统前清空数据-->
+    <bean id="systemLogoutFilter" class="cn.xt.shiro.SystemLogoutFilter"></bean>
+
 
     <!-- 缓存配置  -->
     <bean id="ehCacheManager"

@@ -10,8 +10,8 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -63,7 +63,7 @@ public class LoginController {
 //        }
 
         if(UtilFuns.isEmpty(username)){
-            return "sysadmin/login/login";
+            return "redirect:/login";
         }
 
         try {
@@ -82,19 +82,18 @@ public class LoginController {
         }catch (Exception e){
             e.printStackTrace();
             request.setAttribute("errorInfo","对不起，用户名或密码错误！");
-            return "sysadmin/login/login";
+            return "redirect:/login";
         }
-
-        return "home/fmain";
-    }
-
+        // 登录成功跳转到主页
+        return "home/fmain";    }
 
 
     //注销
     @RequestMapping("/logout")
-    public String logout(HttpSession session){
-        session.removeAttribute(SysConstant.CURRENT_USER_INFO); //删除session
-
-        return "sysadmin/login/logout";
+    public void logout(){
+        //shiro注销，shiro会自动把session释放，所以不需要调用session.invalidate();方法
+        Subject currentUser = SecurityUtils.getSubject();
+        currentUser.logout();
     }
+
 }

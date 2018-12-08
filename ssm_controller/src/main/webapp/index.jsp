@@ -3,7 +3,12 @@
 <head>
 </head>
 <script type="text/javascript">
-     window.location.href = "login";		//javascript页面跳转
+    if(self.location!=top.location){
+        top.location=self.location;
+    }
+</script>
+<script type="text/javascript">
+     window.location.href = "/login";		//javascript页面跳转
 </script>
 <body>
 </body>

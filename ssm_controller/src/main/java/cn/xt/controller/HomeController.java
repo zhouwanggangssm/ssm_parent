@@ -28,6 +28,8 @@ public class HomeController {
             return "cargo/left";
         }else if(moduleName.equals("baseinfo")){//
             return "baseinfo/left";
+        }else if(moduleName.equals("stat")){
+            return "stat/left";
         }
         return "home/left";
     }
@@ -40,6 +42,8 @@ public class HomeController {
             return "cargo/main";
         }else if(moduleName.equals("baseinfo")){
             return "baseinfo/main";
+        }else if(moduleName.equals("stat")){
+            return "stat/main";
         }
 
         return "home/main";

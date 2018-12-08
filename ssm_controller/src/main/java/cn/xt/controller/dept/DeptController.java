@@ -133,7 +133,7 @@ public class DeptController {
 
 
         //将部门id放进部门对象
-        dept.setDeptId("jx"+deptId);
+        dept.setDeptId(deptId);
         //将部门状态信息放进部门对象 部门状态 0 停用 1 启用
         dept.setState(1);
 
@@ -142,7 +142,7 @@ public class DeptController {
             //判断添加部门是否成功
             if(deptService.addDept(dept)>0){
                 //重定向到dept_list
-                return "redirect:/sysadmin/dept_list";
+                return "redirect:/dept/dept_list";
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -176,6 +176,9 @@ public class DeptController {
     //修改部门信息
     @RequestMapping("/updateDept")
     public String updateDept(Dept dept){
+
+
+
         //判断本部门id是否等于上级部门id
         if(dept.getDeptId().equals(dept.getParentId().getDeptId())){
             //传入空值到上级部门
@@ -185,7 +188,7 @@ public class DeptController {
             //判断是否修改成功
             if(deptService.updateDept(dept)>0){
                 //重定向到dept_list
-                return "redirect:/sysadmin/dept_list";
+                return "redirect:/dept/dept_list";
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -214,7 +217,7 @@ public class DeptController {
 
                 //批量删除部门
                 if (deptService.deleteDeptList(list) > 0) {
-                    return "redirect:/sysadmin/dept_list";
+                    return "redirect:/dept/dept_list";
                 }
 
 
@@ -224,7 +227,7 @@ public class DeptController {
 
                 //单个删除部门
                 if (deptService.deleteDept(id) > 0) {
-                    return "redirect:/sysadmin/dept_list";
+                    return "redirect:/dept/dept_list";
                 }
 
 
@@ -233,6 +236,6 @@ public class DeptController {
             e.printStackTrace();
         }
 
-        return "redirect:/sysadmin/dept_list";
+        return "redirect:/dept/dept_list";
     }
 }

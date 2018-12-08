@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xt.dao.StatMapper" >
+    <!--厂家生产销售-->
+    <resultMap id="conmap" type="cn.xt.domain.ContractProduct">
+        <result column="FACTORY_NAME" property="factoryName"></result>
+        <result column="samount" property="amount"></result>
+    </resultMap>
+    <select id="execChangjia" resultMap="conmap">
+      SELECT factory_name,sum(amount) samount FROM contract_product_c
+      GROUP BY factory_name ORDER BY samount DESC
+    </select>
+    <!--产品销量前15-->
+    <resultMap id="chan" type="cn.xt.domain.ContractProduct">
+    <result column="PRODUCT_NO" property="productNo"></result>
+    <result column="sumnum" property="cnumber"></result>
+    </resultMap>
+    <select id="execChanPing" resultMap="chan">
+        SELECT product_no,sum(cnumber)as sumnum FROM contract_product_c
+         GROUP BY product_no ORDER BY sumnum DESC LIMIT 15
+    </select>
+
+    <!--统计人数-->
+    <resultMap id="online" type="cn.xt.domain.OnlineInfo">
+        <result column="a1" property="a1"/>
+        <result column="countnum" property="a2"/>
+    </resultMap>
+    <select id="execonline" resultMap="online">
+      SELECT t.a1,p.countnum
+        FROM (SELECT a1 FROM online_info_t) t
+        LEFT JOIN (SELECT SUBSTRING(login_time,12,2) AS a1,COUNT(*) AS countnum FROM login_log_p
+        GROUP BY SUBSTRING(login_time,12,2)) p ON t.a1=p.a1
+    </select>
+
+</mapper>
