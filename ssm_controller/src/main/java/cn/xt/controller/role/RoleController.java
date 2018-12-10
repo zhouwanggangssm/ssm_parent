@@ -261,7 +261,7 @@ public class RoleController {
     @RequestMapping(value = "/addRoleModule",method = RequestMethod.POST)
     public String addRoleModule(RoleModule roleModule){
         try {
-            //给角色添加一个或者多个模块
+            //给角色添加一或者多个模块
             if(roleService.addRoleModule(roleModule)>0){
                 return "redirect:/role/role_list";
             }

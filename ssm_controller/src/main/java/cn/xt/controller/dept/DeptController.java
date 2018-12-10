@@ -71,12 +71,12 @@ public class DeptController {
         try {
 
 
-            //使用分页的插件 pageHelper
-            PageHelper.startPage(pageIndex, SysConstant.PAGE_SIZE);
-            //传入当前页，每页显示5条
-            List<Dept> deptList = deptService.findPage();
+            //使用分页的插件 pageHelper 传入当前页和页面大小
+            PageHelper.startPage(pageIndex,SysConstant.PAGE_SIZE);
+            //查询部门分页
+            List<Dept> deptList=deptService.findPage();
             //把查出来的数据放进pageInfo
-            PageInfo pageInfo = new PageInfo(deptList);
+            PageInfo pageInfo=new PageInfo(deptList);
 
 
             //传递部门信息
