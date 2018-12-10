@@ -37,6 +37,22 @@
 	    		 alert("请先选择一项并且只能选择一项，再进行操作！");
 	    	 }
 	     }
+	     //实现分配角色
+         function toUserRole(){
+             if(isOnlyChecked()){
+                 formSubmit('/user/UserRoleUI','_self');
+             }else{
+                 alert("请先选择一项并且只能选择一项，再进行操作！");
+             }
+         }
+         //实现删除
+         function toDelete(){
+             if(isOnlyChecked()){
+                 formSubmit('/user/deleteUser','_self');
+             }else{
+                 alert("请先选择一项或者多项，再进行操作！");
+             }
+         }
 	</script>
 </head>
 
@@ -51,8 +67,8 @@
 <li id="view"><a href="javascript:toView()">查看</a></li>
 <li id="new"><a href="#" onclick="formSubmit('/user/getUpUserUI','_self');this.blur();">新增</a></li>
 <li id="update"><a href="#" onclick="javascript:toUpdate()">修改</a></li>
-<li id="update"><a href="#" onclick="formSubmit('/user/UserRoleUI','_self');this.blur();">角色</a></li>
-<li id="delete"><a href="#" onclick="formSubmit('/user/deleteUser','_self');this.blur();">删除</a></li>
+<li id="update"><a href="#" onclick="javascript:toUserRole()">角色</a></li>
+<li id="delete"><a href="#" onclick="javascript:toDelete()">删除</a></li>
 </ul>
   </div>
 </div>

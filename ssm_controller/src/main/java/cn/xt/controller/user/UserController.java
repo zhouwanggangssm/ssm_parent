@@ -55,18 +55,26 @@ public class UserController {
 
             //构建分页对象
             PageSupport pageSupport=new PageSupport();
+            //当前页
             pageSupport.setCurrentPageNo(currentPageNo);
+            //页面大小
             pageSupport.setPageSize(pageSize);
+            //总条数
             pageSupport.setTotalCount(totalCount);
             //页面总数
             int totalPageCount=pageSupport.getTotalPageCount();
 
             //查询用户信息
             List<User> userList=userService.findUserPage(((currentPageNo-1)*pageSize),pageSize);
+            //用户信息
             model.addAttribute("userList",userList);
+            //当前页
             model.addAttribute("currentPageNo",currentPageNo);
+            //总条数
             model.addAttribute("totalCount",totalCount);
+            //页面总数
             model.addAttribute("totalPageCount",totalPageCount);
+            //页面大小
             model.addAttribute("pageSize",pageSize);
 
         }catch (Exception e){
@@ -81,7 +89,9 @@ public class UserController {
     @RequestMapping("/findByIdUser")
     public String findByIdUser(@RequestParam(value = "id",required = false) String id, Model model) {
         try {
+            //查询单个用户
             User user = userService.getUserById(id);
+            //将user对象放进model
             model.addAttribute("user", user);
         } catch (Exception e) {
             e.printStackTrace();
@@ -94,9 +104,13 @@ public class UserController {
     @RequestMapping("/getUpUserUI")
     public String getUpUserUI(Model model){
         try {
+            //查询所有部门
             List<Dept> deptList=deptService.getUpDept();
+            //将deptList对象放进model
             model.addAttribute("deptList",deptList);
+            //查询所有直属领导
             List<UserInfo> userList=userService.getUpmanager();
+            //将userList对象放进model
             model.addAttribute("userList",userList);
         }catch (Exception e){
             e.printStackTrace();
@@ -107,6 +121,7 @@ public class UserController {
     //添加用户提交事务更新数据库
     @Transactional
     protected int addUser(User user) throws Exception {
+        //添加用户
         int adduser=userService.addUser(user);
         return adduser;
     }
@@ -137,7 +152,7 @@ public class UserController {
             user.setCreateTime(new Date());
             userInfo.setCreateTime(new Date());
 
-
+            //添加用户和添加用户扩展信息
             if (addUser(user)>0&&userService.addUserInfo(userInfo)>0){
                 return "redirect:/user/user_list";
             }
@@ -232,7 +247,7 @@ public class UserController {
             user.setUpdateTime(new Date());
 
 
-
+            //修改用户
             if(userService.updateUser(user)>0){
                 return "redirect:/user/user_list";
             }
@@ -246,10 +261,13 @@ public class UserController {
     @RequestMapping("/UserRoleUI")
     public String UserRoleUI(@RequestParam String id, Model model){
         try {
-
+            //单个查询用户扩展信息
             UserInfo userInfo=userService.findByIdUserInfo(id);
+            //将userInfo对象放进model
             model.addAttribute("userInfo",userInfo);
+            //查询所有角色
             List<Role> roleList=roleService.findRoleList();
+            //将roleList集合放进model
             model.addAttribute("roleList",roleList);
 
         }catch (Exception e){
@@ -264,7 +282,7 @@ public class UserController {
     public String saveUserRole(RoleUser roleUser){
          try {
 
-             //给用户添加多个角色
+             //给用户添加一个或者多个角色
              if(userService.addRoleUser(roleUser)>0){
                  return "redirect:/user/user_list";
              }

@@ -128,27 +128,30 @@ public class DeptController {
     //添加部门
     @RequestMapping("/adddept")
     public String addDept(Dept dept){
-        //随机产生部门id
-        String deptId= StringUtils.randomUUID();
+        //非空验证
+        if(dept.getParentId().getDeptId()!=null&&dept.getDeptName()!=null) {
+            //随机产生部门id
+            String deptId = StringUtils.randomUUID();
 
 
-        //将部门id放进部门对象
-        dept.setDeptId(deptId);
-        //将部门状态信息放进部门对象 部门状态 0 停用 1 启用
-        dept.setState(1);
+            //将部门id放进部门对象
+            dept.setDeptId(deptId);
+            //将部门状态信息放进部门对象 部门状态 0 停用 1 启用
+            dept.setState(1);
 
 
-        try {
-            //判断添加部门是否成功
-            if(deptService.addDept(dept)>0){
-                //重定向到dept_list
-                return "redirect:/dept/dept_list";
+            try {
+                //判断添加部门是否成功
+                if (deptService.addDept(dept) > 0) {
+                    //重定向到dept_list
+                    return "redirect:/dept/dept_list";
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
 
-        return "sysadmin/dept/jDeptCreate";
+        }
+        return "redirect:/dept/tocreate";
     }
 
     //准备修改页面的数据

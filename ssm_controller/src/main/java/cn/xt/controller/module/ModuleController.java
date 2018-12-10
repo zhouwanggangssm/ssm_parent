@@ -55,7 +55,9 @@ public class ModuleController {
     @RequestMapping("/findmodulebyid")
     public String findModuleById(@RequestParam("id") String id,Model model){
         try {
+            //查询单个模板
             Module module=moduleService.findModuleById(id);
+            //将module放进model
             model.addAttribute("module",module);
         }catch (Exception e){
             e.printStackTrace();
@@ -75,8 +77,9 @@ public class ModuleController {
     @RequestMapping("/addmodule")
     public String addModule(Module module, HttpSession session){
         try {
+            //生成moduleId
             String moduleId= StringUtils.randomUUID();
-            //生成id
+            //将moduleId放进module对象
             module.setModuleId(moduleId);
             //创建人id((User)session.getAttribute(Constants.USER_SESSION)).getId()
             module.setCreateBy(((User)session.getAttribute(SysConstant.CURRENT_USER_INFO)).getUserId());
@@ -85,6 +88,7 @@ public class ModuleController {
             //创建时间
             module.setCreateTime(new Date());
 
+            //添加模板
             if(moduleService.addModule(module)>0){
                 return "redirect:/module/module_list";
             }
@@ -98,7 +102,9 @@ public class ModuleController {
     @RequestMapping("/updateModuleUI")
     public String updateModuleUI(@RequestParam("id") String id,Model model){
         try {
+            //查询单个模板
             Module module=moduleService.findModuleById(id);
+            //将module对象放进model
             model.addAttribute("module",module);
         }catch (Exception e){
             e.printStackTrace();
@@ -116,7 +122,8 @@ public class ModuleController {
             //修改时间
             module.setUpdateTime(new Date());
 
-            if(moduleService.updateModule(module)>0){
+            //修改模板
+          if(moduleService.updateModule(module)>0){
                 return "redirect:/module/module_list";
             }
         }catch (Exception e){

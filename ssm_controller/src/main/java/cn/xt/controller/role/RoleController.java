@@ -62,7 +62,9 @@ public class RoleController {
     @RequestMapping("/findRoleById")
     public String findRoleById(@RequestParam(value = "id",required = false) String id,Model model){
         try {
+            //查询单个角色
             Role role=roleService.findRoleById(id);
+            //将role放进model
             model.addAttribute("role",role);
         }catch (Exception e){
             e.printStackTrace();
@@ -115,7 +117,7 @@ public class RoleController {
         try {
             //按id查询角色
             Role role=roleService.findRoleById(id);
-            //传递role对象到修改页面
+            //传递role对象放进model
             model.addAttribute("role",role);
         }catch (Exception e){
             e.printStackTrace();
@@ -133,6 +135,8 @@ public class RoleController {
             //修改时间
             role.setUpdateTime(new Date());
 
+
+            //修改角色
             if(roleService.updateRole(role)>0){
                 return "redirect:/role/role_list";
             }
@@ -188,9 +192,13 @@ public class RoleController {
     @RequestMapping("/rolemoduleUI")
     public String rolemoduleUI(@RequestParam(value = "id",required = false) String id,Model model){
         try {
+            //查询单个角色
             Role role=roleService.findRoleById(id);
+            //传递role对象放进model
             model.addAttribute("role",role);
+            //查询所有模板
             List<Module> moduleList=moduleService.findModule();
+            //将moduleList放进model
             model.addAttribute("moduleList",moduleList);
         }catch (Exception e){
             e.printStackTrace();
@@ -253,7 +261,7 @@ public class RoleController {
     @RequestMapping(value = "/addRoleModule",method = RequestMethod.POST)
     public String addRoleModule(RoleModule roleModule){
         try {
-            //给角色添加多个模块
+            //给角色添加一个或者多个模块
             if(roleService.addRoleModule(roleModule)>0){
                 return "redirect:/role/role_list";
             }

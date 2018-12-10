@@ -15,7 +15,7 @@ public class SystemLogoutFilter extends LogoutFilter {
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
         //在这里执行退出系统前需要清空的数据
           Subject subject = getSubject(request, response);
-
+        //得到登录页面重定向地址
         String redirectUrl = getRedirectUrl(request, response, subject);
 
         try {

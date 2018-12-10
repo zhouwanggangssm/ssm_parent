@@ -37,6 +37,14 @@
 	    		 alert("请先选择一项并且只能选择一项，再进行操作！");
 	    	 }
 	     }
+         //实现删除
+         function toDelete(){
+             if(isOnlyChecked()){
+                 formSubmit('/dept/deleteDept','_self');
+             }else{
+                 alert("请先选择一项或者多项，再进行操作！");
+             }
+         }
 	</script>
 </head>
 
@@ -52,7 +60,7 @@
 <li id="view"><a href="#" onclick="javascript:toView()">查看</a></li>
 <li id="new"><a href="#" onclick="formSubmit('/dept/tocreate','_self');this.blur();">新增</a></li>
 <li id="update"><a href="#" onclick="javascript:toUpdate()">修改</a></li>
-<li id="delete"><a href="#" onclick="formSubmit('/dept/deleteDept','_self');this.blur();">删除</a></li>
+<li id="delete"><a href="#" onclick="javascript:toDelete()">删除</a></li>
 </ul>
   </div>
 </div>
