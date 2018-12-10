@@ -30,16 +30,15 @@ public class AuthRealm extends AuthorizingRealm {
 
             //Set<Role> roles=user.getRoles();//对象导航
             List<Role> roles=userService.findUserRoleusername(user.getUserName());
-            List<String> permissions=null;
             if(null==roles||0==roles.size()){
                 return null;
             }{
                 info=new SimpleAuthorizationInfo();
+                //遍历每个角色
                 for(Role role:roles){
                     System.out.println("用户拥有的角色======================================="+role.getName());
-                    info.addRole(role.getName());
-                    //遍历每个角色
-                    //Set<Module> modules=role.getModules();//得到每个角色下的模块列表
+                    info.addRole(role.getName());//添加用户的角色（权限）
+                    //得到每个角色下的模块列表
                     List<Module> modules=userService.findRoleModulerolename(role.getName());
                     for(Module m:modules){
                         System.out.println("角色拥有的模块======================================="+m.getName());
