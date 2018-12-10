@@ -1,8 +1,9 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ include file="../base.jsp" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head><%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
-	<shiro:hasRole name="user"></shiro:hasRole>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<shiro:hasRole name="user"></shiro:hasRole>
+<head>
     <title></title>
     <link rel="stylesheet" rev="stylesheet" type="text/css" href="${ctx}/skin/default/css/left.css" media="all"/>
 
