@@ -16,6 +16,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 装箱
+ */
 @Controller
 @RequestMapping("/cargo")
 public class PackingListController {
@@ -28,7 +31,9 @@ public class PackingListController {
      */
     @RequestMapping("/packinglist_packing_list")
     public String list(@RequestParam(value = "pageIndex",required = false,defaultValue = "1") int pageIndex, Model model){
+        //分页PageHelper
         PageHelper.startPage(pageIndex, SysConstant.PAGE_SIZE);
+        //查询所有装箱信息
         List<PackingList> list = packingListService.findPage();
         PageInfo pageInfo = new PageInfo(list);
         model.addAttribute("results",pageInfo.getList());//数据
@@ -45,6 +50,7 @@ public class PackingListController {
     @RequestMapping("/packinglist_tocreate")
     public String toCreate(String[] exportId,Model model){//出口报运ID集合
         //携带出口报运的id集合，显示装箱和报运的关系
+        //调用getDivDataCreate
         model.addAttribute("divData",packingListService.getDivDataCreate(exportId));
         return "cargo/packinglist/jPackingListCreate";
     }
@@ -55,6 +61,7 @@ public class PackingListController {
      */
     @RequestMapping(value = "/packingListAction_insert",method = RequestMethod.POST)
     public String inserts(PackingList packingList){
+        //新增
         packingListService.insert(packingList);
         return "redirect:/cargo/packinglist_packing_list";
     }
@@ -69,7 +76,8 @@ public class PackingListController {
         PackingList packingList = packingListService.get(packingListId);
         model.addAttribute("packingList",packingList);
 
-        //调用
+        //调用getDivDataUpdate
+        //getExportIds ， getExportNos用 |分割
         String divDataUpdate = packingListService.getDivDataUpdate(packingList.getExportIds().split("\\|"), packingList.getExportNos().split("\\|"));
         model.addAttribute("divData",divDataUpdate);
         return "cargo/packinglist/jPackingListUpdate";
@@ -81,6 +89,7 @@ public class PackingListController {
      */
     @RequestMapping(value = "/packingList_update",method = RequestMethod.PUT)
     public String updates(PackingList packingList){
+        //修改
         packingListService.update(packingList);
         return "redirect:/cargo/packinglist_packing_list";
     }
@@ -95,7 +104,7 @@ public class PackingListController {
         PackingList packingList = packingListService.get(packingListId);
         model.addAttribute("packingList",packingList);
 
-        //调用拼串方法 合同号
+        //调用拼串方法getDivDataView 合同号getExportNos 用| 分割
         model.addAttribute("divData",packingListService.getDivDataView(packingList.getExportNos().split("\\|")));
         return "cargo/packinglist/jPackingListView";
     }
@@ -106,6 +115,7 @@ public class PackingListController {
      */
     @RequestMapping(value = "/packingList_delete",method = RequestMethod.DELETE)
     public String deletes(String packingListId){
+        //删除成功
         packingListService.delete(packingListId);
         return "redirect:/cargo/packinglist_packing_list";
     }
@@ -116,7 +126,7 @@ public class PackingListController {
      */
     @RequestMapping("/packingList_submit")
     public String submit(String packingListId){
-        //提交
+        //提交  用逗号分割
         this.ChangeState(1,packingListId.split(","));
         return "redirect:/cargo/packinglist_packing_list";
     }
@@ -138,6 +148,7 @@ public class PackingListController {
      * @param packingListId
      */
     private void ChangeState(Integer state,String[] packingListId){
+        //创建map对象
         Map<String,Object> map = new HashMap<>();
         map.put("state",state);
         map.put("ids",packingListId);

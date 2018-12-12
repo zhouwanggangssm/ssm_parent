@@ -13,6 +13,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * 报运业务层
+ */
 @Service
 @WebService
 public class ExportService {
@@ -45,7 +48,9 @@ public class ExportService {
      */
     @WebMethod(exclude = true)
     public List<Contract> getContractInfo(){
+        //创建map对象
         Map<String,Object> map = new HashMap<>();
+        //状态为1的
         map.put("state",1);
        return contractMapper.find(map);
     }
@@ -69,13 +74,16 @@ public class ExportService {
         //2.将合同下的货物信息搬家到报运下货物表中
         //3.将合同下的附件信息搬家到报运下的附件中
         //合同id放进ids字段中
-        export.setContractIds(UtilFuns.joinStr(ids,","));//添加报运单  工具类拼串
+        //添加报运单  工具类拼串
+        export.setContractIds(UtilFuns.joinStr(ids,","));
 
         String contractNos = "";
+        //循坏
         for(int i = 0 ; i < ids.length ; i++){
             //得到合同对象
             Contract contract = contractMapper.view(ids[i]);
-            contractNos += contract.getContractNo() + " "; //以空格作为分隔符
+            //以空格作为分隔符
+            contractNos += contract.getContractNo() + " ";
         }
 
         //去掉最后的字符
@@ -94,9 +102,12 @@ public class ExportService {
 
             //得到合同对象
             Contract contract = contractMapper.view(ids[i]);
-            for( ContractProduct  contractProduct : contract.getContractProducts()){
 
+            //循坏 contract.getContractProducts()
+            for( ContractProduct  contractProduct : contract.getContractProducts()){
+                //创建ExportProduct对象
                 ExportProduct ep = new ExportProduct();
+                //UUID
                 String uuid = UUID.randomUUID().toString();
                 uuid = uuid.replace("-","");
                 ep.setExportProductId(uuid); //主键  UUID生成
@@ -119,7 +130,7 @@ public class ExportService {
                     //实例化报运单下的附件对象
                     ExtEproduct extE = new ExtEproduct();
 
-                    //copy属性
+                    //copy属性BeanUtils工具类
                     BeanUtils.copyProperties(extC,extE); //拷贝  工具类
                     String uuid2 = UUID.randomUUID().toString();
                     uuid2 = uuid2.replace("-","");
@@ -167,7 +178,7 @@ public class ExportService {
         for(int i = 0; i < mr_id.length ;i++){
             //根据id查询exportProduct对象
             ExportProduct exportProduct = exportProductMapper.selectByPrimaryKey(mr_id[i]);
-            //赋值
+            //赋值exportProduct.setOrderNo(mr_orderNo[i]); 比如
             exportProduct.setOrderNo(mr_orderNo[i]);
             exportProduct.setCnumber(mr_cnumber[i]);
             exportProduct.setGrossWeight(mr_grossWeight[i]);
@@ -194,14 +205,21 @@ public class ExportService {
     public String getMrecordData(String exportId){
         ExportProductExample example = new ExportProductExample();
         ExportProductExample.Criteria criteria = example.createCriteria();
+
+        //andExportIdEqualTo(exportId)方法
         criteria.andExportIdEqualTo(exportId);
+
+        //查询ExportProduct下的所有信息
         List<ExportProduct> list = exportProductMapper.selectByExample(example);
 
+        //创建StringBuffer对象
         StringBuffer buffer = new StringBuffer();
+        //循坏
         for (ExportProduct exportProduct : list) {
         //拼接 双引号转义
         buffer.append("addTRRecord(\"mRecordTable\", \"").append(exportProduct.getExportProductId()).append("\",\"").append(exportProduct.getProductNo()).append("\", \"").append(exportProduct.getCnumber()).append("\", \"").append(UtilFuns.convertNull(exportProduct.getGrossWeight())).append("\", \"").append(UtilFuns.convertNull(exportProduct.getNetWeight())).append("\", \"").append(UtilFuns.convertNull(exportProduct.getSizeLength())).append("\", \"").append(UtilFuns.convertNull(exportProduct.getSizeWidth())).append("\", \"").append(UtilFuns.convertNull(exportProduct.getSizeHeight())).append("\", \"").append(UtilFuns.convertNull(exportProduct.getExPrice())).append("\", \"").append(UtilFuns.convertNull(exportProduct.getTax())).append("\");");
         }
+        //返回buffer.toString();
         return buffer.toString();
     }
 
@@ -212,22 +230,26 @@ public class ExportService {
     @WebMethod(exclude = true)
     public void delete(String[] exportId) {
         List<String> list = new ArrayList<>();
+        //循坏
         for (String id : exportId) {
             //删除当前报运下的货物附件
             extEproductMapper.deleteByExportProductId(id);
         }
 
+        //循坏
         for (String id : exportId) {
             //删除当前报运下的货物
             exportProductMapper.deleteByExportId(id);
         }
 
+        //循坏
         for(String id : exportId){
             list.add(id);
         }
         //删除报运单
         ExportExample example = new ExportExample();
         ExportExample.Criteria criteria = example.createCriteria();
+        //andExportIdIn(list);方法
         criteria.andExportIdIn(list);
         exportMapper.deleteByExample(example);
     }
@@ -238,6 +260,14 @@ public class ExportService {
      */
     public int updateState(Map<String,Object> map){
         return exportMapper.updateState(map);
+    }
+
+    /**
+     * 修改报运对象
+     * @return
+     */
+    public int updateExport(Export export){
+        return exportMapper.updateByPrimaryKeySelective(export);
     }
 }
 

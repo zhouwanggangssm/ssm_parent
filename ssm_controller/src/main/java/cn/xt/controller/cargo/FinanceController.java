@@ -1,13 +1,7 @@
 package cn.xt.controller.cargo;
 
-import cn.xt.domain.Finance;
-import cn.xt.domain.Invoice;
-import cn.xt.domain.PackingList;
-import cn.xt.domain.ShippingOrder;
-import cn.xt.service.FinanceService;
-import cn.xt.service.InvoiceService;
-import cn.xt.service.PackingListService;
-import cn.xt.service.ShippingOrderService;
+import cn.xt.domain.*;
+import cn.xt.service.*;
 import cn.xt.utils.DownloadUtil;
 import cn.xt.utils.SysConstant;
 import com.github.pagehelper.PageHelper;
@@ -38,6 +32,8 @@ import java.util.*;
 public class FinanceController {
     @Autowired
     private FinanceService financeService;
+    @Autowired
+    private ExportService exportService;
     /**
      * 查询所有发票
      * @param pageIndex
@@ -156,6 +152,12 @@ public class FinanceController {
     @RequestMapping("/finance_submit")
     public String submit(String financeId){
         this.changeState(1,financeId.split(","));
+        //创建报运对象
+        Export export = new Export();
+        //状态改为5
+        export.setState(5);
+        //更新
+        exportService.updateExport(export);
         return "redirect:/cargo/finance_list";
     }
 

@@ -7,6 +7,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,34 +25,49 @@ public class   basicinfo{
      private FactorySercice factorySercice;
 
 
-    //分页条件查询
+    /**
+     * 分页条件查询
+     * @param text
+     * @param pageIndex
+     * @param f_type
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/factoryActionlist_list")
     public String fyFactory(
             @RequestParam(value = "text",required = false)String text,
             @RequestParam(value="pageIndex",required = false,defaultValue = "1")int  pageIndex,
             @RequestParam(value = "f_type",required = false)String f_type,
-
             Model model
     ){
-        //调用pagehelper.startpage的方法  传pageindex和sysconstant
-        PageHelper.startPage(pageIndex, SysConstant.PAGE_SIZE);
+        //调用PageHelper.startPage的方法  传pageIndex和SysConstant
+        PageHelper.startPage(pageIndex,SysConstant.PAGE_SIZE);
         //调用sercice的方法serviceFactpry
-        List<Factory> list=factorySercice.serviceFactory(text, f_type);
+        List<Factory> factoryList = factorySercice.serviceFactory(text, f_type);
         //实例化Pageinfo
-        PageInfo pageInfo = new PageInfo(list);
+        PageInfo pageInfo = new PageInfo(factoryList);
         //用model返回分页数据
+        model.addAttribute("list",pageInfo.getList());
         //list接
-        model.addAttribute("list",pageInfo.getList());  //返回数据  pageinfo.getList
+          //返回数据  pageinfo.getList
         //totalPageCount接
-        model.addAttribute("totalPageCount",pageInfo.getPages());//总页数 pageinfo.getPages
+        //总页数 pageinfo.getPages
+        model.addAttribute("totalPageCount", pageInfo.getPages());
         //totalCount
-        model.addAttribute("totalCount",pageInfo.getTotal()); //总记录数 pageinfo.getTotal
+         //总记录数 pageinfo.getTotal
+        model.addAttribute("totalCount", pageInfo.getTotal());
+        model.addAttribute("currentPageNo", pageInfo.getPageNum());
         //currentPageNo
-        model.addAttribute("currentPageNo",pageIndex);//当前页 pageindex
+        //当前页 pageIndex
         return "baseinfo/jFactoryList";
     }
 
-    //根据ID查询
+    /**
+     * 根据ID查询
+     * @param factoryId
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/selectFactoryId")
     public String selectFactoryId(
             @RequestParam(value = "factoryId",required = false)String factoryId,
@@ -67,12 +83,22 @@ public class   basicinfo{
         }
 
     }
+
+    /**
+     * 跳转添加页面
+     * @return
+     */
     @RequestMapping(value = "/goadd")
     public String goadd(){
         return  "baseinfo/addFactory";
     }
 
-    //添加厂家信息
+
+    /**
+     * 添加厂家信息
+     * @param factory
+     * @return
+     */
     @RequestMapping(value = "/FactoryAdd",method = RequestMethod.POST)
     public String factoryAdd(Factory factory){
 
@@ -86,7 +112,13 @@ public class   basicinfo{
         }
     }
 
-    //根据id删除
+
+    /**
+     * 根据id删除
+     * @param factoryId
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/deleFactryID")
     public String deleFactryID(@RequestParam(value = "factoryId",required = false)String factoryId,Model model){
 
@@ -100,8 +132,13 @@ public class   basicinfo{
         }
     }
 
-    //根据id查询修改
-    //获得factoryId
+
+    /**
+     * 根据id查询修改 获得factoryId
+     * @param factoryId
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/upFactoryId")
     public String upFactoryId( @RequestParam(value = "factoryId",required = false)String factoryId,
                                Model model){
@@ -117,7 +154,12 @@ public class   basicinfo{
         }
 
     }
-    //修改方法upFactory 获得factory
+
+    /**
+     * 修改方法upFactory 获得factory
+     * @param factory
+     * @return
+     */
     @RequestMapping(value = "/upFactory")
     public String upFactory(Factory factory){
         //在修改
@@ -135,8 +177,12 @@ public class   basicinfo{
 
     }
 
-    //根据id修改状态upType
-    //获得factoryId state
+    /**
+     *  //根据id修改状态upType 获得factoryId state
+     * @param factoryId
+     * @param state
+     * @return
+     */
     @RequestMapping(value = "/upType")
     public String upType(
             @RequestParam(value = "factoryId",required = false)String factoryId,

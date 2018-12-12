@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 购销合同业务层
+ */
 @Service
 public class ContractService {
     @Autowired
@@ -68,7 +71,7 @@ public class ContractService {
      * @param id
      */
     public void delete(String id){
-
+        //创建list集合
         List<String> ids = new ArrayList<>();
         ids.add(id);
         //级联删除附件
@@ -93,6 +96,7 @@ public class ContractService {
         //删除购销合同
         ContractExample example = new ContractExample();
         ContractExample.Criteria criteria =  example.createCriteria();
+        //andContractIdIn(ids)
         criteria.andContractIdIn(ids);
         contractMapper.deleteByExample(example);
     }

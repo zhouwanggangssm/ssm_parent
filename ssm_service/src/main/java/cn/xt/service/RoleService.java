@@ -12,7 +12,10 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
+/***
+ * @author 黄德乐
+ * 角色管理业务层
+ */
 @Service
 public class RoleService{
     @Autowired
@@ -158,8 +161,11 @@ public class RoleService{
      * @throws Exception
      */
     public int addRoleModule(RoleModule roleModule) throws Exception{
+        //角色模板的模板id是否包含逗号
         if(roleModule.getModuleId().indexOf(",")>0){
+            //模板id用逗号分割放进String数组
             List<String> list= Arrays.asList(roleModule.getModuleId().split(","));
+            //将list和模板的角色id放进添加方法
             return roleMapper.addRoleModule(list,roleModule.getRoleId());
         }else {
             return roleMapper.addRoleModule(Arrays.asList(roleModule.getModuleId()),roleModule.getRoleId());

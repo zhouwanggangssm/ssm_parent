@@ -15,8 +15,8 @@
 <div id="innerMenubar">
   <div id="navMenubar">
 	<ul>
-		<li id="view"><a href="#" onclick="formSubmit('/cargo/contract_toview','_self');this.blur();">查看</a></li>
-		<li id="delete"><a href="#" onclick="formSubmit('/cargo/contract_delete','_self');this.blur();">删除</a></li>
+		<li id="view"><a href="#" onclick="formSubmit('/cargo/contracthis_toview','_self');this.blur();">查看</a></li>
+		<li id="delete"><a href="#" onclick="formSubmit('/cargo/contracthis_delete','_self');this.blur();">删除</a></li>
 		<li id="new"><a href="#" onclick="formSubmit('${ctx}/cargo/contracthis/pigeouthole','_self');this.blur();" title="取消归档">取消</a></li>
 	</ul>
   </div>
@@ -63,7 +63,7 @@
 		<td><input type="checkbox" name="contractId" value="${o.contractId}"/></td>
 		<td>${status.index+1}</td>
 		<td>${o.customName}</td>
-		<td><a href="/cargo/contract_toview?contractId=${o.contractId}">${o.contractNo}</a></td>
+		<td><a href="/cargo/contracthis_toview?contractId=${o.contractId}">${o.contractNo}</a></td>
 		<td>
 			${o.cpnum}/${o.extnum}
 		</td>

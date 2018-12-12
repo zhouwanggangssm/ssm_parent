@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
-
+/***
+ * @author 黄德乐
+ * 角色模块业务层
+ */
 @Service
 public class RoleModuleService {
      @Autowired

@@ -13,14 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * 附件业务层
+ */
 @Service
 public class ExtCproductService {
     @Autowired
     private ExtCproductMapper extCproductMapper;
     @Autowired
     private FactoryMapper factoryMapper;
-    @Autowired
-    private ContractProductMapper contractProductMapper;
     @Autowired
     private ContractMapper contractMapper;
     /**
@@ -40,33 +41,44 @@ public class ExtCproductService {
     public List<ExtCproduct> queryListAll(String contractProductId){
         //实例化ExtCproductExample对象
         ExtCproductExample example = new ExtCproductExample();
+
         ExtCproductExample.Criteria criteria = example.createCriteria();
+
         //调用andContractProductIdEqualTo方法，根据id查询所有附件
         criteria.andContractProductIdEqualTo(contractProductId);
+
+        //创建List集合
         List<ExtCproduct> list = extCproductMapper.selectByExample(example);
+
         return list;
     }
 
     /**
-     * 添加货物
+     * 添加附件信息
      */
     public void add(ExtCproduct extCproduct){
         //定义double类型的变量
-        double amount = 0d;
+       double amount = 0d;
 
         //随机生成UUID
         String uuid = UUID.randomUUID().toString();
+
         //把"-" 替换成""
-        uuid = uuid.replace("-","");
+        String s = uuid.replace("-", "");
+
         //附件id
-        extCproduct.setExtCproductId(uuid);
+       extCproduct.setExtCproductId(s);
 
-        //判断价格&&数量是否为空
-        if(UtilFuns.isNotEmpty(extCproduct.getPrice()) && UtilFuns.isNotEmpty(extCproduct.getCnumber())){
-            amount=extCproduct.getPrice()*extCproduct.getCnumber(); //货物总金额
+        //用工具类判断价格&&数量是否为空
+        if (UtilFuns.isNotEmpty(extCproduct.getPrice()) && UtilFuns.isNotEmpty(extCproduct.getCnumber())) {
 
-            extCproduct.setAmount(amount);//把总金额放进实体
+            //货物总金额
+            amount = (extCproduct.getPrice()*extCproduct.getCnumber());
+
+            //把总金额放进实体
+            extCproduct.setAmount(amount);
         }
+
 
         //修改购销合同的总金额
         Contract contract = getContractById(extCproduct.getContractProduct().getContract().getContractId());
@@ -74,7 +86,7 @@ public class ExtCproductService {
         //购销合同总金额加货物总金额
         contract.setTotalAmount(contract.getTotalAmount()+amount);
 
-        //保存购销合同的总金额
+        //通过调用方法更新购销合同的总金额
         updateAmount(contract);
 
         //保存附件信息
@@ -103,10 +115,11 @@ public class ExtCproductService {
             //修改当前合同的总金额
             contract.setTotalAmount(contract.getTotalAmount()-extamount+amount);
 
-            //保存购销合同的总金额
+            //更新购销合同的总金额
             updateAmount(contract);
         }
 
+        //更新附件
         int i = extCproductMapper.updateByPrimaryKeySelective(extCproduct);
         return i;
     }

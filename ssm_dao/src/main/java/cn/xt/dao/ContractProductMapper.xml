@@ -38,12 +38,13 @@
 
   <insert id="inserts" parameterType="cn.xt.domain.ContractProduct">
     insert into contract_product_c
-    (CONTRACT_PRODUCT_ID,CONTRACT_ID,FACTORY_ID,FACTORY_NAME,PRODUCT_NO,
+    (CONTRACT_PRODUCT_ID,CONTRACT_ID,PRODUCT_REQUEST,FACTORY_ID,FACTORY_NAME,PRODUCT_NO,
     PRODUCT_IMAGE,PRODUCT_DESC,CNUMBER,OUT_NUMBER,LOADING_RATE,BOX_NUM,
     PACKING_UNIT,PRICE,AMOUNT,FINISHED,EXTS,ORDER_NO)
     values(
     #{contractProductId},
     #{contractId},
+    #{productRequest},
     #{factoryId},
     #{factoryName, jdbcType=VARCHAR},
     #{productNo, jdbcType=VARCHAR},

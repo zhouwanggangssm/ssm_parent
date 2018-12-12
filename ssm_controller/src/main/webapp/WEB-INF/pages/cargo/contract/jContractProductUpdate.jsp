@@ -39,7 +39,7 @@
  
     <div>
 		<table class="commonTable" cellspacing="1">
-	        <tr>
+			<tr>
 	            <td class="columnTitle">生产厂家：</td>
 	            <td class="tableContent">
 					<select name="factoryId" onchange="setFactoryName(this.options[this.selectedIndex].text);">
@@ -56,14 +56,14 @@
 	            </td>
 	            <td class="columnTitle">货号：</td>
 	            <td class="tableContentAuto"><input type="text" name="productNo" value="${contractProduct.productNo }"/></td>
-	        </tr>		
-	        <tr>
-	            <td class="columnTitle">货物照片：</td>
-	            <td class="tableContent"><input type="text" name="productImage" value="${contractProduct.productImage }"/></td>
-	        </tr>		
+	        </tr>
+			<tr>
+				<td class="columnTitle">货物照片：</td>
+				<td class="tableContent"><input type="text" name="productImage" value="${contractProduct.productImage }"/></td>
+			</tr>
 	        <tr>
 	            <td class="columnTitle">数量：</td>
-	            <td class="tableContent"><input type="text" name="cnumber" value="${contractProduct.cnumber }"/>
+	            <td class="tableContent"><input type="text" name="cnumber" value="${contractProduct.cnumber }" onkeyup="value=value.replace(/[^(\d)]/g,'')"/>
 	                <input type="hidden" name="amount" value="${contractProduct.amount }"/>
 	            </td>
 	            <td class="columnTitle">包装单位：</td>
@@ -76,13 +76,13 @@
 	            <td class="columnTitle">装率：</td>
 	            <td class="tableContent"><input type="text" name="loadingRate" value="${contractProduct.loadingRate }"/></td>
 	            <td class="columnTitle">箱数：</td>
-	            <td class="tableContent"><input type="text" name="boxNum" value="${contractProduct.boxNum }"/></td>
+	            <td class="tableContent"><input type="text" name="boxNum" value="${contractProduct.boxNum }" onkeyup="value=value.replace(/[^(\d)]/g,'')"/></td>
 	        </tr>		
 	        <tr>
 	            <td class="columnTitle">单价：</td>
-	            <td class="tableContent"><input type="text" name="price" value="${contractProduct.price }"/></td>
+	            <td class="tableContent"><input type="text" name="price" value="${contractProduct.price }" onkeyup="value=value.replace(/[^(\d)]/g,'')"/></td>
 	            <td class="columnTitle">排序号：</td>
-	            <td class="tableContent"><input type="text" name="orderNo" value="${contractProduct.orderNo }"/></td>
+	            <td class="tableContent"><input type="text" name="orderNo" value="${contractProduct.orderNo }" onkeyup="value=value.replace(/[^(\d)]/g,'')"/></td>
 	        </tr>		
 	        <tr>
 	            <td class="columnTitle">货物描述：</td>

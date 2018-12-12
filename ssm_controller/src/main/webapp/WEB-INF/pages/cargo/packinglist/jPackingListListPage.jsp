@@ -4,6 +4,62 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title></title>
+	<script type="text/javascript" src="${ctx }/js/jquery-1.4.4.js"></script>
+	<script type="text/javascript">
+
+        //验证复选框是否被选中
+        function checks() {
+            var check = $("input[type='checkbox']").is(':checked');
+            if (check == true) {
+                //查看
+                formSubmit('/cargo/packingList_toview','_self');
+            }else {
+                alert("请先选择一项并且只能选择一项，再进行操作！");
+            }
+        }
+
+        function des() {
+            var ss = $("input[type='checkbox']").is(':checked');
+            if (ss == true) {
+                if(confirm("你确定要删除吗？")){
+                    formSubmit('/cargo/packingList_delete','_self');
+                }
+            }else{
+                alert("请先选择一项并且选择多项，再进行操作！");
+            }
+        }
+
+        function aaa() {
+            var aa = $("input[type='checkbox']").is(':checked');
+            if (aa == true) {
+                //修改
+                formSubmit('/cargo/packingList_toupdate','_self');
+            }else {
+                alert("请先选择一项并且只能选择一项，再进行操作！");
+            }
+        }
+
+        function bbb() {
+            var bb = $("input[type='checkbox']").is(':checked');
+            if (bb == true) {
+                //提交
+                formSubmit('/cargo/packingList_submit','_self');
+            }else {
+                alert("请先选择一项并且选择多项，再进行操作！");
+            }
+        }
+
+        function ccc() {
+            var cc = $("input[type='checkbox']").is(':checked');
+            if (cc == true) {
+                //取消
+                formSubmit('/cargo/packingList_cancel','_self');
+            }else {
+                alert("请先选择一项并且选择多项，再进行操作！");
+            }
+        }
+
+	</script>
 </head>
 
 <body>
@@ -15,11 +71,11 @@
 <div id="innerMenubar">
   <div id="navMenubar">
 <ul>
-	<li id="view"><a href="#" onclick="formSubmit('/cargo/packingList_toview','_self');this.blur();">查看</a></li>
-	<li id="update"><a href="#" onclick="formSubmit('/cargo/packingList_toupdate','_self');this.blur();">修改</a></li>
-	<li id="delete"><a href="#" onclick="formSubmit('/cargo/packingList_delete','_self');this.blur();">删除</a></li>
-	<li id="submit"><a href="#" onclick="formSubmit('/cargo/packingList_submit','_self');this.blur();">提交</a></li>
-	<li id="new"><a href="#" onclick="formSubmit('/cargo/packingList_cancel','_self');this.blur();">取消</a></li>
+	<li id="view"><a href="#" onclick="checks();this.blur();">查看</a></li>
+	<li id="update"><a href="#" onclick="aaa();this.blur();">修改</a></li>
+	<li id="delete"><a href="#" onclick="des();this.blur();">删除</a></li>
+	<li id="submit"><a href="#" onclick="bbb();this.blur();">提交</a></li>
+	<li id="new"><a href="#" onclick="ccc();this.blur();">取消</a></li>
 </ul>
   </div>
 </div>
@@ -48,7 +104,6 @@
 	</tr>
 	</thead>
 	<tbody class="tableBody" >
-${page.links}
 	
 	<c:forEach items="${results}" var="o" varStatus="status">
 	<tr class="odd" onmouseover="this.className='highlight'" onmouseout="this.className='odd'" >
@@ -59,8 +114,9 @@ ${page.links}
 		<td>${o.invoiceNo}</td>
 		<td><fmt:formatDate value="${o.invoiceDate}" pattern="yyyy-MM-dd"/></td>
 		<td>
-		<c:if test="${o.state==0}">草稿</c:if>
-		<c:if test="${o.state==1}"><b><font color="green">已上报</font></b></c:if>
+			<c:if test="${o.state==0}">草稿</c:if>
+			<c:if test="${o.state==1}"><b><font color="green">已上报</font></b></c:if>
+			<c:if test="${o.state==2}"><b><font color="green">已委托</font></b></c:if>
 		</td>
 	</tr>
 	</c:forEach>

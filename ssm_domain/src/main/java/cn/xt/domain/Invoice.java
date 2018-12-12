@@ -1,7 +1,12 @@
 package cn.xt.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
+/**
+ * 发票
+ */
 public class Invoice {
     private String invoiceId;
 
@@ -16,7 +21,7 @@ public class Invoice {
     private String createBy;
 
     private String createDept;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createTime;
 
     public String getInvoiceId() {

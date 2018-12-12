@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+/***
+ * @author 黄德乐
+ * 模块管理业务层
+ */
 @Service
 public class ModuleService {
     @Autowired

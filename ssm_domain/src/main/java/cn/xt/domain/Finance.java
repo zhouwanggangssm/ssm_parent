@@ -4,6 +4,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
+/**
+ * 财务
+ */
 public class Finance {
     private String financeId;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -16,7 +19,7 @@ public class Finance {
     private String createBy;
 
     private String createDept;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createTime;
 
     public String getFinanceId() {

@@ -1,6 +1,8 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ include file="../../base.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
+<script type="text/javascript" src="${ctx }/js/datepicker/WdatePicker.js"></script>
 <head>
 	<title></title>
 </head>
@@ -42,7 +44,7 @@
 	            <td class="tableContent">${invoice.tradeTerms}</td>
 	       
 	            <td class="columnTitle">发票时间：</td>
-	            <td class="tableContent">${invoice.createTime}</td>
+	            <td class="tableContent"><fmt:formatDate value="${invoice.createTime}" pattern="yyyy-MM-dd"></fmt:formatDate></td>
 	        </tr>
 	        <tr>
 	            <td class="columnTitle">委托单号：</td>

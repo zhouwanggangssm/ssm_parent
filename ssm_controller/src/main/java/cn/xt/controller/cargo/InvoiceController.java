@@ -1,8 +1,10 @@
 package cn.xt.controller.cargo;
 
+import cn.xt.domain.Export;
 import cn.xt.domain.Invoice;
 import cn.xt.domain.PackingList;
 import cn.xt.domain.ShippingOrder;
+import cn.xt.service.ExportService;
 import cn.xt.service.InvoiceService;
 import cn.xt.service.PackingListService;
 import cn.xt.service.ShippingOrderService;
@@ -31,6 +33,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * 发票
+ */
 @Controller
 @RequestMapping("/cargo")
 public class InvoiceController {
@@ -40,6 +45,8 @@ public class InvoiceController {
     private ShippingOrderService shippingOrderService;
     @Autowired
     private PackingListService packingListService;
+    @Autowired
+    private ExportService exportService;
     /**
      * 查询所有发票
      * @param pageIndex
@@ -50,7 +57,7 @@ public class InvoiceController {
     public String list(@RequestParam(value = "pageIndex",required = false,defaultValue = "1") int pageIndex, Model model){
         //使用分页的插件 pageHelper
         PageHelper.startPage(pageIndex, SysConstant.PAGE_SIZE);
-        //传入当前页，每页显示10条
+        //传入当前页，每页显示5条
         List<Invoice> list = invoiceService.findPage();
         //把查出来的数据放进pageInfo
         PageInfo pageInfo = new PageInfo(list);
@@ -72,7 +79,7 @@ public class InvoiceController {
     public String toCreate(@RequestParam(value = "pageIndex",required = false,defaultValue = "1") int pageIndex,
                            Model model) {
         PageHelper.startPage(pageIndex, SysConstant.PAGE_SIZE);
-        //查询委托为2的信息
+        //查询委托的信息
         List<ShippingOrder> shippingList = invoiceService.findShippingList();
         PageInfo pageInfo = new PageInfo(shippingList);
         //放进model
@@ -90,6 +97,7 @@ public class InvoiceController {
      */
     @RequestMapping(value = "/invoice_insert",method = RequestMethod.POST)
     public String create(Invoice invoice){
+        //新增发票成功
         invoiceService.insert(invoice);
         return "redirect:/cargo/invoice_list";
     }
@@ -100,6 +108,7 @@ public class InvoiceController {
      */
     @RequestMapping("/invoice_toview")
     public String view(String invoiceId,Model model){
+        //调用get方法
         Invoice invoice = invoiceService.get(invoiceId);
         model.addAttribute("invoice",invoice);
         return "cargo/invoicelist/jInvoiceView";
@@ -113,6 +122,7 @@ public class InvoiceController {
      */
     @RequestMapping("/invoice_toupdate")
     public String toUpdate(String invoiceId,Model model){
+        //回显数据
         Invoice invoice = invoiceService.get(invoiceId);
         model.addAttribute("invoice",invoice);
         return "cargo/invoicelist/jInvoiceUpdate";
@@ -125,6 +135,7 @@ public class InvoiceController {
      */
     @RequestMapping(value = "/invoice_update",method = RequestMethod.PUT)
     public String updates(Invoice invoice){
+        //修改
         invoiceService.update(invoice);
         return "redirect:/cargo/invoice_list";
     }
@@ -152,7 +163,7 @@ public class InvoiceController {
     }
 
     /**
-     * 提交
+     * 提交 1
      * @return
      */
     @RequestMapping("/invoice_submit")
@@ -162,7 +173,7 @@ public class InvoiceController {
     }
 
     /**
-     * 取消
+     * 取消 0
      * @return
      */
     @RequestMapping("/invoice_cancel")
@@ -193,6 +204,13 @@ public class InvoiceController {
         invoice.setState(2);
         //更新
         invoiceService.update(invoice);
+
+        //创建报运对象
+        Export export = new Export();
+        //状态改为4
+        export.setState(4);
+        //更新
+        exportService.updateExport(export);
         return "redirect:/cargo/invoice_list";
     }
 
@@ -218,7 +236,7 @@ public class InvoiceController {
         //===========读取数据
         //根据id查询委托单
         String[] ids = invoiceId.split(", ");
-        if (ids.length!=1) {
+        if (ids.length != 1) {
             return "redirect:/cargo/invoice_list";
         }
         //发票对象
@@ -227,12 +245,13 @@ public class InvoiceController {
         PackingList packingList = packingListService.get(invoiceId);
         //委托对象
         ShippingOrder shippingOrder = shippingOrderService.get(invoiceId);
+
         nRow = sheet.getRow(3);
-        nCell = nRow.getCell(1);
+        nCell = nRow.getCell(0);
         nCell.setCellValue(packingList.getSeller());
 
         nRow = sheet.getRow(8);
-        nCell = nRow.getCell(1);
+        nCell = nRow.getCell(0);
         nCell.setCellValue(packingList.getBuyer());
 
         nRow = sheet.getRow(15);
@@ -242,8 +261,13 @@ public class InvoiceController {
 
         //信用证
         nRow = sheet.getRow(19);
-        nCell = nRow.createCell(1);
+        nCell = nRow.createCell(0);
         nCell.setCellValue(shippingOrder.getLcNo());
+
+        //发票号
+        nRow = sheet.getRow(15);
+        nCell = nRow.createCell(0);
+        nCell.setCellValue(packingList.getInvoiceNo());
 
         //日期
         nRow = sheet.getRow(15);
@@ -258,7 +282,7 @@ public class InvoiceController {
 
         //唛头
         nRow = sheet.getRow(23);
-        nCell = nRow.createCell(1);
+        nCell = nRow.createCell(0);
         nCell.setCellValue(packingList.getMarks());
 
         //描述

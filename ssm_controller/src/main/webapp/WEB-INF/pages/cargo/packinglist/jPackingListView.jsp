@@ -59,8 +59,9 @@
 	        <tr>
 	            <td class="columnTitle">状态：</td>
 	            <td class="tableContent">
-	           <c:if test="${packingList.state==0}">草稿</c:if>
-				<c:if test="${packingList.state==1}"><b><font color="green">已上报</font></b></c:if>
+	           		<c:if test="${packingList.state==0}">草稿</c:if>
+					<c:if test="${packingList.state==1}"><b><font color="green">已上报</font></b></c:if>
+					<c:if test="${packingList.state==2}"><b><font color="green">已委托</font></b></c:if>
 	            </td>
 	        </tr>	
 	       

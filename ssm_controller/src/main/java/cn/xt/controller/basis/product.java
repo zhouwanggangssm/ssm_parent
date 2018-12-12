@@ -32,6 +32,15 @@ public class product {
     @Autowired
     public PrductSercice prductSercice;
 
+
+    /**
+     * 分页查询
+     * @param id
+     * @param factoryName
+     * @param pageIndex
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/productList")
     public String productList(@RequestParam(value ="id", required = false) String id,
                               @RequestParam(value = "factoryName",required = false) String factoryName,
@@ -42,7 +51,6 @@ public class product {
         List<Product> list=prductSercice.selectProdList(id,factoryName);
         //把查出来的数据放进pageInfo
         PageInfo pageInfo = new PageInfo(list);
-
 
         model.addAttribute("listpro",pageInfo.getList());//数据
         model.addAttribute("totalPageCount",pageInfo.getPages());//总页数
@@ -59,9 +67,14 @@ public class product {
         model.addAttribute("Factory",list);
         return "/baseinfo/addproduct";
     }
-//添加
-// 获得原始文件名
 
+    /**
+     * 添加 获得原始文件名
+     * @param product
+     * @param request
+     * @param fileName
+     * @return
+     */
     @RequestMapping(value = "/addprodct")
     public String addprodct(Product product, HttpServletRequest request
             , @RequestParam(value = "fileName") MultipartFile fileName
@@ -95,7 +108,12 @@ public class product {
             return "redirect:/product/productList";
 
     }
-//删除
+
+    /**
+     * 删除
+     * @param productId
+     * @return
+     */
     @RequestMapping(value = "/detproduct",method = RequestMethod.DELETE)
     public String detproduct(@RequestParam(value = "productId",required = false)String productId) {
 
@@ -108,7 +126,13 @@ public class product {
 
 
     }
-//根据id查询修改
+
+    /**
+     * 根据id查询修改
+     * @param productId
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/selectp")
     public String selectproduct(@RequestParam(value = "productId",required = false)String productId,
                                 Model model){
@@ -134,7 +158,14 @@ public class product {
             return "";
         }
     }
-    //根据id查询
+
+
+    /**
+     * 根据id查询
+     * @param productId
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/listProductId")
     public  String listProductId(@RequestParam(value = "productId",required = false)String productId,
                                  Model model){

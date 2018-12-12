@@ -11,6 +11,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author 黄德乐
+ * 用户管理业务层
+ */
 @Service
 public class UserService{
     @Autowired

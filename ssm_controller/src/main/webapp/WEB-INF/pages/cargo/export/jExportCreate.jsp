@@ -59,14 +59,14 @@
 	        </tr>	
 	        <tr>
 	            <td class="columnTitle">总箱数</td>
-	            <td class="tableContent"><input type="text" name="boxNums"/></td>
+	            <td class="tableContent"><input type="text" name="boxNums" onkeyup="value=value.replace(/[^(\d)]/g,'')"/></td>
 	       
 	            <td class="columnTitle">总毛重</td>
-	            <td class="tableContent"><input type="text" name="grossWeights"/></td>
+	            <td class="tableContent"><input type="text" name="grossWeights" onkeyup="value=value.replace(/[^(\d)]/g,'')"/></td>
 	        </tr>	
 	        <tr>
 	            <td class="columnTitle">体积</td>
-	            <td class="tableContent"><input type="text" name="measurements"/></td>
+	            <td class="tableContent"><input type="text" name="measurements" onkeyup="value=value.replace(/[^(\d)]/g,'')"/></td>
 	        </tr>	
 	       
 		</table>

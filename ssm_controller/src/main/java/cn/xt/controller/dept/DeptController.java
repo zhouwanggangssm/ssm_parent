@@ -19,7 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * @author 黄德乐
+ * 部门管理
+ */
 @Controller
 @RequestMapping("/dept")
 public class DeptController {

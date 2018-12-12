@@ -5,12 +5,15 @@ import cn.xt.service.ContractHisService;
 import cn.xt.utils.SysConstant;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +27,7 @@ public class ContractHisController {
     //归档
     @RequestMapping("/cargo/contracthis/pigeinhole")
     public String pigeinhole(String[] contractId){
+        //传入contractId数组
         contractHisService.pigeinhole(contractId);
         return "redirect:/cargo/contracthis/list";
     }
@@ -34,6 +38,7 @@ public class ContractHisController {
      */
     @RequestMapping("/cargo/contracthis/pigeouthole")
     public String pigeouthole(String[] contractId){
+        //传入contractId数组
         contractHisService.pigeouthole(contractId);
         return "redirect:/cargo/contracthis/list";
     }
@@ -58,6 +63,40 @@ public class ContractHisController {
         return "cargo/contracthis/jContractHisList";
     }
 
+    /**
+     * 查看历史购销合同
+     * @return
+     */
+    @RequestMapping("/cargo/contracthis_toview")
+    public String views(String contractId, Model model){
+        //根据contractId查询
+        Contract contract = contractHisService.view(contractId);
+        model.addAttribute("contract",contract);
+        return "cargo/contract/jContractView";
+    }
+
+    /**
+     * 输出历史购销合同
+     * @return
+     */
+    @RequestMapping(value = "/cargo/contracthis_delete" ,method = RequestMethod.DELETE)
+    public String delete(String contractId){
+        //创建list集合
+        List<String> list = new ArrayList<>();
+        if(contractId.contains(",")){
+            String[] ids = contractId.split(",");
+            for(int i = 0; i<ids.length;i++){
+                //放入集合中
+                list.add(ids[i]);
+            }
+            //批量删除
+            contractHisService.deleteBarch(list);
+        }else{
+            //删除单个
+            contractHisService.delete(contractId);
+        }
+        return "redirect:/cargo/contracthis/list";
+    }
 }
 
 

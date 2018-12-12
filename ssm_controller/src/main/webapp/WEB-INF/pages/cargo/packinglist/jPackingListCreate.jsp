@@ -43,14 +43,9 @@
 				</tr>
 				<tr>
 					<td class="columnTitle_mustbe">卖家：</td>
-					<td class="tableContent"><textarea name="seller" style="height:80px;">INT'L CO.,LTD.
-8-C,JIATENG BUILDING.NO.108
-HEPING RO0001</textarea></td>
+					<td class="tableContent"><textarea name="seller" style="height:80px;"></textarea></td>
 					<td class="columnTitle_mustbe">买家：</td>
-					<td class="tableContent"><textarea name="buyer" style="height:80px;">LEE &CO.,LTD
-NOS.9-12,17/FL,TOWER 3,
-CHINA HONGKONG CITY,
-33CANTON ROOWLOON.HK</textarea></td>
+					<td class="tableContent"><textarea name="buyer" style="height:80px;"></textarea></td>
 				</tr>
 				<tr>
 					<td class="columnTitle_mustbe">唛头：</td>

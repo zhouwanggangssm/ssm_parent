@@ -1,6 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ include file="../../base.jsp"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <head>
 	<title></title>
 	<script type="text/javascript" src="${ctx }/js/datepicker/WdatePicker.js"></script>
@@ -83,7 +84,7 @@
 	        </tr>	
 	        <tr>
 	            <td class="columnTitle">份数：</td>
-	            <td class="tableContent"><input type="text" name="copyNum" value=""/></td>
+	            <td class="tableContent"><input type="text" name="copyNum" value="" onkeyup="value=value.replace(/[^(\d)]/g,'')"/></td>
 	            <td class="columnTitle">扼要说明：</td>
 	            <td class="tableContent"><input type="text" name="remark" value=""/></td>
 	        </tr>	
@@ -124,7 +125,7 @@
 		<td>${o.seller}</td>
 		<td>${o.buyer}</td>
 		<td>${o.invoiceNo}</td>
-		<td>${o.invoiceDate}</td>
+		<td><fmt:formatDate value="${o.invoiceDate}" pattern="yyyy-MM-dd"/></td>
 		<td>
 		<c:if test="${o.state==0}">草稿</c:if>
 		<c:if test="${o.state==1}"><b><font color="green">已上报</font></b></c:if>

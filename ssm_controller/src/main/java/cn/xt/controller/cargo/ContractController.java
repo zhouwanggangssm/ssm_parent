@@ -13,9 +13,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
@@ -43,7 +45,7 @@ public class ContractController {
         List<Contract> list = contractService.findpage();
         //把查出来的数据放进pageInfo
         PageInfo pageInfo = new PageInfo(list);
-
+        //把数据放进作用域中
         model.addAttribute("results",pageInfo.getList());//数据
         model.addAttribute("totalPageCount",pageInfo.getPages());//总页数
         model.addAttribute("totalCount",pageInfo.getTotal()); //总记录数
@@ -58,7 +60,9 @@ public class ContractController {
      */
     @RequestMapping("/contract_toview")
     public String view(@RequestParam("contractId") String id, Model model){
+        //调用业务层查询方法
         Contract contract = contractService.getIdInfo(id);
+        //把对象放进作用域
         model.addAttribute("contract",contract);
         return "cargo/contract/jContractView";
     }
@@ -81,14 +85,16 @@ public class ContractController {
         //用uuid生成id
         String uuid = UUID.randomUUID().toString();
         uuid = uuid.replace("-","");
+        //id
         contract.setContractId(uuid);
-        //总金额
         //创建时间
        contract.setCreateTime(new Date());
+       //总金额默认为 0d
         contract.setTotalAmount(0d);
         contract.setState(0); //0草稿 1已上报 2已报运
-            contractService.add(contract);
-            return "redirect:/cargo/contract_list";
+        //添加
+        contractService.add(contract);
+        return "redirect:/cargo/contract_list";
     }
 
     /**
@@ -97,7 +103,9 @@ public class ContractController {
      */
     @RequestMapping("/contract_toupdateUI")
     public String updateUI(@RequestParam("contractId") String id,Model model){
+        //调用查询方法
         Contract contract = contractService.get(id);
+        //回显数据
         model.addAttribute("contract",contract);
         return "cargo/contract/jContractUpdate";
     }
@@ -108,8 +116,9 @@ public class ContractController {
      */
     @RequestMapping(value = "/contract_update",method = RequestMethod.PUT)
     public String updateContract(Contract contract){
-            contractService.update(contract);
-            return "redirect:/cargo/contract_list";
+        //修改购销合同
+        contractService.update(contract);
+        return "redirect:/cargo/contract_list";
 
     }
 
@@ -122,11 +131,13 @@ public class ContractController {
     public String deleteContract(@RequestParam("contractId") String ids){
         //创建String类型list集合
         List<String> list = new ArrayList<>();
+        //判断ids是否包含，
         if (ids.contains(",")){
-            //ids存放在String数组中,然后split分割
+            //ids存放在String数组中,然后split分割 ，
             String[] idss = ids.split(",");
-            //组装id的集合
+            //组装id的集合 循坏
             for (String i : idss){
+                //放进list中
                 list.add(i);
             }
             //批量删除
@@ -135,7 +146,7 @@ public class ContractController {
             //单个删除
             contractService.delete(ids);
         }
-         return "redirect:/cargo/contract_list";
+        return "redirect:/cargo/contract_list";
     }
 
     /**
@@ -168,9 +179,13 @@ public class ContractController {
      * @param ids
      */
     private void changeState(Integer stateValue,String[]ids){
+        //创建map集合
         Map<String,Object> map = new HashMap<>();
+        //把state放进map中
         map.put("state",stateValue);
+        //把ids放进map
         map.put("ids",ids);
+        //调用修改方法
         contractService.updateState(map);
     }
 
@@ -179,11 +194,11 @@ public class ContractController {
      */
     @RequestMapping("/contract_print")
     public void print(String contractId, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        //实例化打印的工具类
+        //实例化打印的工具类ContractPrint
         ContractPrint cp = new ContractPrint();
-        //得到要打印的数据
+        //得到要打印的数据调用getIdInfo
         Contract contract = contractService.getIdInfo(contractId);
-        //调用模板打印的方法
+        //调用模板打印的方法 把路径/传过去
         cp.print(contract,request.getSession().getServletContext().getRealPath("/"),request,response);
     }
 }

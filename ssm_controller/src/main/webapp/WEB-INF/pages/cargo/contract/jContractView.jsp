@@ -76,7 +76,7 @@
 	        </tr>		
 	        <tr>
 	            <td class="columnTitle">要求：</td>
-	            <td class="tableContent"><textarea>${contract.crequest }</textarea></td>
+	            <td class="tableContent"><textarea  readonly="readonly">${contract.crequest }</textarea></td>
 	            <td class="columnTitle">说明：</td>
 	            <td class="tableContent"><pre>${contract.remark }</pre></td>
 	        </tr>		

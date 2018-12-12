@@ -11,6 +11,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 发票业务层
+ */
 @Service
 public class InvoiceService {
     @Autowired
@@ -69,6 +72,8 @@ public class InvoiceService {
 
         //状态默认为0
         invoice.setState(0);
+        //发票时间
+        invoice.setCreateTime(new Date());
         //新增
         invoiceMapper.insertSelective(invoice);
     }

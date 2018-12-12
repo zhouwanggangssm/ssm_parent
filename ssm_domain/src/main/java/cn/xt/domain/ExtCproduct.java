@@ -29,6 +29,8 @@ public class ExtCproduct implements Serializable {
 
     private String packingUnit;//  包装单位   PCS/SETS
 
+    private Integer finished;
+
     private Integer cnumber;//数量
 
     private double price;//单价
@@ -165,5 +167,13 @@ public class ExtCproduct implements Serializable {
 
     public void setCtype(String ctype) {
         this.ctype = ctype;
+    }
+
+    public Integer getFinished() {
+        return finished;
+    }
+
+    public void setFinished(Integer finished) {
+        this.finished = finished;
     }
 }

@@ -65,7 +65,7 @@
 	        </tr>		
 	        <tr>
 	            <td class="columnTitle">数量：</td>
-	            <td class="tableContent"><input type="text" name="cnumber" value="${extCproduct.cnumber}"/></td>
+	            <td class="tableContent"><input type="text" name="cnumber" value="${extCproduct.cnumber}" onkeyup="value=value.replace(/[^(\d)]/g,'')"/></td>
 	            <td class="columnTitle">包装单位：</td>
 	            <td class="tableContentAuto">
 	            	<input type="radio" name="packingUnit" value="PCS" <c:if test="${extCproduct.packingUnit=='PCS'}">checked</c:if> class="input">只
@@ -74,9 +74,9 @@
 	        </tr>		
 	        <tr>
 	            <td class="columnTitle">单价：</td>
-	            <td class="tableContent"><input type="text" name="price" value="${extCproduct.price}"/></td>
+	            <td class="tableContent"><input type="text" name="price" value="${extCproduct.price}" onkeyup="value=value.replace(/[^(\d)]/g,'')"/></td>
 	            <td class="columnTitle">排序号：</td>
-	            <td class="tableContent"><input type="text" name="orderNo" value="${extCproduct.orderNo}"/></td>
+	            <td class="tableContent"><input type="text" name="orderNo" value="${extCproduct.orderNo}" onkeyup="value=value.replace(/[^(\d)]/g,'')"/></td>
 	        </tr>		
 	        <tr>
 	            <td class="columnTitle">货物描述：</td>

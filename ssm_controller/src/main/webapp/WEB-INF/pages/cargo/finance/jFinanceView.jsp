@@ -1,5 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ include file="../../base.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<script type="text/javascript" src="${ctx }/js/datepicker/WdatePicker.js"></script>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title></title>
@@ -31,17 +33,17 @@
 		<table class="commonTable" cellspacing="1">
 	        <tr>
 	            <td class="columnTitle">制单人：</td>
-	            <td class="tableContent">${inputBy}</td>
+	            <td class="tableContent">${finance.inputBy}</td>
 	        </tr>	
 	        <tr>
 	            <td class="columnTitle">制单日期：</td>
-	            <td class="tableContent">${inputDate}</td>
+	            <td class="tableContent"><fmt:formatDate value='${finance.inputDate }' pattern='yyyy-MM-dd' /></td>
 	        </tr>	
 	        <tr>
 	            <td class="columnTitle">状态：</td>
 	           <td class="tableContent">
-	           <c:if test="${state==0}">草稿</c:if>
-				<c:if test="${state==1}"><b><font color="green">已上报</font></b></c:if>
+	           <c:if test="${finance.state==0}">草稿</c:if>
+				<c:if test="${finance.state==1}"><b><font color="green">已上报</font></b></c:if>
 	            </td>
 	        </tr>	
 	     

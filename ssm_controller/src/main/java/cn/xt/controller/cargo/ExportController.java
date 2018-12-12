@@ -30,6 +30,7 @@ public class ExportController {
     private ContractService contractService;
     @Autowired
     private ExportService exportService;
+
     /**
      * 分页，查询报运单
      * @return
@@ -39,8 +40,9 @@ public class ExportController {
                        Model model){
         //分页插件
         PageHelper.startPage(pageIndex, SysConstant.PAGE_SIZE);
-        //状态为1
+        //查询所有报运单信息
         List<Export> list = exportService.findList();
+        //创建PageInfo对象
         PageInfo pageInfo = new PageInfo(list);
         model.addAttribute("results",pageInfo.getList());
         model.addAttribute("totalPageCount",pageInfo.getPages());//总页数
@@ -49,12 +51,18 @@ public class ExportController {
         return "cargo/export/jExportList";
     }
 
+    /**
+     * 查询购销合同管理所有信息
+     * @param pageIndex
+     * @param model
+     * @return
+     */
     @RequestMapping("/export_contractlist")
     public String seleteContract(@RequestParam(value = "pageIndex",required = false,defaultValue = "1") Integer pageIndex,
                                  Model model){
         //分页插件
         PageHelper.startPage(pageIndex,SysConstant.PAGE_SIZE);
-        //查询购销合同
+        //查询购销合同管理
         List<Contract> contractList = exportService.getContractInfo();
         PageInfo pageInfo = new PageInfo(contractList);
         model.addAttribute("results",pageInfo.getList());
@@ -65,12 +73,14 @@ public class ExportController {
     }
 
     /**
-     * 查看购销合同
+     *  根据购销合同id查看购销合同
      * @return
      */
     @RequestMapping("/contract_toviews")
     public String view(@RequestParam("contractId") String contractId,Model model){
+        //调用getIdInfo方法
         Contract contract = contractService.getIdInfo(contractId);
+        //存进作用域中
         model.addAttribute("contract",contract);
         return "cargo/contract/jContractView";
     }
@@ -82,6 +92,7 @@ public class ExportController {
     @RequestMapping("/export_tocreate")
     public String ExportUI(@RequestParam("contractId") String contractId,
     Model model){
+        //把购销合同存进model中
         model.addAttribute("contractId",contractId);
         return "cargo/export/jExportCreate";
     }
@@ -109,6 +120,7 @@ public class ExportController {
 
         //准备批量修改控件的数据
         String mrecordData = exportService.getMrecordData(exportId);
+        //把mRecordData存进去
         model.addAttribute("mRecordData",mrecordData);
         return "cargo/export/jExportUpdate";
     }
@@ -119,7 +131,7 @@ public class ExportController {
      * @return
      */
     @RequestMapping(value = "/export_update",method = RequestMethod.PUT)
-    public String updates(Export export,
+    public String updates(Export export, //传入对象，要修改的数组
                           String[] mr_id,
                           Integer[] mr_orderNo,
                           Integer[] mr_cnumber,
@@ -141,6 +153,7 @@ public class ExportController {
      */
     @RequestMapping("/export_toview")
     public String toView(String exportId,Model model){
+        //根据报运exportId查询对象
         Export export = exportService.get(exportId);
         model.addAttribute("export",export);
         return "cargo/export/jExportView";
@@ -152,7 +165,7 @@ public class ExportController {
      */
     @RequestMapping(value = "/export_delete",method = RequestMethod.DELETE)
     public String deletes(String exportId){
-        //接收id,分割
+        //接收id,用逗号分割
         exportService.delete(exportId.split(","));
         return "redirect:/cargo/export_List";
     }
@@ -163,6 +176,7 @@ public class ExportController {
      */
     @RequestMapping("/export_submit")
     public String submit(String exportId){
+        //接收页面传来的报运多个id，进行提交
         String[] ids = exportId.split(",");
         this.changeState(1,ids);
         return "redirect:/cargo/export_List";
@@ -174,7 +188,9 @@ public class ExportController {
      */
     @RequestMapping("/export_cancel")
     public String cancel(String exportId){
+        //用String数组接收
         String[] ids = exportId.split(",");
+        //调用changeState方法
         this.changeState(0,ids);
         return "redirect:/cargo/export_List";
     }
@@ -183,6 +199,7 @@ public class ExportController {
      * 改变状态
      */
     private void changeState(Integer state,String[] ids){
+        //创建map集合
         Map<String,Object> map = new HashMap<>();
         map.put("state",state);
         map.put("ids",ids);

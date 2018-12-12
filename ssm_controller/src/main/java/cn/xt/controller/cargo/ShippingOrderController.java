@@ -53,7 +53,7 @@ public class ShippingOrderController {
                        Model model){
         //使用分页的插件 pageHelper
         PageHelper.startPage(pageIndex, SysConstant.PAGE_SIZE);
-        //传入当前页，每页显示10条
+        //传入当前页，每页显示5条
         List<ShippingOrder> list = shippingOrderService.findPage();
         //把查出来的数据放进pageInfo
         PageInfo pageInfo = new PageInfo(list);
@@ -73,7 +73,7 @@ public class ShippingOrderController {
     public String toCreate(@RequestParam(value = "pageIndex",required = false,defaultValue = "1") int pageIndex,
                            Model model){
         PageHelper.startPage(pageIndex,SysConstant.PAGE_SIZE);
-        //查询装箱为 1的信息
+        //查询装箱为findPackingList 1的信息
         List<PackingList> packingList = shippingOrderService.findPackingList(1);
         PageInfo pageInfo = new PageInfo(packingList);
         //放进model
@@ -90,6 +90,7 @@ public class ShippingOrderController {
      */
     @RequestMapping(value = "shippingOrder_insert",method = RequestMethod.POST)
     public String create(ShippingOrder shippingOrder){
+        //新增成功
         shippingOrderService.insert(shippingOrder);
         return "redirect:/cargo/jshipping_list";
     }
@@ -100,6 +101,7 @@ public class ShippingOrderController {
      */
     @RequestMapping("/shippingOrder_view")
     public String view(String shippingOrderId,Model model){
+        //调用get方法
         ShippingOrder shippingOrder = shippingOrderService.get(shippingOrderId);
         model.addAttribute("sOd",shippingOrder);
         return "cargo/shippingorder/jShippingOrderView";
@@ -113,7 +115,9 @@ public class ShippingOrderController {
      */
     @RequestMapping("/shippingOrder_toUpdate")
     public String toUpdate(String shippingOrderId,Model model){
+        //回显数据
         ShippingOrder shippingOrder = shippingOrderService.get(shippingOrderId);
+        //存入sod
         model.addAttribute("sOd",shippingOrder);
         return "cargo/shippingorder/jShippingOrderUpdate";
     }
@@ -124,6 +128,7 @@ public class ShippingOrderController {
      */
     @RequestMapping(value = "/shippingOrder_update",method = RequestMethod.PUT)
     public String update(ShippingOrder shippingOrder){
+        //修改成功
         shippingOrderService.update(shippingOrder);
         return "redirect:/cargo/jshipping_list";
     }
@@ -134,9 +139,13 @@ public class ShippingOrderController {
      */
     @RequestMapping(value = "/shippingOrder_delete",method = RequestMethod.DELETE)
     public String deletes(String shippingOrderId){
+        //创建list集合
         List<String> list = new ArrayList<>();
+        //判断是否包含逗号
         if(shippingOrderId.contains(",")){
+            //有的话就把逗号分割
             String[] ids = shippingOrderId.split(",");
+            //循坏
             for(int i = 0; i<ids.length;i++){
                 //放入集合中
                 list.add(ids[i]);
@@ -156,6 +165,7 @@ public class ShippingOrderController {
      */
     @RequestMapping("/shippingOrder_submit")
     public String submit(String shippingOrderId){
+        //状态改为1 逗号分割
         this.changeState(1,shippingOrderId.split(","));
         return "redirect:/cargo/jshipping_list";
     }
@@ -166,6 +176,7 @@ public class ShippingOrderController {
      */
     @RequestMapping("/shippingOrder_cancel")
     public String cancel(String shippingOrderId){
+        //状态改为0 逗号分割
         this.changeState(0,shippingOrderId.split(","));
         return "redirect:/cargo/jshipping_list";
     }
@@ -175,7 +186,9 @@ public class ShippingOrderController {
      */
     private void changeState(Integer state,String[] ids){
         Map<String,Object> map = new HashMap<>();
+        //存入state
         map.put("state",state);
+        //存入ids
         map.put("ids",ids);
         shippingOrderService.updateStates(map);
     }
@@ -191,6 +204,13 @@ public class ShippingOrderController {
         shippingOrder.setState(2);
         //更新
         shippingOrderService.update(shippingOrder);
+
+        //创建报运对象
+        Export export = new Export();
+        //状态改为3
+        export.setState(3);
+        //更新
+        exportService.updateExport(export);
         return "redirect:/cargo/jshipping_list";
     }
 
@@ -230,6 +250,7 @@ public class ShippingOrderController {
         //查询报运单对象
         String[] exportIds = packingList.getExportIds().split("\\|");
         Export export = null;
+        //循坏
         for (int i =0;i<exportIds.length;i++){
              export = exportService.get(exportIds[0]);
         }
@@ -241,7 +262,7 @@ public class ShippingOrderController {
 
         //提单抬头
         nRow = sheet.getRow(8);
-        nCell = nRow.getCell(2);
+        nCell = nRow.getCell(0);
         nCell.setCellValue(shippingOrder.getConsignee());
 
         //正本通知人
@@ -279,7 +300,7 @@ public class ShippingOrderController {
 
         //卸货港
         nRow = sheet.getRow(23);
-        nCell = nRow.createCell(3);
+        nCell = nRow.createCell(6);
         nCell.setCellValue(shippingOrder.getPortOfTrans());
 
         //装期
@@ -343,6 +364,7 @@ public class ShippingOrderController {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         wb.write(baos);
         baos.close();
+        //调用download方法
         downloadUtil.download(baos,response,request,"委托单.xls");
         return null;
     }

@@ -4,6 +4,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
+/**
+ * 装箱
+ */
 public class PackingList {
     private String packingListId;
 

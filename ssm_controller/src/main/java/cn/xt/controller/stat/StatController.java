@@ -68,13 +68,13 @@ public class StatController {
     public String productsale(HttpServletRequest request) throws Exception{
         String dir="productsale";
         //sql语句
-        List<ContractProduct> lists=statcharService.execChanPing();
-        List<String> list=new ArrayList<>();
+       List<ContractProduct> lists= statcharService.execChanPing();
+       List<String> list =new ArrayList<>();
         //将getProductNo，Cnumber() 循环添加到list集合中
-        for(ContractProduct s:lists){
-            list.add(s.getProductNo());
-            list.add(s.getCnumber().toString());
-        }
+       for(ContractProduct c:lists){
+           list.add(c.getProductNo());
+           list .add(c.getCnumber().toString());
+       }
 
         //将sql存入到柱状图数据中
         String content=genBarDateSet(list);

@@ -1,7 +1,6 @@
 package cn.xt.service;
 
-import cn.xt.dao.ExportMapper;
-import cn.xt.dao.PackingListMapper;
+import cn.xt.dao.*;
 import cn.xt.domain.Export;
 import cn.xt.domain.PackingList;
 import cn.xt.utils.UtilFuns;
@@ -12,12 +11,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * 装箱业务层
+ */
 @Service
 public class PackingListService {
     @Autowired
    private PackingListMapper packingListMapper;
     @Autowired
     private ExportMapper exportMapper;
+    @Autowired
+    private ShippingOrderMapper shippingOrderMapper;//委托
+    @Autowired
+    private InvoiceMapper invoiceMapper;//发票
+    @Autowired
+    private FinanceMapper financeMapper;//财务
     /**
      * 查询所有装箱单
      * @return
@@ -110,7 +118,9 @@ public class PackingListService {
         String exportNos = "";
         //得到getExportIds 用逗号分割
         String[] _s = packingList.getExportIds().split(",");
+        //循坏
         for (int i = 0; i < _s.length; i++){
+            //创建String数组用“|”分割
             String[] _tmp = _s[i].split("\\|");
             exportIds += _tmp[0] + "|";
             exportNos += _tmp[1] + "|";
@@ -145,6 +155,13 @@ public class PackingListService {
      * @param packingListId
      */
     public void delete(String packingListId) {
+        //委托删除
+        shippingOrderMapper.deleteByPrimaryKey(packingListId);
+        //发票删除
+        invoiceMapper.deleteByPrimaryKey(packingListId);
+        //财务删除
+        financeMapper.deleteByPrimaryKey(packingListId);
+        //删除装箱单
         packingListMapper.deleteByPrimaryKey(packingListId);
     }
 

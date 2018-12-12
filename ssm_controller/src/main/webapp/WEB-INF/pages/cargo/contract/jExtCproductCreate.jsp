@@ -13,7 +13,7 @@
 </head>
 
 <body>
-<form name="icform" method="post">
+<form name="icform" method="post" enctype="multipart/form-data">
 	<%--购销合同的id--%>
 	<input type="hidden" name="contractProduct.contract.contractId" value="${sessionScope.contractId}"/>
 	<input type="hidden" name="contractProductId" value="${contractProductId}"/>
@@ -63,11 +63,11 @@
 	        </tr>		
 	        <tr>
 	            <td class="columnTitle">货物照片：</td>
-	            <td class="tableContent"><input type="text" name="productImage" value=""/></td>
+	            <td class="tableContent"><input type="file" name="Image" value=""/></td>
 	        </tr>		
 	        <tr>
 	            <td class="columnTitle">数量：</td>
-	            <td class="tableContent"><input type="text" name="cnumber" value=""/></td>
+	            <td class="tableContent"><input type="text" name="cnumber" value="" onkeyup="value=value.replace(/[^(\d)]/g,'')"/></td>
 	            <td class="columnTitle">包装单位：</td>
 	            <td class="tableContentAuto">
 	            	<input type="radio" name="packingUnit" value="PCS" class="input">只
@@ -76,9 +76,9 @@
 	        </tr>		
 	        <tr>
 	            <td class="columnTitle">单价：</td>
-	            <td class="tableContent"><input type="text" name="price" value=""/></td>
+	            <td class="tableContent"><input type="text" name="price" value="" onkeyup="value=value.replace(/[^(\d)]/g,'')"/></td>
 	            <td class="columnTitle">排序号：</td>
-	            <td class="tableContent"><input type="text" name="orderNo" value=""/></td>
+	            <td class="tableContent"><input type="text" name="orderNo" value="" onkeyup="value=value.replace(/[^(\d)]/g,'')"/></td>
 	        </tr>		
 	        <tr>
 	            <td class="columnTitle">货物描述：</td>

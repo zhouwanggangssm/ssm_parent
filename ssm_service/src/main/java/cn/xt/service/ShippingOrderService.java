@@ -38,6 +38,7 @@ public class ShippingOrderService {
     public List<PackingList> findPackingList(Integer state){
         PackingListExample example = new PackingListExample();
         PackingListExample.Criteria criteria = example.createCriteria();
+        //andStateEqualTo(state)
         criteria.andStateEqualTo(state);
         return packingListMapper.selectByExample(example);
     }

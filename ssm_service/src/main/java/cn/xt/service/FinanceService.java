@@ -12,6 +12,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 财务业务层
+ */
 @Service
 public class FinanceService {
     @Autowired
@@ -93,6 +96,7 @@ public class FinanceService {
     public void deleteBarch(List<String> list) {
         FinanceExample example = new FinanceExample();
         FinanceExample.Criteria criteria = example.createCriteria();
+        //andFinanceIdIn(list);
         criteria.andFinanceIdIn(list);
         financeMapper.deleteByExample(example);
     }

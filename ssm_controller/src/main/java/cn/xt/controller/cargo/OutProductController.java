@@ -90,7 +90,7 @@ public class OutProductController {
         CellStyle tradeTermsCellStyle = row.getCell(cellNo++).getCellStyle();
 
 
-
+        //查询getShipTimeList所有信息
         List<ContractProduct> shipTimeList = contractProductService.getShipTimeList(inputDate);
 
         //查询出符合指定船期的货物列表

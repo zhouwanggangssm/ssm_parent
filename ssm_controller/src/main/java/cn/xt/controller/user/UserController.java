@@ -3,7 +3,6 @@ package cn.xt.controller.user;
 import cn.xt.domain.*;
 import cn.xt.service.DeptService;
 import cn.xt.service.RoleService;
-import cn.xt.service.RoleuserService;
 import cn.xt.service.UserService;
 import cn.xt.utils.MD5;
 import cn.xt.utils.PageSupport;
@@ -36,8 +35,6 @@ public class UserController {
     DeptService deptService;
     @Autowired
     RoleService roleService;
-    @Autowired
-    RoleuserService roleuserService;
 
 
     @RequestMapping("/user_list")
@@ -174,9 +171,9 @@ public class UserController {
             //把id放进String数组中，然后split分割
             String [] idlist=id.split(",");
             //组装id的集合
-            for(String i:idlist){
-                list.add(i);
-            }
+           for(String i:idlist){
+               list.add(i);
+           }
             //批量删除
             try {
 
@@ -187,8 +184,9 @@ public class UserController {
 
                          //批量删除用户表
                          if(userService.deleteUserList(list)>0){
-                         return "redirect:/user/user_list";
-                     }
+                             return "redirect:/user/user_list";
+                         }
+
 
             }catch (Exception e){
                 e.printStackTrace();

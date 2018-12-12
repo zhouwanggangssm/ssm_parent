@@ -4,18 +4,19 @@
 <head>
 	<title></title>
 	<script type="text/javascript" src="../../js/datepicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="${ctx }/js/jquery-1.4.4.js"></script>
 	<script type="text/javascript">
 		//动态设置生产厂家的名称 
 		function setFactoryName(val){
 			document.getElementById("factoryName").value = val;
 		}
+
 	</script>
 </head>
 
 <body>
-<form name="icform" method="post">
+<form name="icform" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="contractId" value="${contractId}"/>
-
 <div id="menubar">
 <div id="middleMenubar">
 <div id="innerMenubar">
@@ -58,11 +59,12 @@
 	        </tr>		
 	        <tr>
 	            <td class="columnTitle">货物照片：</td>
-	            <td class="tableContent"><input type="text" name="productImage" value=""/></td>
+	            <td class="tableContent"><input type="file" name="Image" value=""/></td>
 	        </tr>		
 	        <tr>
 	            <td class="columnTitle">数量：</td>
-	            <td class="tableContent"><input type="text" name="cnumber" value=""/></td>
+	            <td class="tableContent"><input type="text" name="cnumber" id="cnumber" value="" onkeyup="value=value.replace(/[^\d]/g,'') "
+												onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"   /> </td>
 	            <td class="columnTitle">包装单位：</td>
 	            <td class="tableContentAuto">
 	            	<input type="radio" name="packingUnit" value="PCS" class="input">只
@@ -73,13 +75,13 @@
 	            <td class="columnTitle">装率：</td>
 	            <td class="tableContent"><input type="text" name="loadingRate" value=""/></td>
 	            <td class="columnTitle">箱数：</td>
-	            <td class="tableContent"><input type="text" name="boxNum" value=""/></td>
+	            <td class="tableContent"><input type="text" name="boxNum" value="" onkeyup="value=value.replace(/[^(\d)]/g,'')"/></td>
 	        </tr>		
 	        <tr>
 	            <td class="columnTitle">单价：</td>
-	            <td class="tableContent"><input type="text" name="price" value=""/></td>
+	            <td class="tableContent"><input type="text" name="price" value="" onkeyup="value=value.replace(/[^(\d)]/g,'')"/></td>
 	            <td class="columnTitle">排序号：</td>
-	            <td class="tableContent"><input type="text" name="orderNo" value=""/></td>
+	            <td class="tableContent"><input type="text" name="orderNo" value="" onkeyup="value=value.replace(/[^(\d)]/g,'')"/></td>
 	        </tr>		
 	        <tr>
 	            <td class="columnTitle">货物描述：</td>

@@ -4,6 +4,31 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title></title>
+	<script type="text/javascript" src="${ctx }/js/jquery-1.4.4.js"></script>
+	<script type="text/javascript">
+
+        //验证复选框是否被选中
+        function checks() {
+            var check = $("input[type='checkbox']").is(':checked');
+            if (check == true) {
+                //查看
+                formSubmit('${ctx}/cargo/contract_toviews','_self');
+            }else {
+                alert("请先选择一项并且只能选择一项，再进行操作！");
+            }
+        }
+
+        //验证复选框是否被选中
+        function tocreate() {
+            var aa = $("input[type='checkbox']").is(':checked');
+            if (aa == true) {
+                //查看
+                formSubmit('${ctx}/cargo/export_tocreate','_self');
+            }else {
+                alert("请先选择一项并且只能选择一项，再进行操作！");
+            }
+        }
+	</script>
 </head>
 
 <body>
@@ -14,9 +39,8 @@
 <div id="innerMenubar">
   <div id="navMenubar">
 <ul>
-<li id="view"><a href="#" onclick="formSubmit('${ctx}/cargo/contract_toviews','_self');this.blur();">查看</a></li>
-<li id="print"><a href="#" onclick="formSubmit('${ctx}/cargo/contractAction_print','_self');this.blur();">打印</a></li>
-<li id="new"><a href="#" onclick="formSubmit('${ctx}/cargo/export_tocreate','_self');this.blur();">报运</a></li>
+<li id="view"><a href="#" onclick="checks();this.blur();">查看</a></li>
+<li id="new"><a href="#" onclick="tocreate();this.blur();">报运</a></li>
 </ul>
   </div>
 </div>
